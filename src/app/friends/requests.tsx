@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View } from 'react-native';
 
 
-export default function Chat(){
+export default function Requests(){
     return <View>
         <Text>
-            CHATS
+            Запити
         </Text>
     </View>
 }

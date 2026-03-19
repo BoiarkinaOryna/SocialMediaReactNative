@@ -1,6 +1,8 @@
-import { View, Text, TouchableOpacity,Image } from "react-native"
+import { View, Text, TouchableOpacity, Image, Pressable } from "react-native"
 import { styles } from "./header.styles"
 import { ICONS } from "../../icons/"
+import { router } from "expo-router";
+
 
 
 export function Header(){
@@ -16,7 +18,12 @@ export function Header(){
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.button}>
-                <ICONS.SvgSettings/>
+                <Pressable
+                    // style = {styles.}
+                    onPress={() => router.push("/settings")}
+                >
+                    <ICONS.SvgSettings/>
+                </Pressable>
             </TouchableOpacity>
 
             <TouchableOpacity style={styles.button}>
