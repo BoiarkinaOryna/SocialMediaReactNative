@@ -1,22 +1,5 @@
-
-import { StyleSheet, Text, View } from 'react-native';
-import { Link } from '../../shared/ui/Links/links';
-
+import { AlbumPage } from "../../modules/settings/ui/AlbumPage/AlbumPage";
 
 export default function Albums(){
-    return <View>
-        <Text>
-            ALBUMS
-        </Text>
-        <View>
-            <Link 
-                text = "Особиста інформація"
-                link='/settings'
-            ></Link>
-            <Link 
-                text = "Альбоми"
-                disabeled={true}               
-            ></Link>
-        </View>
-    </View>
+    return <AlbumPage />
 }

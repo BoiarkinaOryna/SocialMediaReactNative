@@ -1,23 +1,29 @@
 import { StyleSheet } from "react-native";
+import { COLORS } from "../../constants/colors";
 
 export const styles = StyleSheet.create({
     button:{
 
-        
+    },
+    hasLogo:{
+        alignItems: "center",
+        justifyContent: "space-between",
+        paddingTop: 10,
+        height: 50
     },
     disabeled:{
-        
+        color: COLORS.blue50
+    },
+    text:{
+        fontWeight: 500,
+        height: 25,
     },
     topLine:{
-        borderRadius:1,
-        position:"absolute",
-        top:1,
-
+        borderTopWidth: 2,
+        borderTopColor: COLORS.pulm,
     },
     bottomLine:{
-        borderRadius:1,
-        position:"absolute",
-        bottom:-1,
-
+        borderBottomWidth: 2,
+        borderBottomColor: COLORS.pulm,
     },
 })

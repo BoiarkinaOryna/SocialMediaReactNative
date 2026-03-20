@@ -1,5 +1,6 @@
 import SvgBack from "./_icons/back";
 import SvgChat from "./_icons/chat";
+import SvgContacts from "./_icons/contacts";
 import SvgHome from "./_icons/home";
 import SvgMound from "./_icons/mound";
 import SvgPeople from "./_icons/people";
@@ -11,6 +12,7 @@ import SvgLogoText from "./_icons/logoText";
 export const ICONS = {
     SvgBack,
     SvgChat,
+    SvgContacts,
     SvgHome,
     SvgMound,
     SvgPeople,

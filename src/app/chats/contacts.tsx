@@ -1,10 +1,6 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { ContactsPage } from '../../modules/chats/ui/ContactsPage/ContactsPage';
 
 
 export default function Contacts(){
-    return <View>
-        <Text>
-            CONTACTS
-        </Text>
-    </View>
+    return <ContactsPage />
 }

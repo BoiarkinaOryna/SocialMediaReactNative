@@ -17,20 +17,7 @@ export default function App() {
                     animation: 'none',
                 }}
             >
-                
-                <Stack.Screen name='(main)'/>
-
-                <Stack.Screen name='index'/>
-
-                {/* <Stack
-                    screenOptions={{
-                        header: () => <TabBar/>
-                    }}
-                >
-
-                </Stack> */}
             </Stack>
-
         </SafeAreaView>
     </SafeAreaProvider>
   

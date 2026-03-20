@@ -1,10 +1,5 @@
-import { StyleSheet, Text, View } from 'react-native';
-
+import { GroupsPage } from "../../modules/chats/ui/GroupsPage/GroupsPage";
 
 export default function Group(){
-    return <View>
-        <Text>
-            GROUP
-        </Text>
-    </View>
+    return <GroupsPage />
 }

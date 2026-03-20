@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { COLORS } from "../../constants/colors";
 
 
 export const styles = StyleSheet.create({
@@ -7,20 +8,14 @@ export const styles = StyleSheet.create({
         bottom: -785,
         left: 0,
         right: 0,
-       
-
     },
     headerBottom:{
-        // position: "absolute",
         flexDirection: "row",
-        // left: 0,
-        // right: 0,
-        // bottom: 0,
         alignItems: "center",
         justifyContent: "center",
         height: 70,
         paddingBottom: 16,
-        backgroundColor: "#FFF",
+        backgroundColor: COLORS.white,
     },
     linksContainer:{
         flexDirection: "row",
@@ -39,7 +34,6 @@ export const styles = StyleSheet.create({
         paddingLeft:8,  
         alignItems:"center",
         justifyContent: "center",
-        // boxSizing:"border-box",
         gap: 6,
     },
     h1:{
@@ -48,6 +42,6 @@ export const styles = StyleSheet.create({
     },
     selected:{
         borderTopWidth: 2,
-        borderTopColor: "#543C52",
+        borderTopColor: COLORS.pulm,
     }
 })

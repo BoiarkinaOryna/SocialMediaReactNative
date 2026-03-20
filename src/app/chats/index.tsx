@@ -1,10 +1,6 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { MessagesPage } from '../../modules/chats/ui/MessagesPage/MessagesPage';
 
 
 export default function Messages(){
-    return <View>
-        <Text>
-            MESSAGES
-        </Text>
-    </View>
+    return <MessagesPage />
 }
