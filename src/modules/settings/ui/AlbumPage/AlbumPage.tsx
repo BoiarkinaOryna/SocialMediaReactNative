@@ -1,6 +1,6 @@
 import { Text, View } from 'react-native';
-import { Link } from '../../../../shared/ui/Links/Links';
 import { styles } from './album.style';
+import { Link } from '@shared/ui/Links/Links';
 
 export function AlbumPage(){
     return <View style={styles.mainContainer}>

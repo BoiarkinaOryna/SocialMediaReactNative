@@ -1,6 +1,6 @@
 import { Text, View } from 'react-native';
-import { Link } from '../../../../shared/ui/Links/Links';
 import { styles } from './recommendations.styles';
+import { Link } from '@shared/ui/Links/Links';
 
 export function FriendsRecommendationsPage(){
     return <View style={styles.mainContainer}>

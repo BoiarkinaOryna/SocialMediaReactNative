@@ -1,7 +1,7 @@
 import { Text, View } from 'react-native';
-import { Link } from '../../../../shared/ui/Links/Links';
 import { styles } from './messages.styles';
-import { ICONS } from '../../../../shared/icons';
+import { Link } from '@shared/ui/Links/Links';
+import { ICONS } from '@shared/icons';
 
 export function MessagesPage(){
     return <View style={styles.mainContainer}>

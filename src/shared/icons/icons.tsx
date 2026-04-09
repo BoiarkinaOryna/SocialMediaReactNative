@@ -1,23 +1,30 @@
 import SvgBack from "./_icons/back";
 import SvgChat from "./_icons/chat";
 import SvgContacts from "./_icons/contacts";
+import SvgEyeClosed from "./_icons/eyeClosed";
 import SvgHome from "./_icons/home";
+import SvgLogo from "./_icons/logoImg";
+import SvgLogoText from "./_icons/logoText";
 import SvgMound from "./_icons/mound";
+import SvgPen from "./_icons/pen";
 import SvgPeople from "./_icons/people";
 import SvgPlus from "./_icons/plus";
 import SvgSettings from "./_icons/settings";
-import SvgLogo from "./_icons/logoImg";
-import SvgLogoText from "./_icons/logoText";
+import SvgTick from "./_icons/tick";
+
 
 export const ICONS = {
     SvgBack,
     SvgChat,
     SvgContacts,
+    SvgEyeClosed,
     SvgHome,
+    SvgLogo,
+    SvgLogoText,
     SvgMound,
+    SvgPen,
     SvgPeople,
     SvgPlus,
     SvgSettings,
-    SvgLogo,
-    SvgLogoText,
+    SvgTick
 }
