@@ -48,7 +48,7 @@ export function Header(){
                 </Pressable>
             </TouchableOpacity>}
 
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity style={styles.button} onPress={() => router.push("/auth")}>
                 <ICONS.SvgBack/>
             </TouchableOpacity>
         </View>
