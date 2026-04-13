@@ -5,7 +5,8 @@
     "strict": true,
     "paths": {
       "@shared/*": ["./src/shared/*"],
-      "@assets/*": ["./assets"]
+      "@assets/*": ["./assets"],
+      "@modules/*": ["./src/modules/*"]
     }
   },
   "include": [

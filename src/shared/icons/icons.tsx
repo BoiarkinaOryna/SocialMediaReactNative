@@ -1,6 +1,7 @@
 import SvgBack from "./_icons/back";
 import SvgChat from "./_icons/chat";
 import SvgContacts from "./_icons/contacts";
+import SvgCross from "./_icons/cross";
 import SvgEyeClosed from "./_icons/eyeClosed";
 import SvgHome from "./_icons/home";
 import SvgLogo from "./_icons/logoImg";
@@ -17,6 +18,7 @@ export const ICONS = {
     SvgBack,
     SvgChat,
     SvgContacts,
+    SvgCross,
     SvgEyeClosed,
     SvgHome,
     SvgLogo,

@@ -6,8 +6,18 @@ import { Link } from '@shared/ui/Links/Links';
 import { Input } from '@shared/ui/Input/Input';
 import { Button } from '@shared/ui/Button/Button';
 import { ICONS } from '@shared/icons';
+import { Controller, useForm } from 'react-hook-form';
+import { MyDataSchema } from '../../types/my-data.types';
+import { myDataValidator } from '../../models/my-data.validation';
+import { yupResolver } from '@hookform/resolvers/yup';
+
 
 export function PersonalInfoPage(){
+    const { handleSubmit, control } = useForm<MyDataSchema>({
+        // resolver: yupResolver(myDataValidator),
+        mode: "onChange",
+    });
+
     return <ScrollView contentContainerStyle={styles.mainContainer}>
             <View style={styles.linksContainer}> 
                 <Link 
@@ -32,6 +42,16 @@ export function PersonalInfoPage(){
 
             <SettingsCard title='Особиста інформація' button={<Button icon={<ICONS.SvgPen/>}/>}>
                 <View style={styles.inputContainer}>
+                    {/* <Controller
+                        name="name"
+                        control={control}
+                        render={({field, fieldState}) => {
+                            return <Input
+                                label = "Ім'я"
+                                placeholder = "Введіть ім'я"
+                            />
+                        }}
+                    /> */}
                     <Input
                         label = "Ім'я"
                         placeholder = "Введіть ім'я"
