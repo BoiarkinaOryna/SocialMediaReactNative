@@ -7,26 +7,32 @@ import { useEffect, useState } from "react";
 
 
 export function Header(){
-    const [ hideButton, setHideButton ] = useState<string | null>(null)
-
+    const [ currentPage, setCurrentPage ] = useState<string | null>(null)
     const route = useRoute()
     const routeName = route.name
+    
     useEffect(() => {
         if (
             routeName === "chats/index" ||
             routeName === "chats/groups" ||
             routeName === "chats/contacts"
         ) {
-            setHideButton("settings");
+            setCurrentPage("chats");
         } else if (
             routeName === "friends/index" ||
             routeName === "friends/requests" ||
             routeName === "friends/friends" ||
             routeName === "friends/recommendations"
         ) {
-            setHideButton("plus");
-        } else {
-            setHideButton(null);
+            setCurrentPage("friends");
+        } else if (
+            routeName === "settings/index" ||
+            routeName === "settings/album"
+        ) {
+            setCurrentPage("settings")
+        }
+        else {
+            setCurrentPage(null);
         }
     }, [routeName]);
 
@@ -36,14 +42,12 @@ export function Header(){
             <ICONS.SvgLogoText/>
         </View>
         <View style={styles.buttonCon} >
-            {hideButton !== "plus" && <TouchableOpacity style={styles.button} >
+            {currentPage !== "friends" && <TouchableOpacity style={styles.button} >
                 <ICONS.SvgPlus/>
             </TouchableOpacity>}
 
-            {hideButton !== "settings" && <TouchableOpacity style={styles.button}>
-                <Pressable
-                    onPress={() => router.push("/settings")}
-                >
+            {currentPage !== "chats" && <TouchableOpacity style={[styles.button, currentPage === "settings" && styles.chosenIcon]}>
+                <Pressable onPress={() => router.push("/settings")}>
                     <ICONS.SvgSettings/>
                 </Pressable>
             </TouchableOpacity>}

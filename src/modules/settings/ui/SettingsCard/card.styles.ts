@@ -13,7 +13,8 @@ export const styles = StyleSheet.create({
     },
     headline: {
         flexDirection: "row",
-        justifyContent: "space-between"
+        justifyContent: "space-between",
+        alignItems: "center"
     },
     title: {
         fontSize: 16,

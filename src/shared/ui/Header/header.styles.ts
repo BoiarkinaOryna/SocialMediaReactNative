@@ -37,5 +37,8 @@ export const styles = StyleSheet.create({
     selected:{
         borderTopWidth: 2,
         borderTopColor: COLORS.pulm,
+    },
+    chosenIcon:{
+        backgroundColor: COLORS.pulm10
     }
 })
