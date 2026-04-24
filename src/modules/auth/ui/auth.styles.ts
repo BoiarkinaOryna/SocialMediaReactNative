@@ -67,4 +67,12 @@ export const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "600",
   },
+  
+  error: {
+    color: "#FF3B30",
+    fontSize: 13,
+    fontWeight: "500",
+    marginTop: -12,
+    marginBottom: 12,
+  },
 });
