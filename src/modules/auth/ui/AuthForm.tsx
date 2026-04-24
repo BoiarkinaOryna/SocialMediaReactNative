@@ -1,57 +1,82 @@
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import { styles } from "./auth.styles";
 import { useState } from "react";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { Controller, useForm } from "react-hook-form";
-import { loginValidator } from "../models/login.validation";
-import { LoginSchema } from "../types/login.types";
-import { ResgisterSchema } from "../types/register.types";
-import { registerValidator } from "../models/register.validation";
+
+export type AuthFormData = {
+  email: string;
+  password: string;
+  confirmPassword?: string;
+};
 
 type Props = {
   mode: "login" | "register";
   onChangeMode?: (mode: "login" | "register") => void;
+  onSubmit?: (data: AuthFormData) => void;
 };
 
-export default function AuthForm({ mode, onChangeMode }: Props) {
+export default function AuthForm({ mode, onChangeMode, onSubmit }: Props) {
   const isRegister = mode === "register";
 
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [form, setForm] = useState<AuthFormData>({
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
 
-  const { handleSubmit, control } = useForm<ResgisterSchema>({
-		resolver: yupResolver(registerValidator),
-		mode: "onChange",
-	});
+  const handleChange = <K extends keyof AuthFormData>(
+    key: K,
+    value: AuthFormData[K]
+  ) => {
+    setForm((prev) => ({
+      ...prev,
+      [key]: value,
+    }));
+  };
+
+  const handleSubmit = () => {
+    if (!form.email || !form.password) {
+      console.log("Заповни всі поля");
+      return;
+    }
+
+    if (isRegister) {
+      if (!form.confirmPassword) {
+        console.log("Підтверди пароль");
+        return;
+      }
+
+      if (form.password !== form.confirmPassword) {
+        console.log("Паролі не співпадають");
+        return;
+      }
+    }
+
+    onSubmit?.(form);
+  };
 
   return (
     <View style={styles.card}>
-      
+      {/* Tabs */}
       <View style={styles.tabs}>
         <TouchableOpacity onPress={() => onChangeMode?.("register")}>
-          <Text style={[
-            styles.tab,
-            isRegister && styles.activeTab
-          ]}>
+          <Text style={[styles.tab, isRegister && styles.activeTab]}>
             Реєстрація
           </Text>
         </TouchableOpacity>
 
         <TouchableOpacity onPress={() => onChangeMode?.("login")}>
-          <Text style={[
-            styles.tab,
-            !isRegister && styles.activeTab
-          ]}>
+          <Text style={[styles.tab, !isRegister && styles.activeTab]}>
             Авторизація
           </Text>
         </TouchableOpacity>
       </View>
 
+      {/* Title */}
       <Text style={styles.title}>
         {isRegister ? "Приєднуйся до World IT" : "Увійди в акаунт"}
       </Text>
 
+      {/* Email */}
       <Text style={styles.label}>Електронна пошта</Text>
       <Controller
         name="email"
@@ -70,10 +95,11 @@ export default function AuthForm({ mode, onChangeMode }: Props) {
       {/* <TextInput
         placeholder="you@example.com"
         style={styles.input}
-        value={email}
-        onChangeText={setEmail}
-      /> */}
-      
+        value={form.email}
+        onChangeText={(text) => handleChange("email", text)}
+      />
+
+      {/* Password */}
       <Text style={styles.label}>Пароль</Text>
 
       <Controller
@@ -93,10 +119,11 @@ export default function AuthForm({ mode, onChangeMode }: Props) {
         placeholder="Введи пароль"
         secureTextEntry
         style={styles.input}
-        value={password}
-        onChangeText={setPassword}
-      /> */}
+        value={form.password}
+        onChangeText={(text) => handleChange("password", text)}
+      />
 
+      {/* Confirm Password */}
       {isRegister && (
         <View>
           <Text style={styles.label}>Підтверди пароль</Text>
@@ -118,18 +145,20 @@ export default function AuthForm({ mode, onChangeMode }: Props) {
             placeholder="Повтори пароль"
             secureTextEntry
             style={styles.input}
-            value={confirmPassword}
-            onChangeText={setConfirmPassword}
-          /> */}
+            value={form.confirmPassword}
+            onChangeText={(text) =>
+              handleChange("confirmPassword", text)
+            }
+          />
         </View>
       )}
 
-      <TouchableOpacity style={styles.button}>
+      {/* Button */}
+      <TouchableOpacity style={styles.button} onPress={handleSubmit}>
         <Text style={styles.buttonText}>
           {isRegister ? "Створити акаунт" : "Увійти"}
         </Text>
       </TouchableOpacity>
-
     </View>
   );
 }
