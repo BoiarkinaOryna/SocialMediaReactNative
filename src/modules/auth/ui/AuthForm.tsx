@@ -78,21 +78,7 @@ export default function AuthForm({ mode, onChangeMode, onSubmit }: Props) {
 
       {/* Email */}
       <Text style={styles.label}>Електронна пошта</Text>
-      <Controller
-        name="email"
-        control={control}
-        render={({field, fieldState}) => {
-          return <TextInput
-            placeholder="you@example.com"
-            style={styles.input}
-            onChangeText={field.onChange}
-						value={field.value}
-            error={fieldState.error?.message}
-        />
-        }}
-      />
-
-      {/* <TextInput
+      <TextInput
         placeholder="you@example.com"
         style={styles.input}
         value={form.email}
@@ -101,21 +87,7 @@ export default function AuthForm({ mode, onChangeMode, onSubmit }: Props) {
 
       {/* Password */}
       <Text style={styles.label}>Пароль</Text>
-
-      <Controller
-        name="password"
-        control={control}
-        render={({field, fieldState}) => {
-          return <TextInput
-            placeholder="Введи пароль"
-            style={styles.input}
-            onChangeText={field.onChange}
-						value={field.value}
-            error={fieldState.error?.message}
-        />
-        }}
-      />
-      {/* <TextInput
+      <TextInput
         placeholder="Введи пароль"
         secureTextEntry
         style={styles.input}
@@ -127,21 +99,7 @@ export default function AuthForm({ mode, onChangeMode, onSubmit }: Props) {
       {isRegister && (
         <View>
           <Text style={styles.label}>Підтверди пароль</Text>
-
-          <Controller
-            name="passwordConfirmation"
-            control={control}
-            render={({field, fieldState}) => {
-              return <TextInput
-                placeholder="Повтори пароль"
-                style={styles.input}
-                onChangeText={field.onChange}
-                value={field.value}
-                error={fieldState.error?.message}
-            />
-            }}
-          />
-          {/* <TextInput
+          <TextInput
             placeholder="Повтори пароль"
             secureTextEntry
             style={styles.input}

@@ -14,9 +14,15 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 export function PersonalInfoPage(){
     const { handleSubmit, control } = useForm<MyDataSchema>({
-        // resolver: yupResolver(myDataValidator),
+        resolver: yupResolver(myDataValidator),
         mode: "onChange",
     });
+    
+    async function sendForm(data: MyDataSchema){
+        try{
+            const response = await 
+        }
+    }
 
     return <ScrollView contentContainerStyle={styles.mainContainer}>
             <View style={styles.linksContainer}> 
@@ -42,7 +48,7 @@ export function PersonalInfoPage(){
 
             <SettingsCard title='Особиста інформація' button={<Button icon={<ICONS.SvgPen/>}/>}>
                 <View style={styles.inputContainer}>
-                    {/* <Controller
+                    <Controller
                         name="name"
                         control={control}
                         render={({field, fieldState}) => {
@@ -51,23 +57,47 @@ export function PersonalInfoPage(){
                                 placeholder = "Введіть ім'я"
                             />
                         }}
-                    /> */}
-                    <Input
-                        label = "Ім'я"
-                        placeholder = "Введіть ім'я"
-                        />
-                    <Input
-                        label = "Прізвище"
-                        placeholder = "Введіть прізвище"
-                        />
-                    <Input
-                        label = "Дата народження"
-                        placeholder = "15.04.2001"
-                        />
-                    <Input
-                        label = "Електорна адреса"
-                        placeholder = "you@gmail.com"
-                        />
+                    />
+                    <Controller
+                        name="surname"
+                        control={control}
+                        render={({field, fieldState}) => {
+                            return <Input
+                                label = "Прізвище"
+                                placeholder = "Введіть прізвище"
+                            />
+                        }}
+                    />
+                    <Controller
+                        name="birthDate"
+                        control={control}
+                        render={({field, fieldState}) => {
+                            return <Input
+                                label = "Дата народження"
+                                placeholder = "15.04.2001"
+                            />
+                        }}
+                    />
+                    <Controller
+                        name="email"
+                        control={control}
+                        render={({field, fieldState}) => {
+                            return <Input
+                                label = "Електорна адреса"
+                                placeholder = "you@gmail.com"
+                                inputMode="email"
+								autoCapitalize="none"
+								autoComplete="off"
+								autoCorrect={false}
+								// inputContainerStyle={styles.inputContainer}
+								// style={styles.input}
+								onChangeText={field.onChange}
+								value={field.value}
+								error={fieldState.error?.message}
+                            />
+                        }}
+                    />
+
                 </View>
                 <View style={styles.passwordContainer}> 
                     <Text style = {styles.passwordText} >Пароль</Text>

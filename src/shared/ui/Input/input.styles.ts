@@ -26,5 +26,9 @@ export const styles = StyleSheet.create({
     },
     icon:{
         width: 20,
+    },
+    errorMessage: {
+        color: COLORS.red,
+        fontSize: 12
     }
 })
