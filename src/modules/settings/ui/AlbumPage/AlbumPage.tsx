@@ -4,6 +4,7 @@ import { Link } from '@shared/ui/Links/Links';
 import { SettingsCard } from '../SettingsCard/SettingsCard';
 import { Button } from '@shared/ui/Button/Button';
 import { ICONS } from '@shared/icons';
+import { AlbumForm } from './AlbumForm/AlbumForm';
 
 export function AlbumPage(){
     return <ScrollView contentContainerStyle={styles.mainContainer}>
@@ -79,5 +80,7 @@ export function AlbumPage(){
         </SettingsCard>
 
         <SettingsCard title="Немає ще жодного альбому" button={<Button icon={<ICONS.SvgPlus/>}/>} />
+
+        <AlbumForm/>
     </ScrollView>
 }

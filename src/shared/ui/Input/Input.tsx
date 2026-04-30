@@ -25,18 +25,18 @@ export function Input(props: InputProps) {
         </Text>
       )}    
 
-      <View style={styles.inputWrapper}>
+      <View style={[styles.inputWrapper, error && {borderColor: COLORS.red}]}>
         {iconLeft && <View style={styles.icon}>{iconLeft}</View>}
 
         <TextInput
-          style={[styles.input, style, error && {borderColor: COLORS.red}]}
-          placeholderTextColor="#999"
+          style={[styles.input, style]}
+          placeholderTextColor={COLORS.blue20}
           {...rest}
         />
 
         {iconRight && <View style={styles.icon}>{iconRight}</View>}
       </View>
-      { error && <Text>{error}</Text> }
+      { error && <Text style={styles.errorMessage}>{error}</Text> }
     </View>
   );
 }

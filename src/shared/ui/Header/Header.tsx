@@ -4,10 +4,13 @@ import { ICONS } from "../../icons/"
 import { router } from "expo-router";
 import { useRoute } from '@react-navigation/native';
 import { useEffect, useState } from "react";
+import { useUserContext } from "@modules/auth/context/user.context";
 
 
 export function Header(){
     const [ currentPage, setCurrentPage ] = useState<string | null>(null)
+    const { setToken } = useUserContext()
+
     const route = useRoute()
     const routeName = route.name
     
@@ -30,13 +33,17 @@ export function Header(){
             routeName === "settings/album"
         ) {
             setCurrentPage("settings")
+        } else if (
+            routeName === "auth/index"
+        ) {
+            setCurrentPage("register")
         }
         else {
             setCurrentPage(null);
         }
     }, [routeName]);
 
-    return <View style={styles.headerTop} >
+    return currentPage !== "register" && <View style={styles.headerTop} >
         <View style={styles.imgWorld} >
             <ICONS.SvgLogo/>
             <ICONS.SvgLogoText/>
@@ -52,7 +59,10 @@ export function Header(){
                 </Pressable>
             </TouchableOpacity>}
 
-            <TouchableOpacity style={styles.button} onPress={() => router.push("/auth")}>
+            <TouchableOpacity style={styles.button} onPress={() => {
+                    setToken(null)
+                    router.push("/auth")
+                }}>
                 <ICONS.SvgBack/>
             </TouchableOpacity>
         </View>

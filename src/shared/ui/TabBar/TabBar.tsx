@@ -28,12 +28,17 @@ export function TabBar(){
                 setCurrentPage("main")
             } else if (routeName === "(publications)/publications"){
                 setCurrentPage("publications")
+            } else if (
+                routeName === "auth/index" ||
+                routeName === "auth/authorization"
+            ) {
+                setCurrentPage("register")
             }
             else {
                 setCurrentPage(null);
             }
         }, [routeName]);
-    return <View style={styles.container}>
+    return currentPage !== "register" && <View style={styles.container}>
         <View style={styles.headerBottom} >
             <View style={styles.linksContainer} >
                 <Pressable onPress={() => router.push("/(main)/main")} style={[styles.links, currentPage === "main" && styles.selected]} >

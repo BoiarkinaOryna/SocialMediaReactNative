@@ -1,4 +1,6 @@
 export type EditableUserData = {
-    email: String,
-    password: String
+    name: String,
+    surname: String,
+    birthDate: Date,
+    email: String
 }

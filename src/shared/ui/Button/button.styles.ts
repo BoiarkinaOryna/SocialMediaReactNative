@@ -13,5 +13,9 @@ export const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: COLORS.pulm,
         backgroundColor: COLORS.white
+    },
+    dark: {
+        backgroundColor: COLORS.pulm,
+        color: COLORS.white
     }
 })

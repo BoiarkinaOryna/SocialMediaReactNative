@@ -4,10 +4,10 @@ import { styles } from "./button.styles";
 
 
 export function Button(props: ButtonProps){
-    const { icon, text, textPosition, style } = props
-    return <Pressable style={[styles.container, style]}>
-        { textPosition === "left" && <Text>{text}</Text> }
+    const { icon, text, textPosition, isDark, style, ...rest } = props
+    return <Pressable style={[styles.container, isDark && styles.dark, style]} {...rest}>
+        { textPosition === "left" && <Text style={isDark && styles.dark}>{text}</Text> }
         { icon }
-        { textPosition === "right" && <Text>{text}</Text> }
+        { textPosition === "right" && <Text style={isDark && styles.dark}>{text}</Text> }
     </Pressable>
 }

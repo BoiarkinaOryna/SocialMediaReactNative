@@ -4,15 +4,18 @@ export const myDataValidator = yup.object({
     name: yup
         .string()
         .required()
-        .nullable(),
+        // .nullable(),
+        .default(undefined),
     surname: yup
         .string()
         .required()
-        .nullable(),
+        .default(undefined),
+        // .nullable(),
     birthDate: yup
         .date()
         .required()
-        .nullable(),
+        // .nullable(),
+        .default(undefined),
     email: yup
         .string()
         .email("Email must contain '@' and '.'")

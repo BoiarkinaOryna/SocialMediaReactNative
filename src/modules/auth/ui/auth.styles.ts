@@ -1,9 +1,15 @@
+import { COLORS } from "@shared/constants/colors";
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center"
+  },
   card: {
-    width: "100%",
-    backgroundColor: "#fff",
+    width: 343,
+    backgroundColor: COLORS.white,
     borderRadius: 32, 
     padding: 30,     
   },
@@ -19,13 +25,13 @@ export const styles = StyleSheet.create({
     marginHorizontal: 15, 
     fontWeight: "700",
     fontSize: 24,        
-    color: "#9E9E9E",
+    color: COLORS.blue50,
   },
 
   activeTab: {
-    color: "#000",
+    color: COLORS.black,
     borderBottomWidth: 3,
-    borderBottomColor: "#4A3248", 
+    borderBottomColor: COLORS.pulm, 
     paddingBottom: 4,
   },
 
@@ -34,37 +40,32 @@ export const styles = StyleSheet.create({
     fontWeight: "700",
     marginBottom: 25,
     textAlign: "center",
-    color: "#000",
+    color: COLORS.black,
   },
 
-  label: {
-    fontSize: 16,
-    marginBottom: 8,
-    fontWeight: "500",
-    color: "#1A1A1A",
-  },
-
-  input: {
-    borderWidth: 1,
-    borderColor: "#E0E0E0",
-    borderRadius: 12,
-    padding: 14,
-    fontSize: 16,
-    marginBottom: 20,
-    backgroundColor: "#fff",
+  inputsBlock: {
+    gap: 16
   },
 
   button: {
-    marginTop: 20,
-    backgroundColor: "#5B3A57",
-    paddingVertical: 18,
+    marginTop: 24,
+    backgroundColor: COLORS.pulm,
+    paddingVertical: 16,
     borderRadius: 30,
     alignItems: "center",
   },
 
   buttonText: {
-    color: "#fff",
-    fontSize: 18,
-    fontWeight: "600",
+    color: COLORS.white,
+    fontSize: 16,
+    fontWeight: "500",
+  },
+  
+  error: {
+    color: COLORS.red,
+    fontSize: 13,
+    fontWeight: "500",
+    // marginTop: -12,
+    // marginBottom: 12,
   },
 });

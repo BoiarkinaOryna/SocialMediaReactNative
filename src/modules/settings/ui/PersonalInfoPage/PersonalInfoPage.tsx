@@ -10,6 +10,8 @@ import { Controller, useForm } from 'react-hook-form';
 import { MyDataSchema } from '../../types/my-data.types';
 import { myDataValidator } from '../../models/my-data.validation';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useUpdateProfileMutation } from '@modules/settings/api/api';
+import { useUserContext } from '@modules/auth/context/user.context';
 
 
 export function PersonalInfoPage(){
@@ -17,10 +19,18 @@ export function PersonalInfoPage(){
         resolver: yupResolver(myDataValidator),
         mode: "onChange",
     });
+
+    const [ update, {error, isLoading} ] = useUpdateProfileMutation()
+
+    const { token, user } = useUserContext()
+    console.log("user in personal info", user)
+    
     
     async function sendForm(data: MyDataSchema){
         try{
-            const response = await 
+            const response = await update(data)
+        } catch(error){
+            console.log("error:", error)
         }
     }
 
@@ -40,13 +50,13 @@ export function PersonalInfoPage(){
                 <View style={styles.profileCard}>
                     <Image style={styles.avatar} source={require("@assets/LinaLi.jpg")} />
                     <View style={styles.nameContainer}>
-                        <Text style={styles.currentName}>Lina Li</Text>
-                        <Text>@thelili</Text>
+                        <Text style={styles.currentName}>{user?.name}</Text>
+                        <Text>{user?.username}</Text>
                     </View>
                 </View>
             </SettingsCard>
 
-            <SettingsCard title='Особиста інформація' button={<Button icon={<ICONS.SvgPen/>}/>}>
+            <SettingsCard title='Особиста інформація' button={<Button onPress={() => sendForm} icon={<ICONS.SvgPen/>}/>}>
                 <View style={styles.inputContainer}>
                     <Controller
                         name="name"

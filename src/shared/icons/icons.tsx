@@ -8,6 +8,7 @@ import SvgHome from "./_icons/home";
 import SvgLogo from "./_icons/logoImg";
 import SvgLogoText from "./_icons/logoText";
 import SvgMound from "./_icons/mound";
+import SvgOpenMenu from "./_icons/openMenu";
 import SvgPen from "./_icons/pen";
 import SvgPeople from "./_icons/people";
 import SvgPlus from "./_icons/plus";
@@ -27,6 +28,7 @@ export const ICONS = {
     SvgLogo,
     SvgLogoText,
     SvgMound,
+    SvgOpenMenu,
     SvgPen,
     SvgPeople,
     SvgPlus,

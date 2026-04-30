@@ -5,9 +5,8 @@ export const styles = StyleSheet.create({
     background: {
         width: Dimensions.get("window").width,
         height: Dimensions.get("window").height,
-        backgroundColor: "#00000028",
         alignItems: "center",
-        paddingTop: 150
+        paddingTop: 200
     },
     mainContainer: {
         width:343,

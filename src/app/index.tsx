@@ -1,8 +1,11 @@
+import { useUserContext } from "@modules/auth/context/user.context";
 import { Redirect } from "expo-router";
-import { StyleSheet, Text, View } from 'react-native';
-import { Header } from "../shared/ui/Header/Header";
 
 
 export default function Page() {
+	const { token } = useUserContext()
+	if (!token){
+		return <Redirect href={"/auth"} />
+	}
 	return <Redirect href={"/main"} />;
 }
