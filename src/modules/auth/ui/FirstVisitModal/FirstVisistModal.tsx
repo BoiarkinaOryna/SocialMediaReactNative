@@ -82,7 +82,7 @@ export function FirstVisitModal() {
                     error={fieldState.error?.message}
                     />
                   }}
-                  />
+                />
                 <Controller
                   name="username"
                   control={control}

@@ -33,6 +33,7 @@ export const albumValidator = yup.object({
         .required(),
     year: yup
         .number()
+        .required()
         .max(2030, "Year must be before 2030")
         .positive("Year must be a positive number")
         .integer("Year must be an integer")

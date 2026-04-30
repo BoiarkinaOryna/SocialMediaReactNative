@@ -39,7 +39,7 @@ export function PersonalInfoPage(){
                 <Link 
                     text = "Особиста інформація"
                     linePosition={false}
-                    ></Link>
+                ></Link>
                 <Link 
                     text = "Альбоми"
                     link = "/settings/album"                

@@ -1,5 +1,5 @@
 import { baseApi } from "@shared/api/api";
-import { EditableUserData } from "./api.types";
+import { AlbumData,EditableUserData } from "./api.types";
 
 export const settingsApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
@@ -9,10 +9,20 @@ export const settingsApi = baseApi.injectEndpoints({
                 method: "PATCH",
                 body,
             })
-        })
+        }),
+        createAlbum: builder.mutation<any, {body: AlbumData, token: String}>({
+            query: ({body, token}) => ({
+                url: "albums",
+                method: "POST",
+                headers: {Authorization: `Bearer ${token}`},
+                body
+            })
+        }),
+        
     })
 })
 
 export const {
-    useUpdateProfileMutation
+    useUpdateProfileMutation,
+    useCreateAlbumMutation
 } = settingsApi
