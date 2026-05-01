@@ -35,7 +35,7 @@ function AppStack(){
     if (!token) {
         return <Stack 
         screenOptions={{
-            header: () => <></>,
+            header: () => <Header />,
             animation: "none"
         }}
         />

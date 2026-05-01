@@ -2,6 +2,7 @@ import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import { useAuthForm } from "../hooks/useAuthForm";
 import { styles } from "./auth.styles";
 import { Input } from "@shared/ui/Input/Input";
+import { Header } from "@shared/ui/Header/Header";
 
 type Props = {
   mode: "login" | "register";
@@ -23,6 +24,7 @@ export default function AuthForm({ mode, onChangeMode }: Props) {
 
   return (
     <View style={styles.container}>
+      {/* <Header /> */}
       <View style={styles.card}>
         {/* Tabs */}
         <View style={styles.tabs}>
