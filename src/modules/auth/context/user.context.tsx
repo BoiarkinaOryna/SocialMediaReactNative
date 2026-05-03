@@ -2,8 +2,8 @@ import { FullUserWithoutRelations } from "@shared/types/user.types";
 import { createContext, PropsWithChildren, useContext, useState } from "react";
 
 interface UserContextContract {
-    token: String | null,
-    setToken: (token: String | null) => void,
+    token: string | null,
+    setToken: (token: string | null) => void,
 	user: FullUserWithoutRelations | null,
 	setUser: (user: FullUserWithoutRelations) => void
 }
@@ -17,7 +17,7 @@ export function useUserContext() {
 	return ctx;
 }
 export function UserContextProvider(props: PropsWithChildren) {
-	const [token, setToken] = useState<String | null>(null);
+	const [token, setToken] = useState<string | null>(null);
 	const [user, setUser] = useState<FullUserWithoutRelations | null>(null)
 	return (
 		<UserContext

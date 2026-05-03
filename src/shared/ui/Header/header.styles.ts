@@ -40,5 +40,11 @@ export const styles = StyleSheet.create({
     },
     chosenIcon:{
         backgroundColor: COLORS.pulm10
-    }
+    },
+    headerRegister: {
+    height: 56,
+    backgroundColor: COLORS.white,
+    alignItems: "center",
+    justifyContent: "center",
+},
 })

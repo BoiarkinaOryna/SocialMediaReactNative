@@ -1,10 +1,5 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { MyPublicationsPage } from "@modules/publication/ui/MyPublicationsPage/MyPublicationsPage";
 
-
-export default function Publications(){
-    return <View>
-        <Text>
-            MY PUBLICATIONS
-        </Text>
-    </View>
+export default function Publications() {
+  return <MyPublicationsPage />;
 }

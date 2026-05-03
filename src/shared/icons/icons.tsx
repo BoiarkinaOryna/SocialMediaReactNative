@@ -15,6 +15,12 @@ import SvgPlus from "./_icons/plus";
 import SvgSettings from "./_icons/settings";
 import SvgTick from "./_icons/tick";
 import SvgTrashcan from "./_icons/trashcan";
+import { SvgPlusB } from "./_icons/plusB";
+import { SvgPlane } from "./_icons/plane";
+import { SvgaddPhoto } from "./_icons/addPhoto";
+import { addEmoji } from "./_icons/addEmoji";
+import SvgHeart from "./_icons/heart";
+import SvgThumbUp from "./_icons/thupbUp";
 
 
 export const ICONS = {
@@ -24,6 +30,7 @@ export const ICONS = {
     SvgCross,
     SvgEyeClosed,
     SvgEyeOpen,
+    SvgHeart,
     SvgHome,
     SvgLogo,
     SvgLogoText,
@@ -33,6 +40,11 @@ export const ICONS = {
     SvgPeople,
     SvgPlus,
     SvgSettings,
+    SvgThumbUp,
     SvgTick,
     SvgTrashcan,
+    SvgPlane,
+    SvgPlusB,
+    SvgaddPhoto,
+    addEmoji
 }

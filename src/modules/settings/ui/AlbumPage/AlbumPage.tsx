@@ -1,20 +1,35 @@
-
-
-import { Image, ScrollView, View, Text } from "react-native";
+import { ScrollView, View, Text } from "react-native";
+import { Image } from "expo-image"
 import { styles } from "./album.style";
 import { Link } from "@shared/ui/Links/Links";
 import { SettingsCard } from "../SettingsCard/SettingsCard";
 import { Button } from "@shared/ui/Button/Button";
 import { ICONS } from "@shared/icons";
 
-
 import * as ImagePicker from "expo-image-picker";
-import { useAddImageMutation, useGetAlbumsQuery } from "@modules/settings/api/api";
+import {
+    useAddImageMutation,
+    useGetAlbumsQuery,
+} from "@modules/settings/api/api";
+import { AlbumForm } from "./AlbumForm/AlbumForm";
+import { useState } from "react";
 
 export function AlbumPage({ token }: { token: string }) {
-    const { data: albums, isLoading } = useGetAlbumsQuery(token);
+    console.log("TOKEN:", token);
+    const { data, isLoading, refetch,error } = useGetAlbumsQuery(token);
     const [addImage] = useAddImageMutation();
-
+    const getImageUrl = (img: any) =>
+        `http://192.168.0.124:3000/uploads/${
+            img.uri || img.url || img.filename || img.path
+        }`;
+    const [isOpen, setIsOpen] = useState<boolean>(false);
+    console.log("ALBUMS RAW DATA:", data);
+    console.log(error)
+    const albums = Array.isArray(data)
+        ? data
+        : data?.data || data?.albums || [];
+    console.log("ALBUMS NORMALIZED:", albums); 
+    
     const pickAndUpload = async (albumId: number) => {
         const result = await ImagePicker.launchImageLibraryAsync({
             base64: true,
@@ -24,14 +39,19 @@ export function AlbumPage({ token }: { token: string }) {
         if (result.canceled) return;
 
         const asset = result.assets[0];
-
         if (!asset.base64) return;
 
-        await addImage({
-            base64: asset.base64,
-            albumId,
-            token,
-        });
+        try {
+            await addImage({
+                base64: asset.base64,
+                albumId,
+                token,
+            }).unwrap();
+
+            await refetch();
+        } catch (e) {
+            console.error("Upload error:", e);
+        }
     };
 
     if (isLoading) {
@@ -53,9 +73,8 @@ export function AlbumPage({ token }: { token: string }) {
                 />
                 <Link text="Альбоми" linePosition={false} />
             </View>
-
             {/* ALBUMS */}
-            {albums?.length ? (
+            {albums.length ? (
                 albums.map((album: any) => (
                     <SettingsCard
                         key={album.id}
@@ -78,8 +97,11 @@ export function AlbumPage({ token }: { token: string }) {
                                     >
                                         <Image
                                             style={styles.albumImage}
-                                            source={{ uri: img.url }}
+                                            source={{
+                                                uri: getImageUrl(img),
+                                            }}
                                         />
+                                        
 
                                         <View style={styles.albumImageButtons}>
                                             <Button icon={<ICONS.SvgEyeOpen />} />
@@ -94,8 +116,26 @@ export function AlbumPage({ token }: { token: string }) {
                     </SettingsCard>
                 ))
             ) : (
-                <SettingsCard title="Немає ще жодного альбому" button={<Button icon={<ICONS.SvgPlus/>}/>}/>
+                <SettingsCard
+                    title="Немає ще жодного альбому"
+                    button={
+                        <Button
+                            icon={<ICONS.SvgPlus />}
+                            onPress={() => {
+                                setIsOpen(true)
+                                refetch()
+                            }}
+                        />
+                    }
+                />
             )}
+
+            {/* MODAL */}
+            <AlbumForm
+                isOpen={isOpen}
+                setIsOpen={setIsOpen}
+                
+            />
         </ScrollView>
     );
 }

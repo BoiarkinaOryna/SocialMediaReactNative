@@ -1,14 +1,14 @@
 export type FullUserWithoutRelations = {
     id: Number,
-    name?: String,
-    username?: String,
-    pseudonym?: String,
-    birthDate?: String,
-    email: String,
-    password: String,
-    image?: String,
-    about?: String,
-    signature?: String,
+    name?: string,
+    username?: string,
+    pseudonym?: string,
+    birthDate?: string,
+    email: string,
+    password: string,
+    image?: string,
+    about?: string,
+    signature?: string,
     avatar?: Avatar,
 }
 // Relations:
@@ -20,7 +20,7 @@ export type FullUserWithoutRelations = {
 
 export type Avatar = {
     id: Number,
-    image: String,
+    image: string,
     profile: FullUserWithoutRelations,
     shown: Boolean,
     active: Boolean

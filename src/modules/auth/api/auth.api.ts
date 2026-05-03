@@ -20,7 +20,7 @@ export const authApi = baseApi.injectEndpoints({
         body,
       }),
     }),
-    firstVisit: builder.mutation<any, {body: firstVisitDto, token: String}>({
+    firstVisit: builder.mutation<any, {body: firstVisitDto, token: string}>({
       query: ({body, token}) => ({
         url: "users/profile",
         method: "POST",
@@ -28,7 +28,7 @@ export const authApi = baseApi.injectEndpoints({
         body
       })
     }),
-    me: builder.query<FullUserWithoutRelations, String>({
+    me: builder.query<FullUserWithoutRelations, string>({
       query: (token) => ({
         url: "users/me",
         headers: {Authorization: `Bearer ${token}`}

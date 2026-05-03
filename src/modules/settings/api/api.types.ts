@@ -1,11 +1,11 @@
 export type EditableUserData = {
-    name: String,
-    surname: String,
+    name: string,
+    surname: string,
     birthDate: Date,
-    email: String
+    email: string
 }
 export type AlbumData = {
-    title: String,
-    topic: String,
+    title: string,
+    topic: string,
     year: Number
 }

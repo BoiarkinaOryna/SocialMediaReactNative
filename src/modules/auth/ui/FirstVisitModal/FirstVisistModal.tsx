@@ -115,7 +115,3 @@ export function FirstVisitModal() {
       </Modal>
     )
 }
-
-function useMeLazyQuery(arg0: String, arg1: { skip: boolean; }): { data: any; isLoading: any; error: any; refetch: any; } {
-  throw new Error("Function not implemented.");
-}

@@ -23,7 +23,7 @@ export const settingsApi = baseApi.injectEndpoints({
         
         getAlbums: builder.query<any, string>({
             query: (token) => ({
-                url: "albums",
+                url: "/albums",
                 method: "GET",
                 headers: {
                     Authorization: `Bearer ${token}`,
