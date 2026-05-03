@@ -1,6 +1,7 @@
 export type FullUserWithoutRelations = {
     id: Number,
-    name?: String,
+    firstName?: String,
+    lastName?: String
     username?: String,
     pseudonym?: String,
     birthDate?: String,

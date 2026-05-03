@@ -1,14 +1,15 @@
 import { router } from "expo-router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useMeQuery } from "../api/auth.api";
 import { useUserContext } from "../context/user.context";
 
 export function useGetUserData(){
     const { token, setUser } = useUserContext()
 
-    const { data, isLoading, error } = useMeQuery(token!, {
+    const { data, isLoading, error, refetch } = useMeQuery(token!, {
         skip: !token
     })
+    const [ userNeedsAnUpdate, setUserNeedsAnUpdate ] = useState<boolean>(false)
 
     useEffect(() => {
         if (!token) {
@@ -23,9 +24,18 @@ export function useGetUserData(){
         }
     }, [data])
 
+    useEffect(() => {
+        try{
+            refetch()
+        } catch (error){
+            console.log(error)
+        }
+    }, [userNeedsAnUpdate])
+
     return {
         userData: data,
         isUserLoading: isLoading,
-        userError: error
+        userError: error,
+        refetchUser: setUserNeedsAnUpdate
     }
 }

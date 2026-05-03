@@ -4,6 +4,7 @@ import { Redirect } from "expo-router";
 
 export default function Page() {
 	const { token } = useUserContext()
+	console.log("token in app intex", token)
 	if (!token){
 		return <Redirect href={"/auth"} />
 	}

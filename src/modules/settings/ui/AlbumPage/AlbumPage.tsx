@@ -54,27 +54,7 @@ export function AlbumPage(){
                         <Button icon={<ICONS.SvgTrashcan/>}/>
                     </View>
                 </View>
-                <View style={styles.albumImageContainer}>     
-                    <Image style={styles.albumImage} source={require("@assets/LinaLi.jpg")} />
-                    <View style={styles.albumImageButtons}>
-                        <Button icon={<ICONS.SvgEyeOpen/>}/>
-                        <Button icon={<ICONS.SvgTrashcan/>}/>
-                    </View>
-                </View>
-                <View style={styles.albumImageContainer}>     
-                    <Image style={styles.albumImage} source={require("@assets/LinaLi.jpg")} />
-                    <View style={styles.albumImageButtons}>
-                        <Button icon={<ICONS.SvgEyeOpen/>}/>
-                        <Button icon={<ICONS.SvgTrashcan/>}/>
-                    </View>
-                </View>
-                <View style={styles.albumImageContainer}>     
-                    <Image style={styles.albumImage} source={require("@assets/LinaLi.jpg")} />
-                    <View style={styles.albumImageButtons}>
-                        <Button icon={<ICONS.SvgEyeOpen/>}/>
-                        <Button icon={<ICONS.SvgTrashcan/>}/>
-                    </View>
-                </View>
+                <Button icon={<ICONS.SvgPlus/>} />
             </View>
 
         </SettingsCard>

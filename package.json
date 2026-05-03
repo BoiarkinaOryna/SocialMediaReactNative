@@ -10,11 +10,12 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^15.0.2",
-    "@reduxjs/toolkit": "^2.11.2",
     "@hookform/resolvers": "^5.2.2",
+    "@reduxjs/toolkit": "^2.11.2",
     "expo": "~55.0.5",
     "expo-constants": "~55.0.9",
     "expo-image": "~55.0.8",
+    "expo-image-picker": "~55.0.19",
     "expo-linking": "~55.0.8",
     "expo-module-scripts": "^55.0.2",
     "expo-router": "~55.0.7",

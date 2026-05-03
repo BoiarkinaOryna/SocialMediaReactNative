@@ -10,13 +10,12 @@ import { useFirstVisitMutation, useLazyMeQuery } from "@modules/auth/api/auth.ap
 import { useUserContext } from "@modules/auth/context/user.context";
 import { useEffect, useState } from "react";
 
+
 export function FirstVisitModal() {
     const [ isOpen, setIsOpen ] = useState<boolean>(false)
     
     const { token, user, setUser } = useUserContext()
     const [ getUserData ] = useLazyMeQuery()
-
-    // const userAuthData = useGetUserData()
     
     const { handleSubmit, control } = useForm<firstVisitSchema>({
       resolver: yupResolver(firstVisitValidator),

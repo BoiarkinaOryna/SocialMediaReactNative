@@ -5,14 +5,12 @@ import {
   LoginDto,
   RegisterDto,
 } from "../types/auth.schema";
-
 import {
   useLoginMutation,
   useRegisterMutation,
 } from "../api/auth.api";
 import { router } from "expo-router";
 import { useUserContext } from "../context/user.context";
-import { useGetUserData } from "./useGetUserData";
 
 type Mode = "login" | "register";
 
@@ -23,9 +21,10 @@ type AuthFormState = {
 };
 
 export const useAuthForm = (mode: Mode) => {
-  const { token, setToken } = useUserContext()
+  const { token, setToken } = useUserContext();
+
   const isRegister = mode === "register";
-  const [ isComplete, setIsComplete ] = useState<boolean>(false)
+  const [isComplete, setIsComplete] = useState<boolean>(false);
 
   const [form, setForm] = useState<AuthFormState>({
     email: "",
@@ -34,11 +33,15 @@ export const useAuthForm = (mode: Mode) => {
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
-  
-  const [login, { isLoading: loginLoading }] = useLoginMutation();
-  const [register, { isLoading: registerLoading }] = useRegisterMutation();
 
-  const handleChange = (key: keyof AuthFormState, value: string) => {
+  const [login, { isLoading: loginLoading }] = useLoginMutation();
+  const [register, { isLoading: registerLoading }] =
+    useRegisterMutation();
+
+  const handleChange = (
+    key: keyof AuthFormState,
+    value: string
+  ) => {
     setForm((prev) => ({ ...prev, [key]: value }));
   };
 
@@ -47,7 +50,6 @@ export const useAuthForm = (mode: Mode) => {
       setErrors({});
 
       const schema = isRegister ? registerSchema : loginSchema;
-
       await schema.validate(form, { abortEarly: false });
 
       if (isRegister) {
@@ -57,9 +59,8 @@ export const useAuthForm = (mode: Mode) => {
           confirmPassword: form.confirmPassword!,
         };
 
-        await register(data).unwrap()
-        useGetUserData()
-        setIsComplete(true)
+        await register(data).unwrap();
+        setIsComplete(true);
       } else {
         const data: LoginDto = {
           email: form.email,
@@ -67,9 +68,10 @@ export const useAuthForm = (mode: Mode) => {
         };
 
         const response = await login(data).unwrap();
-        console.log("new token:", response.token)
-        setToken(response.token)
-        router.push("/(main)/main")
+        console.log("new token:", response.token);
+
+        setToken(response.token);
+        router.push("/(main)/main");
       }
 
       console.log("Success");
@@ -84,7 +86,9 @@ export const useAuthForm = (mode: Mode) => {
         setErrors(formatted);
       } else {
         setErrors({
-          general: `Server error ${"status" in err ? err.status : err.message}`,
+          general: `Server error ${
+            "status" in err ? err.status : err.message
+          }`,
         });
       }
     }
@@ -97,6 +101,6 @@ export const useAuthForm = (mode: Mode) => {
     handleSubmit,
     isLoading: loginLoading || registerLoading,
     isRegister,
-    isComplete
+    isComplete,
   };
 };

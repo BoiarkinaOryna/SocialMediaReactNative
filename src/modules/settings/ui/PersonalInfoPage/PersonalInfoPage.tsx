@@ -12,6 +12,8 @@ import { myDataValidator } from '../../models/my-data.validation';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useUpdateProfileMutation } from '@modules/settings/api/api';
 import { useUserContext } from '@modules/auth/context/user.context';
+import { useGetUserData } from '@modules/auth/hooks/useGetUserData';
+import { useEffect, useState } from 'react';
 
 
 export function PersonalInfoPage(){
@@ -24,11 +26,15 @@ export function PersonalInfoPage(){
 
     const { token, user } = useUserContext()
     console.log("user in personal info", user)
-    
+
+    const { refetchUser } = useGetUserData();
+
     
     async function sendForm(data: MyDataSchema){
+        console.log("button pressed")
         try{
-            const response = await update(data)
+            token && await update({body: data, token})
+            refetchUser(true);
         } catch(error){
             console.log("error:", error)
         }
@@ -50,13 +56,21 @@ export function PersonalInfoPage(){
                 <View style={styles.profileCard}>
                     <Image style={styles.avatar} source={require("@assets/LinaLi.jpg")} />
                     <View style={styles.nameContainer}>
-                        <Text style={styles.currentName}>{user?.name}</Text>
+                        <Text style={styles.currentName}>{user?.firstName} {user?.lastName}</Text>
                         <Text>{user?.username}</Text>
                     </View>
                 </View>
             </SettingsCard>
 
-            <SettingsCard title='Особиста інформація' button={<Button onPress={() => sendForm} icon={<ICONS.SvgPen/>}/>}>
+            <SettingsCard title='Особиста інформація' button={<Button onPress={handleSubmit(
+                (data) => {
+                    console.log("VALID");
+                    sendForm(data);
+                },
+                (errors) => {
+                    console.log("INVALID", errors);
+                }
+            )} icon={<ICONS.SvgPen/>}/>}>
                 <View style={styles.inputContainer}>
                     <Controller
                         name="name"
@@ -64,7 +78,10 @@ export function PersonalInfoPage(){
                         render={({field, fieldState}) => {
                             return <Input
                                 label = "Ім'я"
-                                placeholder = "Введіть ім'я"
+                                placeholder = {user?.firstName ? String(user?.firstName) : "Введіть ім'я"}
+                                onChangeText={field.onChange}
+                                value={field.value}
+                                error={fieldState.error?.message}
                             />
                         }}
                     />
@@ -74,8 +91,11 @@ export function PersonalInfoPage(){
                         render={({field, fieldState}) => {
                             return <Input
                                 label = "Прізвище"
-                                placeholder = "Введіть прізвище"
-                            />
+                                placeholder = {user?.lastName ? String(user?.lastName) : "Введіть прізвище"}
+                                onChangeText={field.onChange}
+                                value={field.value}
+                                error={fieldState.error?.message}
+        />
                         }}
                     />
                     <Controller
@@ -84,7 +104,10 @@ export function PersonalInfoPage(){
                         render={({field, fieldState}) => {
                             return <Input
                                 label = "Дата народження"
-                                placeholder = "15.04.2001"
+                                placeholder = {user?.birthDate ? String(user?.birthDate) : "15.04.2001"}
+                                onChangeText={field.onChange}
+                                value={field.value && String(field.value)}
+                                error={fieldState.error?.message}
                             />
                         }}
                     />
@@ -94,7 +117,7 @@ export function PersonalInfoPage(){
                         render={({field, fieldState}) => {
                             return <Input
                                 label = "Електорна адреса"
-                                placeholder = "you@gmail.com"
+                                placeholder = {user?.email ? String(user?.email) : "you@gmail.com"}
                                 inputMode="email"
 								autoCapitalize="none"
 								autoComplete="off"
