@@ -1,8 +1,10 @@
-import React from 'react';
-import { ScrollView, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useState, useCallback } from 'react';
+import { ScrollView, View, Text, StyleSheet, RefreshControl } from 'react-native';
 import { Card } from '../../Card/Card';
 import { COLORS } from '@shared/constants/colors';
 import { SettingsCard } from '@shared/ui/SettingsCard/SettingsCard';
+import { useGetFriendsQuery, useGetRecommendationsQuery, useGetRequestsQuery } from '@modules/friends/api/friends.api';
+import { useUserContext } from '@modules/auth/context/user.context';
 
 
 interface OverviewProps {
@@ -11,39 +13,87 @@ interface OverviewProps {
 
 export function OverviewPage(props: OverviewProps) {
     const { activeTab } = props
+    const { token } = useUserContext()
+    const [loading, setLoading] = useState<boolean>(false)
+
+    const {
+        data: friendsData,
+        error: friendsError,
+        isLoading: friendsIsLoading,
+        refetch: friendsRefetch
+    } = useGetFriendsQuery(token!)
+
+    const {
+        data: recommendationsData,
+        error: recommendationsError,
+        isLoading: recommendationsIsLoading,
+        refetch: recommendationsRefetch
+    } = useGetRecommendationsQuery(token!)
+
+    const {
+        data: requestsData,
+        error: requestsError,
+        isLoading: requestsIsLoading,
+        refetch: requestsRefetch
+    } = useGetRequestsQuery(token!)
+
+    const onRefresh = useCallback(async () => {
+        setLoading(true);
+        await friendsRefetch();
+        await recommendationsRefetch()
+        await requestsRefetch()
+        setLoading(false);
+        console.log("my posts is refreshed")
+      }, [friendsRefetch, recommendationsRefetch, requestsRefetch]);
+
     return <View>
-        <ScrollView contentContainerStyle={overviewStyles.container} showsVerticalScrollIndicator={false}>
+        <ScrollView
+            contentContainerStyle={overviewStyles.container}
+            showsVerticalScrollIndicator={false}
+            refreshControl={
+                <RefreshControl refreshing={loading} onRefresh={onRefresh}/>
+                }
+        >
             { (activeTab === "main" || activeTab === "requests") && (
                 <SettingsCard title='Запити' button={<Text>Дивитись всі</Text>}>
-                    <Card
-                        type="request"
-                        name="Yehor Aung"
-                        username="@thelili"
-                    />
-                    <Card
-                        type="request"
-                        name="Yehor Aung"
-                        username="@thelili"
-                    />
+                    {
+                    requestsData?.map((request) => (
+                        <Card
+                            key={request.from_profile.id}
+                            id={request.from_profile.id}
+                            type="request"
+                            // name={`${request.pseudonym} ${request.userId}`}
+                            name={request.from_profile.pseudonym}
+                            username={request.from_profile.pseudonym}
+                        />
+                    ))}
                 </SettingsCard>
             )}
             { (activeTab === "main" || activeTab === "recommendations") && (
                 <SettingsCard title='Рекомендації' button={<Text>Дивитись всі</Text>}>
-                    <Card
-                        type="recommendation"
-                        name="Yehor Aung"
-                        username="@thelili"
-                    />
+                    {recommendationsData?.map((recommendation) => (
+                        <Card
+                            key={recommendation.userId}
+                            id={recommendation.userId}
+                            type="recommendation"
+                            name={recommendation.pseudonym}
+                            username={recommendation.username}
+                        />
+                    ))}
                 </SettingsCard>
             )}
             { (activeTab === "main" || activeTab === "friends") && (
                 <SettingsCard title='Всі друзі' button={<Text>Дивитись всі</Text>}>
-                    <Card
-                        type="friend"
-                        name="Yehor Aung"
-                        username="@thelili"
-                    />
-                </SettingsCard>
+                    {friendsData?.map((friend) => (
+                        <Card
+                            key={friend.userId}
+                            id={friend.userId}
+                            type="friend"
+                            name={friend.pseudonym}
+                            username={friend.username}
+                        />
+                    ))}
+                    </SettingsCard>
             )}
             
             <View style={overviewStyles.bottomSpacing} />
