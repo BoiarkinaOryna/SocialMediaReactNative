@@ -1,6 +1,7 @@
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import { styles } from './main.styles';
 import { Link } from '@shared/ui/Links/Links';
+import { OverviewPage } from './mainOverview/MainOverviewPage';
 
 export function MainFriendsPage(){
     return <View style={styles.mainContainer}>
@@ -24,6 +25,6 @@ export function MainFriendsPage(){
                 disabeled={true}
             ></Link>
         </View>
-        <Text>Головна</Text>
+        <OverviewPage activeTab='main'/>
     </View>
 }

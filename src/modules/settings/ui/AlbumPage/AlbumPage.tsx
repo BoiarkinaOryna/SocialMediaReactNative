@@ -2,7 +2,7 @@ import { ScrollView, View, Text } from "react-native";
 import { Image } from "expo-image"
 import { styles } from "./album.style";
 import { Link } from "@shared/ui/Links/Links";
-import { SettingsCard } from "../SettingsCard/SettingsCard";
+import { SettingsCard } from "../../../../shared/ui/SettingsCard/SettingsCard";
 import { Button } from "@shared/ui/Button/Button";
 import { ICONS } from "@shared/icons";
 

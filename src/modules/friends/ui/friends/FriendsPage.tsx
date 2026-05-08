@@ -1,6 +1,7 @@
-import { Text, View } from 'react-native';
+import {  View } from 'react-native';
 import { styles } from './friends.styles';
 import { Link } from '@shared/ui/Links/Links';
+import { OverviewPage } from '../main/mainOverview/MainOverviewPage';
 
 export function FriendsPage(){
     return <View style={styles.mainContainer}>
@@ -24,6 +25,6 @@ export function FriendsPage(){
                 linePosition={false}
             ></Link>
         </View>
-        <Text>Всі друзі</Text>
+        <OverviewPage activeTab='friends' />
     </View>
 }

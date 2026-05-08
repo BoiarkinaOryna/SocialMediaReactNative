@@ -5,11 +5,11 @@ import { View } from 'react-native';
 
 
 export default function Home(){
-    const { user } = useUserContext()
-    console.log("user in main", user)
+    // const { user } = useUserContext()
+    // console.log("user in main", user)
 
     return <View>
-        { !user?.username && <FirstVisitModal/> }
+        {/* { !user?.username && <FirstVisitModal/> } */}
         <AllPublications />
     </View>
 }

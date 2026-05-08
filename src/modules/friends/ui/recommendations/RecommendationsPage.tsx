@@ -1,6 +1,7 @@
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import { styles } from './recommendations.styles';
 import { Link } from '@shared/ui/Links/Links';
+import { OverviewPage } from '../main/mainOverview/MainOverviewPage';
 
 export function FriendsRecommendationsPage(){
     return <View style={styles.mainContainer}>
@@ -24,6 +25,6 @@ export function FriendsRecommendationsPage(){
                 disabeled={true}   
             ></Link>
         </View>
-        <Text>Рекомендації</Text>
+        <OverviewPage activeTab='recommendations' />
     </View>
 }

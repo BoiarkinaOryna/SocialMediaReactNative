@@ -1,6 +1,7 @@
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import { styles } from './requests.styles';
 import { Link } from '@shared/ui/Links/Links';
+import { OverviewPage } from '../main/mainOverview/MainOverviewPage';
 
 export function FriendsRequestsPage(){
     return <View style={styles.mainContainer}>
@@ -24,6 +25,6 @@ export function FriendsRequestsPage(){
                 disabeled={true}
             ></Link>
         </View>
-        <Text>Запити</Text>
+        <OverviewPage activeTab='requests' />
     </View>
 }

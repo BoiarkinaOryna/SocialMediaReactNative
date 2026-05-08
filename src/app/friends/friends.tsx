@@ -1,7 +1,5 @@
-import { StyleSheet, Text, View } from 'react-native';
-import { FriendsPage } from '../../modules/friends/ui/friends/FriendsPage';
+import { FriendsPage } from "@modules/friends/ui/friends/FriendsPage";
 
-
-export default function Friends(){
+export default function FriendsList() {
     return <FriendsPage />
 }
