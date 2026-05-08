@@ -1,6 +1,5 @@
-import { MainFriendsPage } from '../../modules/friends/ui/main/MainFriendsPage';
+import { FriendsListPage } from '../../modules/friends/ui/main/MainFriendsPage';
 
-
-export default function FriendsMain(){
-    return <MainFriendsPage />
+export default function FriendsMain() {
+    return <FriendsListPage />;
 }

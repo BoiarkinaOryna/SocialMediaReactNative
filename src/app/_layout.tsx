@@ -9,6 +9,7 @@ import { ApiProvider } from '@reduxjs/toolkit/query/react';
 import { baseApi } from '@shared/api/api';
 import { UserContextProvider, useUserContext } from '@modules/auth/context/user.context';
 import { useEffect } from 'react';
+import React from 'react';
 
 export default function App() {
   return (
