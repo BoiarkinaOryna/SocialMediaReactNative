@@ -5,15 +5,15 @@ export type PublicationSchema = InferType<typeof publicationValidator>;
 
 export type Post = {
     id: number;
-    url: string | null;
+    links: string[] | null;
     title: string;
     topic: string | null;
-    text: string | null;
+    content: string | null;
     userId: number | null;
 }
 export type CreatePost = {
-    url?: string;
+    links?: string;
     title: string;
     topic: string;
-    text: string;
+    content: string;
 }

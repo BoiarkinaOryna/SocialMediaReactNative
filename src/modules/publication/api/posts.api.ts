@@ -20,7 +20,10 @@ export const postsApi = baseApi.injectEndpoints({
         headers: {
           Authorization: `Bearer ${token}`,
         },
-        body: data,
+        body: {
+          ...data,
+          links: [data.links]
+        },
       }),
     }),
     getMyPosts: builder.query<Post[], {token: string, take: number, page: number}>({

@@ -40,7 +40,7 @@ export function CreatePublicationModal() {
       mode: "onChange",
     });
 
-  const contentValue = watch("text") ?? "";
+  const contentValue = watch("content") ?? "";
 
   function addTagToContent(tag: string) {
     const currentContent = contentValue;
@@ -49,7 +49,7 @@ export function CreatePublicationModal() {
     if (!currentContent.includes(tag)) {
       const newContent =
         currentContent + (currentContent ? " " : "") + tagWithSpace;
-      setValue("text", newContent, { shouldValidate: true });
+      setValue("content", newContent, { shouldValidate: true });
     }
   }
 
@@ -132,7 +132,7 @@ export function CreatePublicationModal() {
               </View>
 
               <Controller
-                name="text"
+                name="content"
                 control={control}
                 render={({ field, fieldState }) => (
                   <Input
@@ -147,7 +147,7 @@ export function CreatePublicationModal() {
               />
 
               <Controller
-                name="url"
+                name="links"
                 control={control}
                 render={({ field, fieldState }) => (
                   <View style={styles.linkBlock}>

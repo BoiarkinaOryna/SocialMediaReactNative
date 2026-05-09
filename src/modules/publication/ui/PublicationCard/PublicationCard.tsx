@@ -31,9 +31,9 @@ export function PublicationCard({ publication }: PublicationCardProps) {
 
       <View style={styles.body}>
         <Text style={styles.title}>{publication.title}</Text>
-        <Text style={styles.content}>{publication.text}</Text>
-        {!!publication.url && (
-          <Text style={styles.link}>{publication.url}</Text>
+        <Text style={styles.content}>{publication.content}</Text>
+        {!!publication.links && (
+          <Text style={styles.link}>{publication.links}</Text>
         )}
         <View style={styles.activityView}>
           <View style={styles.activity}>
