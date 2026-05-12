@@ -19,10 +19,19 @@ export const styles = StyleSheet.create({
         paddingLeft: 16,
         paddingRight: 16,
     },
+    inputWrapperMultiline: {
+        alignItems: "flex-start",
+        paddingTop: 12,
+        paddingBottom: 12,
+    },
     input: {
         flex: 1,
         color: COLORS.blue50,
         fontSize: 16,
+    },
+    inputMultiline: {
+        width: "100%",
+        textAlignVertical: "top",
     },
     icon:{
         width: 20,
