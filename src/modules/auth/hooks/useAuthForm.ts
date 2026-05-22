@@ -7,6 +7,7 @@ import {
 } from "../types/auth.schema";
 
 import {
+  useLazyMeQuery,
   useLoginMutation,
   useRegisterMutation,
 } from "../api/auth.api";
@@ -23,7 +24,7 @@ type AuthFormState = {
 };
 
 export const useAuthForm = (mode: Mode) => {
-  const { token, setToken } = useUserContext()
+  const { setToken, setUser } = useUserContext()
   const isRegister = mode === "register";
   const [ isComplete, setIsComplete ] = useState<boolean>(false)
 
@@ -32,6 +33,8 @@ export const useAuthForm = (mode: Mode) => {
     password: "",
     confirmPassword: "",
   });
+
+  const [ getUserData ] = useLazyMeQuery()
 
   const [errors, setErrors] = useState<Record<string, string>>({});
   
@@ -69,6 +72,8 @@ export const useAuthForm = (mode: Mode) => {
         const response = await login(data).unwrap();
         console.log("new token:", response.token)
         setToken(response.token)
+        const newUser = await getUserData(response.token).unwrap()
+        setUser(newUser)
         router.push("/(main)/main")
       }
 

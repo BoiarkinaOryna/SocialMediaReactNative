@@ -9,5 +9,5 @@ export const COLORS = {
     fog: "#FAF8FF",
     green: "#22C55E",
     red: "#FF4C4C",
-    background: "#543c5283"
+    background: "#543c523d"
 }

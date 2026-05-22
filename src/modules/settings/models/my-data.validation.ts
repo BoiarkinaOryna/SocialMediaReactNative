@@ -25,10 +25,10 @@ export const myDataValidator = yup.object({
 })
 
 export const albumValidator = yup.object({
-    title: yup
+    name: yup
         .string()
         .required(),
-    topic: yup
+    theme: yup
         .string()
         .required(),
     year: yup

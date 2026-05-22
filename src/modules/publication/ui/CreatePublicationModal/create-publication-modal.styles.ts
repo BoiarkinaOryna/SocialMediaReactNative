@@ -87,6 +87,7 @@ export const styles = StyleSheet.create({
     textAlignVertical: "top",
     paddingTop: 14,
     paddingBottom: 14,
+    gap: 10,
   },
   linkPlusButton: {
     width: 30,
@@ -95,31 +96,6 @@ export const styles = StyleSheet.create({
     padding: 0,
     borderRadius: 17,
     alignItems: "center",
-  },
-  imagesBlock: {
-    gap: 10,
-  },
-  imagesRow: {
-    gap: 12,
-  },
-  imagePreviewWrap: {
-    position: "relative",
-  },
-  imagePreview: {
-    width: 110,
-    height: 110,
-    borderRadius: 16,
-  },
-  removeImageButton: {
-    position: "absolute",
-    top: 8,
-    right: 8,
-    width: 24,
-    height: 24,
-    borderRadius: 12,
-    backgroundColor: COLORS.white,
-    alignItems: "center",
-    justifyContent: "center",
   },
   footer: {
     flexDirection: "row",

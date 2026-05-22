@@ -1,13 +1,14 @@
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import { styles } from './recommendations.styles';
 import { Link } from '@shared/ui/Links/Links';
+import { OverviewPage } from '../main/mainOverview/MainOverviewPage';
 
 export function FriendsRecommendationsPage(){
     return <View style={styles.mainContainer}>
         <View style={styles.linksContainer}>
             <Link
                 text = "Головна"
-                link='/friends'
+                link='/friends/friends'
                 disabeled={true}
             ></Link>
             <Link
@@ -20,10 +21,10 @@ export function FriendsRecommendationsPage(){
             ></Link>
             <Link 
                 text = "Всі друзі"
-                link='/friends/friends'
+                link='/friends'
                 disabeled={true}   
             ></Link>
         </View>
-        <Text>Рекомендації</Text>
+        <OverviewPage activeTab='recommendations' />
     </View>
 }

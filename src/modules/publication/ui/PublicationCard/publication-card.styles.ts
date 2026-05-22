@@ -26,10 +26,12 @@ export const styles = StyleSheet.create({
     gap: 10,
   },
   avatarWrap: {
+    position: "relative",
+  },
+  avatar: {
     width: 46,
     height: 46,
     borderRadius: 23,
-    backgroundColor: COLORS.pulm10,
   },
   authorName: {
     fontSize: 18,
@@ -58,14 +60,22 @@ export const styles = StyleSheet.create({
     fontSize: 15,
     color: COLORS.pulm,
   },
-  imagesGrid: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    gap: 10,
+  imagesRow: {
+    gap: 12,
   },
   postImage: {
-    width: 150,
-    height: 180,
-    borderRadius: 18,
+    width: 220,
+    height: 220,
+    borderRadius: 16,
+    backgroundColor: COLORS.blue10,
+  },
+  activityView: {
+    flexDirection: "row",
+    gap: 16,
+  },
+  activity: {
+    flexDirection: "row",
+    gap: 8,
+    alignItems: "center",
   },
 });

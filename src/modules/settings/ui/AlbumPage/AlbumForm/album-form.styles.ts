@@ -1,7 +1,14 @@
 import { COLORS } from "@shared/constants/colors";
-import { StyleSheet } from "react-native";
+import { Dimensions,StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
+    background: {
+        width: Dimensions.get("window").width,
+        height: Dimensions.get("window").height,
+        alignItems: "center",
+        paddingTop: 200,
+        backgroundColor: COLORS.background
+    },
     modal: {
         width: 375,
         paddingVertical: 24,

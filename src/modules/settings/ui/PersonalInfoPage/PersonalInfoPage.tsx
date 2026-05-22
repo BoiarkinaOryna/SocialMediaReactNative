@@ -1,6 +1,6 @@
 import { ScrollView, Text, View } from 'react-native';
 import { styles } from './personal-info.styles';
-import { SettingsCard } from '../SettingsCard/SettingsCard';
+import { SettingsCard } from '../../../../shared/ui/SettingsCard/SettingsCard';
 import { Image } from 'expo-image';
 import { Link } from '@shared/ui/Links/Links';
 import { Input } from '@shared/ui/Input/Input';

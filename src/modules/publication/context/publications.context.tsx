@@ -1,9 +1,10 @@
 import { createContext, PropsWithChildren, useContext, useState } from "react";
-import { PublicationSchema } from "@modules/publication/types/publication.types";
+import { Post, PublicationSchema } from "@modules/publication/types/publication.types";
 
 export interface PublicationItem extends PublicationSchema {
   id: string;
-  createdAt: string;
+  // publicztion: Post[]
+  // createdAt: string;
 }
 
 interface PublicationsContextContract {
@@ -20,7 +21,7 @@ export function PublicationsProvider(props: PropsWithChildren) {
     const publication: PublicationItem = {
       ...data,
       id: `${Date.now()}`,
-      createdAt: new Date().toISOString(),
+      // createdAt: new Date().toISOString(),
     };
 
     setPublications((current) => [publication, ...current]);
