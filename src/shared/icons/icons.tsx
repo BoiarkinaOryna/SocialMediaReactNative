@@ -16,6 +16,7 @@ import SvgSettings from "./_icons/settings";
 import SvgTick from "./_icons/tick";
 import SvgTrashcan from "./_icons/trashcan";
 import { SvgPlusB } from "./_icons/plusB";
+import SvgReturn from "./_icons/return";
 import { SvgPlane } from "./_icons/plane";
 import { SvgaddPhoto } from "./_icons/addPhoto";
 import { addEmoji } from "./_icons/addEmoji";
@@ -45,6 +46,7 @@ export const ICONS = {
     SvgTrashcan,
     SvgPlane,
     SvgPlusB,
+    SvgReturn,
     SvgaddPhoto,
     addEmoji
 }

@@ -13,7 +13,7 @@ import {
 } from "../api/auth.api";
 import { router } from "expo-router";
 import { useUserContext } from "../context/user.context";
-import { useGetUserData } from "./useGetUserData";
+// import { useGetUserData } from "./useGetUserData";
 
 type Mode = "login" | "register";
 
@@ -61,7 +61,7 @@ export const useAuthForm = (mode: Mode) => {
         };
 
         await register(data).unwrap()
-        useGetUserData()
+        // useGetUserData()
         setIsComplete(true)
       } else {
         const data: LoginDto = {

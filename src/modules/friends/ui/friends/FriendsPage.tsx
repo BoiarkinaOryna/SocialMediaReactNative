@@ -8,7 +8,7 @@ export function FriendsPage(){
         <View style={styles.linksContainer}>
             <Link
                 text = "Головна"
-                link='/friends'
+                link='/friends/friends'
                 disabeled={true}
             ></Link>
             <Link

@@ -26,7 +26,8 @@ export function Header() {
       routeName === "friends/index" ||
       routeName === "friends/requests" ||
       routeName === "friends/friends" ||
-      routeName === "friends/recommendations"
+      routeName === "friends/recommendations" ||
+      routeName === "friends/friends_profile"
     ) {
       setCurrentPage("friends");
     } else if (
@@ -64,7 +65,7 @@ export function Header() {
           </TouchableOpacity>
         )}
 
-        {currentPage !== "chats" && (
+        {currentPage !== "chats" && currentPage !== "friends" && (
           <TouchableOpacity
             style={[
               styles.button,

@@ -32,18 +32,18 @@ export default function App() {
 }
 
 function AppStack() {
-  const { token } = useUserContext();
+  // const { token } = useUserContext();
 
-  if (!token) {
-    return (
-      <Stack
-        screenOptions={{
-          header: () => <Header />,
-          animation: "none",
-        }}
-      />
-    );
-  }
+  // if (!token) {
+  //   return (
+  //     <Stack
+  //       screenOptions={{
+  //         header: () => <Header />,
+  //         animation: "none",
+  //       }}
+  //     />
+  //   );
+  // }
 
   return (
     <Stack

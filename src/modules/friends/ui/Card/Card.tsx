@@ -3,6 +3,7 @@ import { styles } from './card.styles';
 import React from 'react';
 import { useAcceptRequestMutation, useDeclineRequestMutation, useSendRequestMutation } from '@modules/friends/api/friends.api';
 import { useUserContext } from '@modules/auth/context/user.context';
+import { router } from 'expo-router';
 
 interface CardProps {
     id: number
@@ -24,7 +25,6 @@ export function Card({
     // onSecondaryPress 
 }: CardProps) {
     const {token} = useUserContext()
-    console.log("cardId", id)
     const getPrimaryText = () => {
         if (type === 'request') return 'Підтвердити';
         if (type === 'recommendation') return 'Додати';
@@ -63,9 +63,14 @@ export function Card({
                     style={styles.primaryBtn} 
                     onPress={() => {
                         if (type === "request"){
-                            acceptFriendRequest(id)
+                            // acceptFriendRequest(id)
+                            router.push("/friends/friends_profile")
                         } else if (type === "recommendation"){
-                            sendFriendRequest(id)
+                            router.push("/friends/friends_profile")
+                            // sendFriendRequest(id)
+                        }
+                         else {
+                            router.push("/chats")
                         }
                     }}
                     activeOpacity={0.8}

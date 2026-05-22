@@ -1,10 +1,12 @@
 import React, { useState, useCallback } from 'react';
-import { ScrollView, View, Text, StyleSheet, RefreshControl } from 'react-native';
+import { ScrollView, View, Text, StyleSheet, RefreshControl, Pressable } from 'react-native';
 import { Card } from '../../Card/Card';
 import { COLORS } from '@shared/constants/colors';
 import { SettingsCard } from '@shared/ui/SettingsCard/SettingsCard';
 import { useGetFriendsQuery, useGetRecommendationsQuery, useGetRequestsQuery } from '@modules/friends/api/friends.api';
 import { useUserContext } from '@modules/auth/context/user.context';
+import { router } from 'expo-router';
+import { useRoute } from '@react-navigation/native';
 
 
 interface OverviewProps {
@@ -44,8 +46,10 @@ export function OverviewPage(props: OverviewProps) {
         await requestsRefetch()
         setLoading(false);
         console.log("my posts is refreshed")
-      }, [friendsRefetch, recommendationsRefetch, requestsRefetch]);
+    }, [friendsRefetch, recommendationsRefetch, requestsRefetch]);
 
+    const route = useRoute();
+    const routeName = route.name;
     return <View>
         <ScrollView
             contentContainerStyle={overviewStyles.container}
@@ -55,23 +59,25 @@ export function OverviewPage(props: OverviewProps) {
                 }
         >
             { (activeTab === "main" || activeTab === "requests") && (
-                <SettingsCard title='Запити' button={<Text>Дивитись всі</Text>}>
-                    {
-                    requestsData?.map((request) => (
+                <SettingsCard title='Запити' button={routeName !== "friends/requests" && <Pressable onPress={() => {router.push("/friends/requests")}}><Text>Дивитись всі</Text></Pressable>}>
+                    {!requestsData || requestsData.length === 0 ? (
+                        <Text>Запити відсутні</Text>
+                    ) : (requestsData.map((request) => (
                         <Card
                             key={request.from_profile.id}
                             id={request.from_profile.id}
                             type="request"
-                            // name={`${request.pseudonym} ${request.userId}`}
                             name={request.from_profile.pseudonym}
                             username={request.from_profile.pseudonym}
                         />
-                    ))}
+                    )))}
                 </SettingsCard>
             )}
             { (activeTab === "main" || activeTab === "recommendations") && (
-                <SettingsCard title='Рекомендації' button={<Text>Дивитись всі</Text>}>
-                    {recommendationsData?.map((recommendation) => (
+                <SettingsCard title='Рекомендації' button={routeName !== "friends/recommendations" && <Pressable onPress={() => {router.push("/friends/recommendations")}}><Text>Дивитись всі</Text></Pressable>}>
+                    {!recommendationsData || recommendationsData.length === 0 ? (
+                        <Text>Рекомендації відсутні</Text>
+                    ) : (recommendationsData.map((recommendation) => (
                         <Card
                             key={recommendation.userId}
                             id={recommendation.userId}
@@ -79,12 +85,14 @@ export function OverviewPage(props: OverviewProps) {
                             name={recommendation.pseudonym}
                             username={recommendation.username}
                         />
-                    ))}
+                    )))}
                 </SettingsCard>
             )}
             { (activeTab === "main" || activeTab === "friends") && (
-                <SettingsCard title='Всі друзі' button={<Text>Дивитись всі</Text>}>
-                    {friendsData?.map((friend) => (
+                <SettingsCard title='Всі друзі' button={routeName !== "friends/index" && <Pressable onPress={() => {router.push("/friends")}}><Text>Дивитись всі</Text></Pressable>}>
+                    {!friendsData || friendsData.length === 0 ? (
+                        <Text>Друзі відсутні</Text>
+                    ) : (friendsData.map((friend) => (
                         <Card
                             key={friend.userId}
                             id={friend.userId}
@@ -92,7 +100,7 @@ export function OverviewPage(props: OverviewProps) {
                             name={friend.pseudonym}
                             username={friend.username}
                         />
-                    ))}
+                    )))}
                     </SettingsCard>
             )}
             

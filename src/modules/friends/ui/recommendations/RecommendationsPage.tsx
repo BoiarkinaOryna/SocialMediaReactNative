@@ -8,7 +8,7 @@ export function FriendsRecommendationsPage(){
         <View style={styles.linksContainer}>
             <Link
                 text = "Головна"
-                link='/friends'
+                link='/friends/friends'
                 disabeled={true}
             ></Link>
             <Link
@@ -21,7 +21,7 @@ export function FriendsRecommendationsPage(){
             ></Link>
             <Link 
                 text = "Всі друзі"
-                link='/friends/friends'
+                link='/friends'
                 disabeled={true}   
             ></Link>
         </View>

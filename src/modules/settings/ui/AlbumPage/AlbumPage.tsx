@@ -13,10 +13,17 @@ import {
 } from "@modules/settings/api/api";
 import { AlbumForm } from "./AlbumForm/AlbumForm";
 import { useState } from "react";
+import { useUserContext } from "@modules/auth/context/user.context";
+import { router } from "expo-router";
 
-export function AlbumPage({ token }: { token: string }) {
-    console.log("TOKEN:", token);
-    const { data, isLoading, refetch,error } = useGetAlbumsQuery(token);
+export function AlbumPage() {
+    const {token} = useUserContext()
+    if (!token) {
+        router.push("/auth")
+        return
+    }
+    const { data, isLoading, refetch, error } = useGetAlbumsQuery(token);
+    console.log(JSON.stringify(data, null, 2))
     const [addImage] = useAddImageMutation();
     const getImageUrl = (img: any) =>
         `http://192.168.0.124:3000/uploads/${
@@ -123,18 +130,16 @@ export function AlbumPage({ token }: { token: string }) {
                             icon={<ICONS.SvgPlus />}
                             onPress={() => {
                                 setIsOpen(true)
-                                refetch()
                             }}
                         />
                     }
                 />
             )}
 
-            {/* MODAL */}
             <AlbumForm
                 isOpen={isOpen}
                 setIsOpen={setIsOpen}
-                
+                refetchData={refetch}
             />
         </ScrollView>
     );

@@ -18,7 +18,7 @@ export function Input(props: InputProps) {
   } = props;
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, style]}>
       {label && <Text style={[styles.label, labelStyle]}>{label}</Text>}
 
       <View
@@ -31,7 +31,7 @@ export function Input(props: InputProps) {
         {iconLeft && <View style={styles.icon}>{iconLeft}</View>}
 
         <TextInput
-          style={[styles.input, multiline && styles.inputMultiline, style]}
+          style={[styles.input, multiline && styles.inputMultiline]}
           placeholderTextColor={COLORS.blue20}
           multiline={multiline}
           {...rest}

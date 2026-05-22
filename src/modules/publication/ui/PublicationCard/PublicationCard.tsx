@@ -4,12 +4,16 @@ import { Image } from "expo-image";
 import { styles } from "./publication-card.styles";
 import { Post } from "@modules/publication/types/publication.types";
 import { ICONS } from "@shared/icons";
+import { useUserContext } from "@modules/auth/context/user.context";
 
 interface PublicationCardProps {
   publication: Post;
 }
 
 export function PublicationCard({ publication }: PublicationCardProps) {
+
+  console.log("publication", publication);
+  
   return (
     <View style={styles.card}>
       <View style={styles.top}>
@@ -17,12 +21,12 @@ export function PublicationCard({ publication }: PublicationCardProps) {
           <View style={styles.authorRow}>
             <View style={styles.avatarWrap}>
               <Image
-                source={require("@assets/LinaLi.jpg")}
+                source={publication.author.profile.avatar && { uri: publication.author.profile.avatar}}
                 style={styles.avatar}
               />
             </View>
 
-            <Text style={styles.authorName}>Lina Li</Text>
+            <Text style={styles.authorName}>{ publication.author.profile.pseudonym }</Text>
           </View>
         </View>
       </View>
