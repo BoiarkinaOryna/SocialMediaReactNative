@@ -9,7 +9,7 @@ export default function Home(){
     console.log("user in main", user)
 
     return <View>
-        {/* { !user?.username && <FirstVisitModal/> } */}
+        { !user?.username && <FirstVisitModal/> }
         <AllPublications />
     </View>
 }
