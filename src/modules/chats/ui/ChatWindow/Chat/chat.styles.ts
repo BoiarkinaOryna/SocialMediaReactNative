@@ -6,6 +6,7 @@ export const styles = StyleSheet.create({
         gap: 10
     },
     sameSenderMessages: {
+        alignItems: "flex-start",
         padding: 5,
         gap: 10
     },

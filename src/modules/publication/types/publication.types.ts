@@ -1,26 +1,32 @@
 import { InferType } from "yup";
 import { publicationValidator } from "../models/publication.validation";
-import { FullUserWithoutRelations } from "@shared/types/user.types";
 
 export type PublicationSchema = InferType<typeof publicationValidator>;
 
+export type PostImage = {
+  id?: number;
+  uri?: string | null;
+  url?: string | null;
+  filename?: string | null;
+  path?: string | null;
+  original_image?: string | null;
+  compressed_image?: string | null;
+};
+
 export type Post = {
-    id: number;
-    links: string[] | null;
-    title: string;
-    topic: string | null;
-    content: string | null;
-    author: {
-        profile: {
-            id: number,
-            pseudonym: string | undefined,
-            avatar: string | undefined
-        }
-    }
-}
+  id: number;
+  links: string[] | null;
+  title: string;
+  topic: string | null;
+  content: string | null;
+  userId: number | null;
+  images?: PostImage[] | null;
+};
+
 export type CreatePost = {
-    links?: string;
-    title: string;
-    topic: string;
-    content: string;
-}
+  links?: string;
+  title: string;
+  topic: string;
+  content: string;
+  // image?: string | null;
+};

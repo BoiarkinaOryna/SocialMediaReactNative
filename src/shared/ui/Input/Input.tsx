@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, TextInput, StyleSheet } from "react-native";
+import { View, Text, TextInput } from "react-native";
 import { InputProps } from "./input.types";
 import { styles } from "./input.styles";
 import { COLORS } from "@shared/constants/colors";
@@ -40,6 +40,8 @@ export function Input(props: InputProps) {
         {iconRight && <View style={styles.icon}>{iconRight}</View>}
       </View>
       {error && <Text style={styles.errorMessage}>{error}</Text>}
+      {error && <Text style={styles.errorMessage}>{error}</Text>}
     </View>
   );
 }
+

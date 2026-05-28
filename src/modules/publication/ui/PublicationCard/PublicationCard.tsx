@@ -1,19 +1,19 @@
 import { Text, View } from "react-native";
 import { Image } from "expo-image";
-// import { PublicationItem } from "@modules/publication/context/publications.context";
+
 import { styles } from "./publication-card.styles";
+
 import { Post } from "@modules/publication/types/publication.types";
+
 import { ICONS } from "@shared/icons";
-import { useUserContext } from "@modules/auth/context/user.context";
 
 interface PublicationCardProps {
   publication: Post;
 }
 
 export function PublicationCard({ publication }: PublicationCardProps) {
+  console.log("POST", JSON.stringify(publication, null, 2));
 
-  console.log("publication", publication);
-  
   return (
     <View style={styles.card}>
       <View style={styles.top}>
@@ -21,12 +21,12 @@ export function PublicationCard({ publication }: PublicationCardProps) {
           <View style={styles.authorRow}>
             <View style={styles.avatarWrap}>
               <Image
-                source={publication.author.profile.avatar && { uri: publication.author.profile.avatar}}
+                source={require("@assets/LinaLi.jpg")}
                 style={styles.avatar}
               />
             </View>
 
-            <Text style={styles.authorName}>{ publication.author.profile.pseudonym }</Text>
+            <Text style={styles.authorName}>Lina Li</Text>
           </View>
         </View>
       </View>
@@ -35,26 +35,47 @@ export function PublicationCard({ publication }: PublicationCardProps) {
 
       <View style={styles.body}>
         <Text style={styles.title}>{publication.title}</Text>
+
         <Text style={styles.content}>{publication.content}</Text>
-        {!!publication.links && (
-          <Text style={styles.link}>{publication.links}</Text>
+
+        {publication.images?.[0] && (
+          <Image
+            source={{
+              uri: `http://192.168.0.124:3000/uploads/${publication.images[0].original_image}`,
+            }}
+            style={{
+              width: "100%",
+              height: 240,
+              borderRadius: 16,
+              marginTop: 12,
+            }}
+            contentFit="cover"
+          />
         )}
+
+        {!!publication.links?.length && (
+          <Text style={styles.link}>
+            {publication.links.map((link: any) => link.url).join(", ")}
+          </Text>
+        )}
+
         <View style={styles.activityView}>
           <View style={styles.activity}>
-            <ICONS.SvgHeart/>
+            <ICONS.SvgHeart />
             <Text>0 вподобань</Text>
           </View>
+
           <View style={styles.activity}>
-            <ICONS.SvgThumbUp/>
-            <Text>0 Лайків</Text>
+            <ICONS.SvgThumbUp />
+            <Text>0 лайків</Text>
           </View>
+
           <View style={styles.activity}>
-            <ICONS.SvgEyeOpen/>
-            <Text>0 Переглядів</Text>
+            <ICONS.SvgEyeOpen />
+            <Text>0 переглядів</Text>
           </View>
         </View>
       </View>
-
     </View>
   );
 }

@@ -8,21 +8,24 @@ export const styles = StyleSheet.create({
         padding: 10,
         borderRadius: 6,
         borderColor: COLORS.blue50,
-        borderWidth: 0.5
+        borderWidth: 0.5,
+        gap: 10
     },
     myMessage: {
         flexDirection: "row",
         alignItems: "flex-end",
         padding: 10,
         borderRadius: 6,
-        backgroundColor: COLORS.blue20
+        backgroundColor: COLORS.blue20,
+        gap: 10
     },
     text: {
-        flex: 1,
+        // flex: 1,
+        maxWidth: 250,
         fontSize: 14
     },
     time: {
-        width: 25,
+        width: 30,
         fontSize: 10
     }
 })

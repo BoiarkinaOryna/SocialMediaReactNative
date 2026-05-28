@@ -13,15 +13,9 @@ import {
 } from "@modules/settings/api/api";
 import { AlbumForm } from "./AlbumForm/AlbumForm";
 import { useState } from "react";
-import { useUserContext } from "@modules/auth/context/user.context";
-import { router } from "expo-router";
 
-export function AlbumPage() {
-    const {token} = useUserContext()
-    if (!token) {
-        router.push("/auth")
-        return
-    }
+export function AlbumPage({ token }: { token: string }) {
+    console.log("TOKEN:", token);
     const { data, isLoading, refetch, error } = useGetAlbumsQuery(token);
     console.log(JSON.stringify(data, null, 2))
     const [addImage] = useAddImageMutation();

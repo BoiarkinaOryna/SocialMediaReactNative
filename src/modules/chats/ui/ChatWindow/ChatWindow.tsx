@@ -1,15 +1,18 @@
 import { ICONS } from "@shared/icons";
-import { View, Text } from "react-native";
+import { View, Text, Pressable } from "react-native";
 import { Chat } from "./Chat/Chat";
 import { Input } from "@shared/ui/Input/Input";
 import { Button } from "@shared/ui/Button/Button";
 import { styles } from "./chat-window.style";
+import { router } from "expo-router";
 
 export function ChatWindow (){
     return <View style={styles.container}>
         <View style={styles.head}>
             <View style={styles.groupInfo}>
-                <ICONS.SvgReturn/>
+                <Pressable onPress={() => router.back()}>
+                    <ICONS.SvgReturn/>
+                </Pressable>
                 <View style={styles.info}>
                     <View style={styles.avatar}><Text>NG</Text></View>
                     <View>

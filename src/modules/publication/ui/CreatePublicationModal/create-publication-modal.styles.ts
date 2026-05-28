@@ -77,7 +77,6 @@ export const styles = StyleSheet.create({
   linkInputWrapper: {
     flex: 1,
   },
-
   darkLabel: {
     fontSize: 16,
     color: COLORS.black,

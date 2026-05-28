@@ -3,8 +3,9 @@ import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
     container: {
-        height: 640,
+        height: 650,
         justifyContent: "space-between",
+        marginTop: 8,
         padding: 16,
         backgroundColor: COLORS.white,
         borderRadius: 10,

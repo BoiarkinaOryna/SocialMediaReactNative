@@ -6,11 +6,13 @@ import { useRoute } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import { useUserContext } from "@modules/auth/context/user.context";
 import { usePublicationModal } from "@modules/publication/context/modal.context";
+import { useGroupModal } from "@modules/chats/context/group-modal.context";
 
 export function Header() {
   const [currentPage, setCurrentPage] = useState<string | null>(null);
   const { setToken } = useUserContext();
   const { open } = usePublicationModal();
+  const { openNewGroupMembers } = useGroupModal();
 
   const route = useRoute();
   const routeName = route.name;
@@ -19,15 +21,15 @@ export function Header() {
     if (
       routeName === "chats/index" ||
       routeName === "chats/groups" ||
-      routeName === "chats/contacts"
+      routeName === "chats/contacts" ||
+      routeName === "chats/chat"
     ) {
       setCurrentPage("chats");
     } else if (
       routeName === "friends/index" ||
       routeName === "friends/requests" ||
       routeName === "friends/friends" ||
-      routeName === "friends/recommendations" ||
-      routeName === "friends/friends_profile"
+      routeName === "friends/recommendations"
     ) {
       setCurrentPage("friends");
     } else if (
@@ -60,12 +62,15 @@ export function Header() {
       </View>
         <View style={styles.buttonCon}>
         {currentPage !== "friends" && (
-          <TouchableOpacity style={styles.button} onPress={open}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={currentPage === "chats" ? openNewGroupMembers : open}
+          >
             <ICONS.SvgPlus />
           </TouchableOpacity>
         )}
 
-        {currentPage !== "chats" && currentPage !== "friends" && (
+        {currentPage !== "chats" && (
           <TouchableOpacity
             style={[
               styles.button,
