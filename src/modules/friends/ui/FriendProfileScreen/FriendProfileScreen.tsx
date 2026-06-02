@@ -2,8 +2,27 @@ import { View, Text, Image, TouchableOpacity, ScrollView, Pressable } from 'reac
 import { styles } from './profile.styles';
 import { ICONS } from '@shared/icons';
 import { router } from 'expo-router';
+import { useAcceptRequestMutation, useDeclineRequestMutation, useSendRequestMutation } from '@modules/friends/api/friends.api';
+import { useUserContext } from '@modules/auth/context/user.context';
+import { FriendScreenProps } from './FriendProfileScreen.types';
 
-export function FriendProfileScreen() {
+export function FriendProfileScreen(props: FriendScreenProps) {
+    const {id, type} = props
+    console.log("friend id in profile screen:", id, type)
+    const {token} = useUserContext()
+
+    const [sendRequest, {error, isLoading}] = useSendRequestMutation()
+    const [accept, {isLoading: isAcceptLoading, error: acceptError}] = useAcceptRequestMutation()
+    const [decline, {isLoading: isDeclineLoading, error: declineError}] = useDeclineRequestMutation()
+
+    function goBack(){
+        if (router.canGoBack()){
+            router.back()
+        } else {
+            router.push("/friends")
+        }
+    }
+
     return (
         <ScrollView 
             style={styles.container} 
@@ -24,7 +43,7 @@ export function FriendProfileScreen() {
                     <View style={styles.avatarBadge} />
                 </View>
 
-                <Text style={styles.name}>Yehor Aung</Text>
+                <Text style={styles.name}>Yehor Aung ({id})</Text>
                 <Text style={styles.username}>@thelili</Text>
 
                 <View style={styles.statsContainer}>
@@ -49,11 +68,31 @@ export function FriendProfileScreen() {
                 </View>
 
                 <View style={styles.buttonsContainer}>
-                    <TouchableOpacity style={styles.primaryBtn}>
+                    <TouchableOpacity style={styles.primaryBtn} onPress={
+                        () => {
+                            if (type === "sendRequest"){
+                                console.log("sending request")
+                                token && sendRequest({token, id}).unwrap()
+                                goBack()
+                            } else {
+                                token && accept({token, id}).unwrap()
+                                goBack()
+                            }
+                        }
+                    }>
                         <Text style={styles.primaryText}>Підтвердити</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.secondaryBtn}>
+                    <TouchableOpacity style={styles.secondaryBtn} onPress={
+                        () => {
+                            if (type === "sendRequest"){
+                                goBack()
+                            } else {
+                                token && decline({token, id}).unwrap()
+                                goBack()
+                            }
+                        }
+                    }>
                         <Text style={styles.secondaryText}>Видалити</Text>
                     </TouchableOpacity>
                 </View>

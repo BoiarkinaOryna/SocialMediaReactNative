@@ -1,8 +1,6 @@
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { styles } from './card.styles';
 import React from 'react';
-import { useAcceptRequestMutation, useDeclineRequestMutation, useSendRequestMutation } from '@modules/friends/api/friends.api';
-import { useUserContext } from '@modules/auth/context/user.context';
 import { router } from 'expo-router';
 
 interface CardProps {
@@ -24,30 +22,11 @@ export function Card({
     // onPrimaryPress, 
     // onSecondaryPress 
 }: CardProps) {
-    const {token} = useUserContext()
     const getPrimaryText = () => {
         if (type === 'request') return 'Підтвердити';
         if (type === 'recommendation') return 'Додати';
         return 'Повідомлення';
     };
-
-    const [sendRequest, {isLoading: isSendLoading, error: sendError}] = useSendRequestMutation()
-    const [accept, {isLoading: isAcceptLoading, error: acceptError}] = useAcceptRequestMutation()
-    const [decline, {isLoading: isDeclineLoading, error: declineError}] = useDeclineRequestMutation()
-
-    async function sendFriendRequest(id: number){
-        token &&
-        await sendRequest({token, id}).unwrap()
-    }
-    async function acceptFriendRequest(id: number){
-        console.log("accept id", id)
-        token &&
-        await accept({token, id}).unwrap()
-    }
-    async function declineFriendRequest(id: number){
-        token &&
-        await decline({token, id}).unwrap()
-    }
 
     return (
         <View style={styles.card}>
@@ -63,13 +42,11 @@ export function Card({
                     style={styles.primaryBtn} 
                     onPress={() => {
                         if (type === "request"){
-                            // acceptFriendRequest(id)
-                            router.push("/friends/friends_profile")
+                            router.push(`/friends/${id}?type=${"acceptRequest"}`)
                         } else if (type === "recommendation"){
-                            router.push("/friends/friends_profile")
-                            // sendFriendRequest(id)
+                            router.push(`/friends/${id}?type=${"sendRequest"}`)
                         }
-                         else {
+                        else {
                             router.push("/chats")
                         }
                     }}
@@ -82,7 +59,12 @@ export function Card({
                     style={styles.secondaryBtn} 
                     onPress={() => {
                         if (type === "request"){
-                            declineFriendRequest(id)
+                            router.push(`/friends/${id}?type=${"acceptRequest"}`)
+                        } else if (type === "recommendation"){
+                            router.push(`/friends/${id}?type=${"sendRequest"}`)
+                        }
+                        else {
+                            router.push(`/friends/${id}?type=${"deleteFriend"}`)
                         }
                     }}
                     activeOpacity={0.7}

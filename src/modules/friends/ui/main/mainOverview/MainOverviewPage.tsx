@@ -64,13 +64,13 @@ export function OverviewPage(props: OverviewProps) {
                         <Text>Запити відсутні</Text>
                     ) : (requestsData.map((request) => (
                         <Card
-                            key={request.from_profile.id}
-                            id={request.from_profile.id}
+                            key={request.from_user_id}
+                            id={request.from_user_id}
                             type="request"
-                            name={request.from_profile.pseudonym}
-                            username={request.from_profile.pseudonym}
+                            name={request.pseudonym}
+                            username={request.username}
                         />
-                    )))}
+                    )))}    
                 </SettingsCard>
             )}
             { (activeTab === "main" || activeTab === "recommendations") && (
@@ -79,8 +79,8 @@ export function OverviewPage(props: OverviewProps) {
                         <Text>Рекомендації відсутні</Text>
                     ) : (recommendationsData.map((recommendation) => (
                         <Card
-                            key={recommendation.userId}
-                            id={recommendation.userId}
+                            key={recommendation.id}
+                            id={recommendation.id}
                             type="recommendation"
                             name={recommendation.pseudonym}
                             username={recommendation.username}
@@ -94,8 +94,8 @@ export function OverviewPage(props: OverviewProps) {
                         <Text>Друзі відсутні</Text>
                     ) : (friendsData.map((friend) => (
                         <Card
-                            key={friend.userId}
-                            id={friend.userId}
+                            key={friend.id}
+                            id={friend.id}
                             type="friend"
                             name={friend.pseudonym}
                             username={friend.username}

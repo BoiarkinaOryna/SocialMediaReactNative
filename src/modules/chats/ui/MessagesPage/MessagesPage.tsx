@@ -125,12 +125,11 @@ export function MessagesPage() {
           showsVerticalScrollIndicator
         >
           {filteredMessages.map((item) => (
-            <Pressable onPress={() => {router.push("/chats/chat")}}>
-              <View
-                key={item.id}
-                style={[styles.messageRow, item.unread && styles.unreadRow]}
-              >
-                <View style={styles.avatarWrap}>
+            <Pressable onPress={() => {router.push(`../chats/chat?id=${item.id}`)}}>              <View
+              key={item.id}
+              style={[styles.messageRow, item.unread && styles.unreadRow]}
+            >
+              <View style={styles.avatarWrap}>
                   <Image source={item.avatar} style={styles.avatar} />
                   <View
                     style={[

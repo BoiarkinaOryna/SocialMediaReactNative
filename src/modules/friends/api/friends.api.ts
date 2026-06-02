@@ -13,7 +13,7 @@ const friendsApi = baseApi.injectEndpoints({
         }),
         getRecommendations: builder.query<friend[], string>({
             query: (token) => ({
-                url: "/friends/recommendations",
+                url: "/friends/recommendations",        
                 headers: {Authorization: `Bearer ${token}`}
             })
         }),
@@ -40,7 +40,7 @@ const friendsApi = baseApi.injectEndpoints({
         }),
         declineRequest: builder.mutation<any, {token: string, id: number}>({
             query: ({token, id}) => ({
-                url: `/friends/${id}`,
+                url: `/friends/request/${id}`,
                 method: "DELETE",
                 headers: {Authorization: `Bearer ${token}`},
             })
