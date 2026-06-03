@@ -1,6 +1,5 @@
 import { baseApi } from "@shared/api/api";
-import { friend, request } from "../types/friends.types";
-import { string } from "yup";
+import { friend, request, UserInfo } from "../types/friends.types";
 
 
 const friendsApi = baseApi.injectEndpoints({
@@ -45,6 +44,13 @@ const friendsApi = baseApi.injectEndpoints({
                 headers: {Authorization: `Bearer ${token}`},
             })
         }),
+        getFriendInfo: builder.query<UserInfo, {token: string, id: number}>({
+            query: ({token, id}) => ({
+                url: `/friends/${id}`,
+                method: "GET",
+                headers: {Authorization: `Bearer ${token}`}
+            })
+        })
     })
 })
 
@@ -54,5 +60,6 @@ export const {
     useGetRequestsQuery,
     useSendRequestMutation,
     useAcceptRequestMutation,
-    useDeclineRequestMutation
+    useDeclineRequestMutation,
+    useGetFriendInfoQuery
 } = friendsApi
