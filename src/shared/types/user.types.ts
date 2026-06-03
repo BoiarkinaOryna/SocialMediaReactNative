@@ -1,15 +1,11 @@
 export type FullUserWithoutRelations = {
     id: Number,
-    name?: string,
-    username?: string,
+    username: string | null,
     pseudonym?: string,
-    birthDate?: string,
+    birth_date?: string,
     email: string,
-    password: string,
-    image?: string,
-    about?: string,
     signature?: string,
-    avatar?: Avatar,
+    avatar?: string,
 }
 // Relations:
     // post?: Post[],
@@ -18,10 +14,10 @@ export type FullUserWithoutRelations = {
     // chatMessages?: ChatMessage[],
     // frendship?: Friendship[] // from, to
 
-export type Avatar = {
-    id: Number,
-    image: string,
-    profile: FullUserWithoutRelations,
-    shown: Boolean,
-    active: Boolean
-}
+// export type Avatar = {
+//     id: Number,
+//     image: string,
+//     profile: FullUserWithoutRelations,
+//     shown: Boolean,
+//     active: Boolean
+// }

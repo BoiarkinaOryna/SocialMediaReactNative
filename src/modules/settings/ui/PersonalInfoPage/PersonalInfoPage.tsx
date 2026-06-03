@@ -20,6 +20,7 @@ export function PersonalInfoPage(){
         mode: "onChange",
     });
 
+    // const 
     const [ update, {error, isLoading} ] = useUpdateProfileMutation()
 
     const { token, user } = useUserContext()
@@ -48,9 +49,9 @@ export function PersonalInfoPage(){
             </View>
             <SettingsCard title='Картка профілю' button={<Button icon={<ICONS.SvgPen/>}/>}>
                 <View style={styles.profileCard}>
-                    <Image style={styles.avatar} source={require("@assets/LinaLi.jpg")} />
+                    <Image style={styles.avatar} source={{ uri: user?.avatar && user?.avatar}} />
                     <View style={styles.nameContainer}>
-                        <Text style={styles.currentName}>{user?.name}</Text>
+                        <Text style={styles.currentName}>{user?.pseudonym}</Text>
                         <Text>{user?.username}</Text>
                     </View>
                 </View>
@@ -84,7 +85,7 @@ export function PersonalInfoPage(){
                         render={({field, fieldState}) => {
                             return <Input
                                 label = "Дата народження"
-                                placeholder = "15.04.2001"
+                                placeholder = {user?.birth_date}
                             />
                         }}
                     />
@@ -94,7 +95,7 @@ export function PersonalInfoPage(){
                         render={({field, fieldState}) => {
                             return <Input
                                 label = "Електорна адреса"
-                                placeholder = "you@gmail.com"
+                                placeholder = {user?.email}
                                 inputMode="email"
 								autoCapitalize="none"
 								autoComplete="off"

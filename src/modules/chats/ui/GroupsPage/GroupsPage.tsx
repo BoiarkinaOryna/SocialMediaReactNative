@@ -81,7 +81,7 @@ export function GroupsPage() {
           </View>
         </View>
 
-        <View style={styles.listWrapper}>
+        <View>
           <ScrollView
             showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.listContent}

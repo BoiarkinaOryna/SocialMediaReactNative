@@ -1,11 +1,13 @@
 import { baseApi } from "@shared/api/api";
 import { CreatePost, Post } from "../types/publication.types";
 
+const POSTS_URL = "/posts";
+
 export const postsApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAllPosts: builder.query<Post[], { token: string; take: number; page: number }>({
       query: ({ token, take, page }) => ({
-        url: `/post?take=${take}&page=${page}`,
+        url: `${POSTS_URL}?take=${take}&page=${page}`,
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -15,21 +17,21 @@ export const postsApi = baseApi.injectEndpoints({
     }),
     createPost: builder.mutation<any, { data: CreatePost; token: string }>({
       query: ({ data, token }) => ({
-        url: "/post/",
+        url: `${POSTS_URL}/`,
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
         },
         body: {
           ...data,
-          links: [data.links],
+          links: data.links?.trim() ? [data.links.trim()] : [],
         },
       }),
       invalidatesTags: ["Posts"],
     }),
-    addPostImage: builder.mutation<any, { base64: string; postId: number; token: string }>({
+    addPostImage: builder.mutation<any, { base64: string; postId: number | string; token: string }>({
       query: ({ base64, postId, token }) => ({
-        url: "/post/image",
+        url: `${POSTS_URL}/image`,
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -43,7 +45,7 @@ export const postsApi = baseApi.injectEndpoints({
     }),
     getMyPosts: builder.query<Post[], { token: string; take: number; page: number }>({
       query: ({ token, take, page }) => ({
-        url: `/post/my?take=${take}&page=${page}`,
+        url: `${POSTS_URL}/my?take=${take}&page=${page}`,
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -53,12 +55,14 @@ export const postsApi = baseApi.injectEndpoints({
     }),
     delete: builder.mutation<any, { id: number; token: string }>({
       query: ({ id, token }) => ({
-        url: "/post/my",
+        url: `${POSTS_URL}/my`,
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
         },
-        id,
+        body: {
+          postId: id,
+        },
       }),
     }),
   }),

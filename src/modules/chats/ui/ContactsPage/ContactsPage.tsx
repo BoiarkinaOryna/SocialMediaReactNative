@@ -76,7 +76,6 @@ export function ContactsPage() {
         </View>
 
         <ScrollView
-          style={styles.listWrapper}
           contentContainerStyle={styles.listContent}
           showsVerticalScrollIndicator
         >

@@ -17,7 +17,6 @@ import { publicationValidator } from "@modules/publication/models/publication.va
 import { PublicationSchema } from "@modules/publication/types/publication.types";
 
 import {
-  useAddPostImageMutation,
   useCreatePostMutation,
 } from "@modules/publication/api/posts.api";
 
@@ -51,8 +50,6 @@ export function CreatePublicationModal() {
   const { token } = useUserContext();
 
   const [createPostMutation] = useCreatePostMutation();
-
-  const [addPostImage] = useAddPostImageMutation();
 
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
@@ -106,23 +103,16 @@ export function CreatePublicationModal() {
         return;
       }
 
-      const createdPost = await createPostMutation({
+      await createPostMutation({
         token,
         data: {
           title: data.title,
           topic: data.topic,
           content: data.content,
           links: data.links,
+          image: imageBase64,
         },
       }).unwrap();
-
-      if (imageBase64) {
-        await addPostImage({
-          token,
-          base64: imageBase64,
-          postId: createdPost.id,
-        }).unwrap();
-      }
 
       reset(DEFAULT_VALUES);
 

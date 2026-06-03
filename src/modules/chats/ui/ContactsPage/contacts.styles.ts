@@ -5,7 +5,6 @@ export const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
     backgroundColor: COLORS.fog,
-    paddingHorizontal: 8,
   },
   linksContainer: {
     flexDirection: "row",
@@ -18,7 +17,7 @@ export const styles = StyleSheet.create({
     borderTopRightRadius: 14,
   },
   card: {
-    flex: 1,
+    margin: 8,
     backgroundColor: COLORS.white,
     borderRadius: 14,
     borderWidth: 1,
@@ -61,12 +60,8 @@ export const styles = StyleSheet.create({
     color: COLORS.black,
     paddingVertical: 8,
   },
-  listWrapper: {
-    flex: 1,
-  },
   listContent: {
     paddingTop: 2,
-    paddingBottom: 24,
   },
   contactRow: {
     flexDirection: "row",

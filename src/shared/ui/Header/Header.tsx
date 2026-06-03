@@ -21,7 +21,8 @@ export function Header() {
     if (
       routeName === "chats/index" ||
       routeName === "chats/groups" ||
-      routeName === "chats/contacts"
+      routeName === "chats/contacts" ||
+      routeName === "chats/chat"
     ) {
       setCurrentPage("chats");
     } else if (

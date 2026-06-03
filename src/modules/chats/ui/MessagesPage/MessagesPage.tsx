@@ -1,9 +1,10 @@
 import { useMemo, useState } from "react";
-import { Image, ScrollView, Text, TextInput, View } from "react-native";
+import { Image, Pressable, ScrollView, Text, TextInput, View } from "react-native";
 import { styles } from "./messages.styles";
 import { ICONS } from "@shared/icons";
 import { COLORS } from "@shared/constants/colors";
 import { Link } from "@shared/ui/Links/Links";
+import { router } from "expo-router";
 
 const MESSAGES = [
   {
@@ -120,33 +121,33 @@ export function MessagesPage() {
         </View>
 
         <ScrollView
-          style={styles.listWrapper}
           contentContainerStyle={styles.listContent}
           showsVerticalScrollIndicator
         >
           {filteredMessages.map((item) => (
-            <View
+            <Pressable onPress={() => {router.push(`../chats/chat?id=${item.id}`)}}>              <View
               key={item.id}
               style={[styles.messageRow, item.unread && styles.unreadRow]}
             >
               <View style={styles.avatarWrap}>
-                <Image source={item.avatar} style={styles.avatar} />
-                <View
-                  style={[
-                    styles.statusDot,
-                    item.online ? styles.onlineDot : styles.offlineDot,
-                  ]}
-                />
-              </View>
-
-              <View style={styles.messageContent}>
-                <View style={styles.messageHeader}>
-                  <Text style={styles.messageName}>{item.name}</Text>
-                  <Text style={styles.messageDate}>{item.date}</Text>
+                  <Image source={item.avatar} style={styles.avatar} />
+                  <View
+                    style={[
+                      styles.statusDot,
+                      item.online ? styles.onlineDot : styles.offlineDot,
+                    ]}
+                  />
                 </View>
-                <Text style={styles.messageText}>{item.message}</Text>
+
+                <View style={styles.messageContent}>
+                  <View style={styles.messageHeader}>
+                    <Text style={styles.messageName}>{item.name}</Text>
+                    <Text style={styles.messageDate}>{item.date}</Text>
+                  </View>
+                  <Text style={styles.messageText}>{item.message}</Text>
+                </View>
               </View>
-            </View>
+            </Pressable>
           ))}
         </ScrollView>
       </View>
