@@ -2,6 +2,8 @@ import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { styles } from './card.styles';
 import React from 'react';
 import { router } from 'expo-router';
+import { useCreateChatMutation, useLazyGetChatIdByUserIdsQuery } from '@modules/chats/api/chat.api';
+import { useUserContext } from '@modules/auth/context/user.context';
 
 interface CardProps {
     id: number
@@ -27,6 +29,33 @@ export function Card({
         if (type === 'recommendation') return 'Додати';
         return 'Повідомлення';
     };
+    const {token} = useUserContext()
+    if (!token){
+        router.push("/auth")
+        return
+    }
+    const [getChatId, { error: ChatIdError, isError: isChatIdError, isLoading: isChatIdLoading}] = useLazyGetChatIdByUserIdsQuery()
+    const [ createChat, {data, isLoading, error} ] = useCreateChatMutation()
+
+    async function openChat(){
+        // console.log("user id", id)
+        const chatIdObj = await getChatId({userId: id, token: token!})
+        // console.log("chat id", chatIdObj, chatIdObj?.data?.chatId)
+        if (!isChatIdError && chatIdObj){
+            router.push(`/chats/${chatIdObj.data?.chatId}`)
+            return
+        } else if (isChatIdError){
+            if ("status" in ChatIdError && ChatIdError.status == 404){
+                await createChat({contactUserId: id, token: token!})
+                console.log("chat", data)
+                if (!error){
+                    router.push(`/chats/${data.id}`)
+                    return
+                }
+            }
+            console.log("ChatIdError", ChatIdError)
+        }
+    }
 
     return (
         <View style={styles.card}>
@@ -47,7 +76,7 @@ export function Card({
                             router.push(`/friends/${id}?type=${"sendRequest"}`)
                         }
                         else {
-                            router.push("/chats")
+                            openChat()
                         }
                     }}
                     activeOpacity={0.8}

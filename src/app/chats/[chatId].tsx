@@ -10,8 +10,10 @@ import { View } from "react-native";
 export default function Chat(){
     const params = useLocalSearchParams<{ chatId: string }>();
     const chatId = Number(params.chatId);
+    console.log("chatId", chatId)
 
     useEffect(() => {
+        console.log("in use effect")
 		if (Number.isNaN(chatId)) return;
 		ClientSocket.emit("joinChat", { chatId }, (response: any) => {
 			console.log(`Joined chat ${chatId} with response:`, response);

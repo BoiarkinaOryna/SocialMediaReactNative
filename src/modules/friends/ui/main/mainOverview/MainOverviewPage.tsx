@@ -48,6 +48,7 @@ export function OverviewPage(props: OverviewProps) {
         console.log("my posts is refreshed")
     }, [friendsRefetch, recommendationsRefetch, requestsRefetch]);
 
+    console.log("friends data", friendsData)
     const route = useRoute();
     const routeName = route.name;
     return <View>
@@ -68,9 +69,9 @@ export function OverviewPage(props: OverviewProps) {
                             id={request.from_user_id}
                             type="request"
                             name={request.pseudonym}
-                            username={request.username}
+                            username={request.pseudonym}
                         />
-                    )))}    
+                    )))}
                 </SettingsCard>
             )}
             { (activeTab === "main" || activeTab === "recommendations") && (
@@ -79,8 +80,8 @@ export function OverviewPage(props: OverviewProps) {
                         <Text>Рекомендації відсутні</Text>
                     ) : (recommendationsData.map((recommendation) => (
                         <Card
-                            key={recommendation.id}
-                            id={recommendation.id}
+                            key={recommendation.userId}
+                            id={recommendation.userId}
                             type="recommendation"
                             name={recommendation.pseudonym}
                             username={recommendation.username}
