@@ -22,7 +22,7 @@ export function Header() {
       routeName === "chats/index" ||
       routeName === "chats/groups" ||
       routeName === "chats/contacts" ||
-      routeName === "chats/chat"
+      routeName === "chats/[chatId]"
     ) {
       setCurrentPage("chats");
     } else if (

@@ -1,4 +1,4 @@
-import { View } from "react-native";
+import { ScrollView, View } from "react-native";
 import { styles } from "./chat.styles";
 import { Message } from "./chat.types";
 import { ChatMessage } from "./Massage/Message";
@@ -15,7 +15,7 @@ export function Chat({ messages, userId }: Props) {
   messages.forEach((message, index) => {
     const prev = group[group.length - 1];
 
-    if (!prev || prev.sender.id === message.sender.id) {
+    if (!prev || prev.sender_id === message.sender_id) {
       group.push(message);
     } else {
       groupedMessages.push(group);
@@ -28,24 +28,24 @@ export function Chat({ messages, userId }: Props) {
   });
 
   return (
-    <View style={styles.chatContainer}>
+    <ScrollView contentContainerStyle={styles.chatContainer}>
       {groupedMessages.map((group, i) => (
         <View
           key={i}
           style={[
             styles.sameSenderMessages,
-            userId === group[0].sender.id && styles.myMessages,
+            userId === group[0].sender_id && styles.myMessages,
           ]}
         >
           {group.map((msg) => (
             <ChatMessage
               key={msg.id}
               data={msg}
-              isMy={msg.sender.id === userId}
+              isMy={msg.sender_id === userId}
             />
           ))}
         </View>
       ))}
-    </View>
+    </ScrollView>
   );
 }

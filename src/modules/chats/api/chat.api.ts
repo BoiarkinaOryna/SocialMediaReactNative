@@ -3,6 +3,7 @@
 // import { connectSocket, getSocket } from "./socket";
 
 import { baseApi } from "@shared/api/api";
+import { ChatWithChatParticipantsDto, MyChatsResponse } from "../types/chat.types"
 
 // type GetMessagesArgs = {
 //   chatId: string;
@@ -138,6 +139,21 @@ const chatApi = baseApi
                     headers: {Authorization: `Bearer ${token}`}
 				}),
 			}),
+			getChatInfo: build.query<any, {chatId: number, token: string}>({
+				query: ({chatId, token}) => ({
+					url: `/chats/chat/${chatId}`,
+					method: "GET",
+                    headers: {Authorization: `Bearer ${token}`}
+				}),
+			}),
+			getMyChats: build.query<MyChatsResponse, string>({
+				query: (token) => ({
+					url: "/chats/my",
+					method: "GET",
+					headers: { Authorization: `Bearer ${token}` },
+				}),
+				providesTags: ["Chat"],
+			}),
             
 			// getAllChats: build.query<ChatWithContactInfo[], void>({
 			// 	query: () => ({
@@ -174,4 +190,9 @@ const chatApi = baseApi
 		}),
 	});
 
-export const { useCreateChatMutation, useLazyGetChatIdByUserIdsQuery } = chatApi;
+export const {
+	useCreateChatMutation,
+	useLazyGetChatIdByUserIdsQuery,
+	useLazyGetChatInfoQuery,
+	useGetMyChatsQuery
+} = chatApi;

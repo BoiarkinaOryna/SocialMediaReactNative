@@ -45,7 +45,7 @@ export const styles = StyleSheet.create({
     minWidth: 14,
     height: 14,
     borderRadius: 7,
-    backgroundColor: "#FF4C4C",
+    backgroundColor: COLORS.red,
     alignItems: "center",
     justifyContent: "center",
     paddingHorizontal: 3,
@@ -113,7 +113,7 @@ export const styles = StyleSheet.create({
     borderColor: COLORS.white,
   },
   onlineDot: {
-    backgroundColor: "#22C55E",
+    backgroundColor: COLORS.green,
   },
   offlineDot: {
     backgroundColor: COLORS.blue20,

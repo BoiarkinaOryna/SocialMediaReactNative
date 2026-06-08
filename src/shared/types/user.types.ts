@@ -1,5 +1,5 @@
 export type FullUserWithoutRelations = {
-    id: Number,
+    id: number,
     username: string | null,
     pseudonym?: string,
     birth_date?: string,

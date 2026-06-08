@@ -1,97 +1,49 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { Image, Pressable, ScrollView, Text, TextInput, View } from "react-native";
-import { styles } from "./messages.styles";
-import { ICONS } from "@shared/icons";
-import { COLORS } from "@shared/constants/colors";
-import { Link } from "@shared/ui/Links/Links";
+import { skipToken } from "@reduxjs/toolkit/query";
 import { router } from "expo-router";
 
-const MESSAGES = [
-  {
-    id: "1",
-    name: "Mona Lisa",
-    message: "Привіт! Як справи ?",
-    date: "09:14",
-    avatar: require("@assets/LinaLi.jpg"),
-    online: true,
-    unread: true,
-  },
-  {
-    id: "2",
-    name: "Ann Ti",
-    message: "Привіт!",
-    date: "25.04.2025",
-    avatar: require("@assets/LinaLi.jpg"),
-    online: false,
-    unread: false,
-  },
-  {
-    id: "3",
-    name: "Ann Ti",
-    message: "Привіт!",
-    date: "25.04.2025",
-    avatar: require("@assets/LinaLi.jpg"),
-    online: false,
-    unread: false,
-  },
-  {
-    id: "4",
-    name: "Ann Ti",
-    message: "Привіт!",
-    date: "25.04.2025",
-    avatar: require("@assets/LinaLi.jpg"),
-    online: false,
-    unread: false,
-  },
-  {
-    id: "5",
-    name: "Ann Ti",
-    message: "Привіт!",
-    date: "25.04.2025",
-    avatar: require("@assets/LinaLi.jpg"),
-    online: false,
-    unread: false,
-  },
-];
+import { useUserContext } from "@modules/auth/context/user.context";
+import { useGetMyChatsQuery } from "@modules/chats/api/chat.api";
+import { COLORS } from "@shared/constants/colors";
+import { ICONS } from "@shared/icons";
+import { Link } from "@shared/ui/Links/Links";
+
+import { styles } from "./messages.styles";
+
+const FALLBACK_AVATAR = require("@assets/LinaLi.jpg");
+
+const getUserName = (participant?: {
+  id: number;
+  pseudonym: string | null;
+  username: string | null;
+}) => participant
+  ? participant.pseudonym || participant.username || `User ${participant.id}`
+  : "";
 
 export function MessagesPage() {
   const [search, setSearch] = useState("");
+  const { token, user } = useUserContext();
+  const { data, isLoading } = useGetMyChatsQuery(token ?? skipToken);
 
-  const filteredMessages = useMemo(() => {
-    const normalizedSearch = search.trim().toLowerCase();
+  const chats = data?.personal ?? [];
+  const filteredChats = chats.filter((chat) => {
+    const participant =
+      chat.participants.find((item) => item.id !== user?.id) ??
+      chat.participants[0];
+    const name = getUserName(participant) || chat.name || "";
+    const message = chat.lastMessage?.text || "";
+    const query = search.trim().toLowerCase();
 
-    if (!normalizedSearch) {
-      return MESSAGES;
-    }
-
-    return MESSAGES.filter(
-      (item) =>
-        item.name.toLowerCase().includes(normalizedSearch) ||
-        item.message.toLowerCase().includes(normalizedSearch)
-    );
-  }, [search]);
+    return !query || name.toLowerCase().includes(query) || message.toLowerCase().includes(query);
+  });
 
   return (
     <View style={styles.mainContainer}>
       <View style={styles.linksContainer}>
-        <Link
-          text="Контакти"
-          logo
-          logoComponent={<ICONS.SvgContacts />}
-          link="/chats/contacts"
-        />
-        <Link
-          text="Повідомлення"
-          logo
-          logoComponent={<ICONS.SvgChat />}
-          linePosition={true}
-        />
-        <Link
-          text="Групові чати"
-          logo
-          logoComponent={<ICONS.SvgChat />}
-          link="/chats/groups"
-        />
+        <Link text="Контакти" logo logoComponent={<ICONS.SvgContacts />} link="/chats/contacts" />
+        <Link text="Повідомлення" logo logoComponent={<ICONS.SvgChat />} linePosition />
+        <Link text="Групові чати" logo logoComponent={<ICONS.SvgChat />} link="/chats/groups" />
       </View>
 
       <View style={styles.card}>
@@ -100,7 +52,7 @@ export function MessagesPage() {
             <View style={styles.titleIconWrap}>
               <ICONS.SvgChat />
               <View style={styles.badge}>
-                <Text style={styles.badgeText}>2</Text>
+                <Text style={styles.badgeText}>{chats.length}</Text>
               </View>
             </View>
             <Text style={styles.title}>Повідомлення</Text>
@@ -120,39 +72,41 @@ export function MessagesPage() {
           </View>
         </View>
 
-        <ScrollView
-          contentContainerStyle={styles.listContent}
-          showsVerticalScrollIndicator
-        >
-          {filteredMessages.map((item) => (
-            <Pressable
-              onPress={() => router.push(`../chats/${item.id}`)}
-              key={item.id}
-            >
-              <View
-                key={item.id}
-                style={[styles.messageRow, item.unread && styles.unreadRow]}
-              >
-                <View style={styles.avatarWrap}>
-                  <Image source={item.avatar} style={styles.avatar} />
-                  <View
-                    style={[
-                      styles.statusDot,
-                      item.online ? styles.onlineDot : styles.offlineDot,
-                    ]}
-                  />
-                </View>
+        <ScrollView contentContainerStyle={styles.listContent} showsVerticalScrollIndicator>
+          {isLoading && (
+            <View style={styles.messageRow}>
+              <Text style={styles.messageText}>Завантаження...</Text>
+            </View>
+          )}
 
-                <View style={styles.messageContent}>
-                  <View style={styles.messageHeader}>
-                    <Text style={styles.messageName}>{item.name}</Text>
-                    <Text style={styles.messageDate}>{item.date}</Text>
+          {filteredChats.map((chat) => {
+            const participant =
+              chat.participants.find((item) => item.id !== user?.id) ??
+              chat.participants[0];
+            const name = getUserName(participant) || chat.name || `Chat ${chat.id}`;
+            const avatar = participant?.avatar
+              ? { uri: participant.avatar }
+              : FALLBACK_AVATAR;
+
+            return (
+              <Pressable onPress={() => router.push(`/chats/${chat.id}`)} key={chat.id}>
+                <View style={styles.messageRow}>
+                  <View style={styles.avatarWrap}>
+                    <Image source={avatar} style={styles.avatar} />
+                    <View style={[styles.statusDot, styles.offlineDot]} />
                   </View>
-                  <Text style={styles.messageText}>{item.message}</Text>
+
+                  <View style={styles.messageContent}>
+                    <View style={styles.messageHeader}>
+                      <Text style={styles.messageName}>{name}</Text>
+                      <Text style={styles.messageDate}>{chat.lastMessage?.created_at?.slice(0, 10)}</Text>
+                    </View>
+                    <Text style={styles.messageText}>{chat.lastMessage?.text}</Text>
+                  </View>
                 </View>
-              </View>
-            </Pressable>
-          ))}
+              </Pressable>
+            );
+          })}
         </ScrollView>
       </View>
     </View>

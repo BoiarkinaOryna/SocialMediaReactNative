@@ -41,7 +41,8 @@ export function Card({
         // console.log("user id", id)
         const chatIdObj = await getChatId({userId: id, token: token!})
         // console.log("chat id", chatIdObj, chatIdObj?.data?.chatId)
-        if (!isChatIdError && chatIdObj){
+        if (chatIdObj.data?.chatId && !isNaN(chatIdObj.data?.chatId)){
+            console.log(1)
             router.push(`/chats/${chatIdObj.data?.chatId}`)
             return
         } else if (isChatIdError){
@@ -49,6 +50,7 @@ export function Card({
                 await createChat({contactUserId: id, token: token!})
                 console.log("chat", data)
                 if (!error){
+                    console.log(2)
                     router.push(`/chats/${data.id}`)
                     return
                 }

@@ -3,7 +3,8 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
     chatContainer: {
         padding: 10,
-        gap: 10
+        gap: 10,
+        height: 500,
     },
     sameSenderMessages: {
         alignItems: "flex-start",

@@ -26,6 +26,7 @@ import { SvgSearch } from "./_icons/search";
 import { SvgNP } from "./_icons/NP";
 import { SvgPhoto } from "./_icons/Photo";
 import SvgReturn from "./_icons/return";
+import SvgDots from "./_icons/dots";
 
 
 export const ICONS = {
@@ -33,6 +34,7 @@ export const ICONS = {
     SvgChat,
     SvgContacts,
     SvgCross,
+    SvgDots,
     SvgEyeClosed,
     SvgEyeOpen,
     SvgHeart,
