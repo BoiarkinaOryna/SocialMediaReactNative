@@ -20,7 +20,7 @@ export function AlbumPage({ token }: { token: string }) {
     console.log(JSON.stringify(data, null, 2))
     const [addImage] = useAddImageMutation();
     const getImageUrl = (img: any) =>
-        `http://192.168.0.124:3000/uploads/${
+        `http://192.168.88.205:3000/uploads/${
             img.uri || img.url || img.filename || img.path
         }`;
     const [isOpen, setIsOpen] = useState<boolean>(false);

@@ -8,7 +8,6 @@ import { useUserContext } from '@modules/auth/context/user.context';
 import { router } from 'expo-router';
 import { useRoute } from '@react-navigation/native';
 
-
 interface OverviewProps {
     activeTab: 'main' | 'requests' | 'recommendations' | 'friends'
 }
@@ -80,8 +79,8 @@ export function OverviewPage(props: OverviewProps) {
                         <Text>Рекомендації відсутні</Text>
                     ) : (recommendationsData.map((recommendation) => (
                         <Card
-                            key={recommendation.userId}
-                            id={recommendation.userId}
+                            key={recommendation.id}
+                            id={recommendation.id}
                             type="recommendation"
                             name={recommendation.pseudonym}
                             username={recommendation.username}
@@ -102,7 +101,7 @@ export function OverviewPage(props: OverviewProps) {
                             username={friend.username}
                         />
                     )))}
-                    </SettingsCard>
+                </SettingsCard>
             )}
             
             <View style={overviewStyles.bottomSpacing} />

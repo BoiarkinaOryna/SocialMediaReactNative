@@ -8,7 +8,6 @@ import { useGetMyChatsQuery } from "@modules/chats/api/chat.api";
 import { COLORS } from "@shared/constants/colors";
 import { ICONS } from "@shared/icons";
 import { Link } from "@shared/ui/Links/Links";
-
 import { styles } from "./messages.styles";
 
 const FALLBACK_AVATAR = require("@assets/LinaLi.jpg");

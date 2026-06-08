@@ -16,6 +16,8 @@ export type PostImage = {
 export type Post = {
   id: number;
   links: string[] | null;
+  post_app_postimage?: PostImage[] | null;
+  post_app_postlink?: { id?: number; url: string }[] | null;
   title: string;
   topic: string | null;
   content: string | null;
@@ -28,5 +30,5 @@ export type CreatePost = {
   title: string;
   topic: string;
   content: string;
-  // image?: string | null;
+  image?: string | null;
 };
