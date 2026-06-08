@@ -1,8 +1,10 @@
 import { Text, View } from "react-native";
 import { Image } from "expo-image";
-// import { PublicationItem } from "@modules/publication/context/publications.context";
+
 import { styles } from "./publication-card.styles";
+
 import { Post } from "@modules/publication/types/publication.types";
+
 import { ICONS } from "@shared/icons";
 
 interface PublicationCardProps {
@@ -10,6 +12,12 @@ interface PublicationCardProps {
 }
 
 export function PublicationCard({ publication }: PublicationCardProps) {
+  console.log("POST", JSON.stringify(publication, null, 2));
+
+  const image = publication.images?.[0] ?? publication.post_app_postimage?.[0];
+  const imageName = image?.original_image ?? image?.compressed_image;
+  const links = publication.links ?? publication.post_app_postlink;
+
   return (
     <View style={styles.card}>
       <View style={styles.top}>
@@ -31,26 +39,47 @@ export function PublicationCard({ publication }: PublicationCardProps) {
 
       <View style={styles.body}>
         <Text style={styles.title}>{publication.title}</Text>
-        <Text style={styles.content}>{publication.text}</Text>
-        {!!publication.url && (
-          <Text style={styles.link}>{publication.url}</Text>
+
+        <Text style={styles.content}>{publication.content}</Text>
+
+        {imageName && (
+          <Image
+            source={{
+              uri: `http://192.168.88.205:3000/uploads/${imageName}`,
+            }}
+            style={{
+              width: "100%",
+              height: 240,
+              borderRadius: 16,
+              marginTop: 12,
+            }}
+            contentFit="cover"
+          />
         )}
+
+        {!!links?.length && (
+          <Text style={styles.link}>
+            {links.map((link: any) => link.url ?? link).join(", ")}
+          </Text>
+        )}
+
         <View style={styles.activityView}>
           <View style={styles.activity}>
-            <ICONS.SvgHeart/>
+            <ICONS.SvgHeart />
             <Text>0 вподобань</Text>
           </View>
+
           <View style={styles.activity}>
-            <ICONS.SvgThumbUp/>
-            <Text>0 Лайків</Text>
+            <ICONS.SvgThumbUp />
+            <Text>0 лайків</Text>
           </View>
+
           <View style={styles.activity}>
-            <ICONS.SvgEyeOpen/>
-            <Text>0 Переглядів</Text>
+            <ICONS.SvgEyeOpen />
+            <Text>0 переглядів</Text>
           </View>
         </View>
       </View>
-
     </View>
   );
 }

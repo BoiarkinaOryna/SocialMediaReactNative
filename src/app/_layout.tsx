@@ -10,6 +10,7 @@ import { UserContextProvider, useUserContext } from "@modules/auth/context/user.
 import { PublicationModalProvider } from "@modules/publication/context/modal.context";
 import { PublicationsProvider } from "@modules/publication/context/publications.context";
 import { PublicationModal } from "@modules/publication/ui/modal";
+import { GroupModalProvider } from "@modules/chats/context/group-modal.context";
 
 export default function App() {
   return (
@@ -18,11 +19,13 @@ export default function App() {
         <SafeAreaView style={{ flex: 1 }}>
           <UserContextProvider>
             <PublicationsProvider>
-              <PublicationModalProvider>
-                <StatusBar style="auto" />
-                <AppStack />
-                <PublicationModal />
-              </PublicationModalProvider>
+              <GroupModalProvider>
+                <PublicationModalProvider>
+                  <StatusBar style="auto" />
+                  <AppStack />
+                  <PublicationModal />
+                </PublicationModalProvider>
+              </GroupModalProvider>
             </PublicationsProvider>
           </UserContextProvider>
         </SafeAreaView>
@@ -38,8 +41,8 @@ function AppStack() {
     return (
       <Stack
         screenOptions={{
-            header: () => <Header />,
-            animation: "none"
+          header: () => <Header />,
+          animation: "none",
         }}
       />
     );

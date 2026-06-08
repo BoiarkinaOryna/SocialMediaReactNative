@@ -31,15 +31,13 @@ export const styles = StyleSheet.create({
   avatar: {
     width: 46,
     height: 46,
-    borderRadius: 23
+    borderRadius: 23,
   },
-
   authorName: {
     fontSize: 18,
     fontWeight: "500",
     color: COLORS.black,
   },
-
   divider: {
     height: 1,
     backgroundColor: COLORS.blue10,
@@ -62,13 +60,22 @@ export const styles = StyleSheet.create({
     fontSize: 15,
     color: COLORS.pulm,
   },
+  imagesRow: {
+    gap: 12,
+  },
+  postImage: {
+    width: 220,
+    height: 220,
+    borderRadius: 16,
+    backgroundColor: COLORS.blue10,
+  },
   activityView: {
     flexDirection: "row",
-    gap: 16
+    gap: 16,
   },
   activity: {
     flexDirection: "row",
     gap: 8,
-    alignItems: "center"
-  }
+    alignItems: "center",
+  },
 });

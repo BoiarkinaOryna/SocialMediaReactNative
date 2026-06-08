@@ -7,5 +7,5 @@ export interface InputProps extends TextInputProps {
     iconRight?: ReactNode;
     label?: string;
     labelStyle?: TextStyle;
-    error?: string
+    error?: string,
 }

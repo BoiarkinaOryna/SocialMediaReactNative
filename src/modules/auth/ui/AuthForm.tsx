@@ -23,7 +23,6 @@ export default function AuthForm({ mode, onChangeMode }: Props) {
 
   return (
     <View style={styles.container}>
-      {/* <Header /> */}
       <View style={styles.card}>
         {/* Tabs */}
         <View style={styles.tabs}>

@@ -5,7 +5,7 @@ export type EditableUserData = {
     email: string
 }
 export type AlbumData = {
-    title: string,
-    topic: string,
+    name: string,
+    theme: string,
     year: Number
 }

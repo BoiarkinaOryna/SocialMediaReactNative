@@ -12,7 +12,7 @@ import { useUserContext } from "@modules/auth/context/user.context";
 import { router } from "expo-router";
 import { useState } from "react";
 
-export function AlbumForm({isOpen, setIsOpen}: {isOpen: boolean, setIsOpen: any}){
+export function AlbumForm({isOpen, setIsOpen, refetchData}: {isOpen: boolean, setIsOpen: any, refetchData: () => any}){
     const { handleSubmit, control } = useForm<AlbumSchema>({
         resolver: yupResolver(albumValidator),
         mode: "onChange",
@@ -26,6 +26,7 @@ export function AlbumForm({isOpen, setIsOpen}: {isOpen: boolean, setIsOpen: any}
             if(token){
                 await createAlbumMutation({body: data, token}).unwrap()
                 setIsOpen(false)
+                refetchData()
             } else{
                 router.push("/auth")
             }
@@ -47,7 +48,7 @@ export function AlbumForm({isOpen, setIsOpen}: {isOpen: boolean, setIsOpen: any}
                 <Text style={styles.headline}>Створити альбом</Text>
                 <View style={styles.inputsContainer}>
                     <Controller
-                        name="title"
+                        name="name"
                         control={control}
                         render={({ field, fieldState }) => {
                             return <Input
@@ -61,7 +62,7 @@ export function AlbumForm({isOpen, setIsOpen}: {isOpen: boolean, setIsOpen: any}
                     
                     />
                     <Controller
-                        name="topic"
+                        name="theme"
                         control={control}
                         render={({field, fieldState}) => {
                             return <Input

@@ -12,6 +12,7 @@ import SvgOpenMenu from "./_icons/openMenu";
 import SvgPen from "./_icons/pen";
 import SvgPeople from "./_icons/people";
 import SvgPlus from "./_icons/plus";
+
 import SvgSettings from "./_icons/settings";
 import SvgTick from "./_icons/tick";
 import SvgTrashcan from "./_icons/trashcan";
@@ -21,6 +22,10 @@ import { SvgaddPhoto } from "./_icons/addPhoto";
 import { addEmoji } from "./_icons/addEmoji";
 import SvgHeart from "./_icons/heart";
 import SvgThumbUp from "./_icons/thupbUp";
+import { SvgSearch } from "./_icons/search";
+import { SvgNP } from "./_icons/NP";
+import { SvgPhoto } from "./_icons/Photo";
+import SvgReturn from "./_icons/return";
 
 
 export const ICONS = {
@@ -39,6 +44,7 @@ export const ICONS = {
     SvgPen,
     SvgPeople,
     SvgPlus,
+    SvgReturn,
     SvgSettings,
     SvgThumbUp,
     SvgTick,
@@ -46,5 +52,8 @@ export const ICONS = {
     SvgPlane,
     SvgPlusB,
     SvgaddPhoto,
-    addEmoji
+    addEmoji,
+    SvgSearch,
+    SvgNP,
+    SvgPhoto
 }

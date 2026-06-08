@@ -5,10 +5,14 @@ import { router } from "expo-router";
 import { useRoute } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import { useUserContext } from "@modules/auth/context/user.context";
+import { usePublicationModal } from "@modules/publication/context/modal.context";
+import { useGroupModal } from "@modules/chats/context/group-modal.context";
 
 export function Header() {
   const [currentPage, setCurrentPage] = useState<string | null>(null);
   const { setToken } = useUserContext();
+  const { open } = usePublicationModal();
+  const { openNewGroupMembers } = useGroupModal();
 
   const route = useRoute();
   const routeName = route.name;
@@ -17,7 +21,8 @@ export function Header() {
     if (
       routeName === "chats/index" ||
       routeName === "chats/groups" ||
-      routeName === "chats/contacts"
+      routeName === "chats/contacts" ||
+      routeName === "chats/chat"
     ) {
       setCurrentPage("chats");
     } else if (
@@ -55,9 +60,12 @@ export function Header() {
         <ICONS.SvgLogo />
         <ICONS.SvgLogoText />
       </View>
-      <View style={styles.buttonCon}>
+        <View style={styles.buttonCon}>
         {currentPage !== "friends" && (
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={currentPage === "chats" ? openNewGroupMembers : open}
+          >
             <ICONS.SvgPlus />
           </TouchableOpacity>
         )}

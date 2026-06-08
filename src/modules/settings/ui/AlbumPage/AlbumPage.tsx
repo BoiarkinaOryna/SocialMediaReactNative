@@ -2,7 +2,7 @@ import { ScrollView, View, Text } from "react-native";
 import { Image } from "expo-image"
 import { styles } from "./album.style";
 import { Link } from "@shared/ui/Links/Links";
-import { SettingsCard } from "../SettingsCard/SettingsCard";
+import { SettingsCard } from "../../../../shared/ui/SettingsCard/SettingsCard";
 import { Button } from "@shared/ui/Button/Button";
 import { ICONS } from "@shared/icons";
 
@@ -16,10 +16,11 @@ import { useState } from "react";
 
 export function AlbumPage({ token }: { token: string }) {
     console.log("TOKEN:", token);
-    const { data, isLoading, refetch,error } = useGetAlbumsQuery(token);
+    const { data, isLoading, refetch, error } = useGetAlbumsQuery(token);
+    console.log(JSON.stringify(data, null, 2))
     const [addImage] = useAddImageMutation();
     const getImageUrl = (img: any) =>
-        `http://192.168.0.124:3000/uploads/${
+        `http://192.168.88.205:3000/uploads/${
             img.uri || img.url || img.filename || img.path
         }`;
     const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -123,18 +124,16 @@ export function AlbumPage({ token }: { token: string }) {
                             icon={<ICONS.SvgPlus />}
                             onPress={() => {
                                 setIsOpen(true)
-                                refetch()
                             }}
                         />
                     }
                 />
             )}
 
-            {/* MODAL */}
             <AlbumForm
                 isOpen={isOpen}
                 setIsOpen={setIsOpen}
-                
+                refetchData={refetch}
             />
         </ScrollView>
     );

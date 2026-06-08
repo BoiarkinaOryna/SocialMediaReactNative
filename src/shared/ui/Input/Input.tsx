@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, TextInput, StyleSheet } from "react-native";
+import { View, Text, TextInput } from "react-native";
 import { InputProps } from "./input.types";
 import { styles } from "./input.styles";
 import { COLORS } from "@shared/constants/colors";
@@ -18,7 +18,7 @@ export function Input(props: InputProps) {
   } = props;
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, style]}>
       {label && <Text style={[styles.label, labelStyle]}>{label}</Text>}
 
       <View
@@ -31,7 +31,7 @@ export function Input(props: InputProps) {
         {iconLeft && <View style={styles.icon}>{iconLeft}</View>}
 
         <TextInput
-          style={[styles.input, multiline && styles.inputMultiline, style]}
+          style={[styles.input, multiline && styles.inputMultiline]}
           placeholderTextColor={COLORS.blue20}
           multiline={multiline}
           {...rest}
@@ -40,6 +40,8 @@ export function Input(props: InputProps) {
         {iconRight && <View style={styles.icon}>{iconRight}</View>}
       </View>
       {error && <Text style={styles.errorMessage}>{error}</Text>}
+      {error && <Text style={styles.errorMessage}>{error}</Text>}
     </View>
   );
 }
+
