@@ -1,35 +1,29 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { Image, ScrollView, Text, TextInput, View } from "react-native";
-import { Feather } from "@expo/vector-icons";
-import { styles } from "./contacts.styles";
-import { ICONS } from "@shared/icons";
-import { COLORS } from "@shared/constants/colors";
-import { Link } from "@shared/ui/Links/Links";
+import { skipToken } from "@reduxjs/toolkit/query";
 
-const CONTACTS = [
-  { id: "1", name: "Jane Cooper", avatar: require("@assets/LinaLi.jpg") },
-  { id: "2", name: "Cameron Williamson", avatar: require("@assets/LinaLi.jpg") },
-  { id: "3", name: "Leslie Alexander", avatar: require("@assets/LinaLi.jpg") },
-  { id: "4", name: "Robert Fox", avatar: require("@assets/LinaLi.jpg") },
-  { id: "5", name: "Jacob Jones", avatar: require("@assets/LinaLi.jpg") },
-  { id: "6", name: "Brooklyn Simmons", avatar: require("@assets/LinaLi.jpg") },
-  { id: "7", name: "Brooklyn Simmons", avatar: require("@assets/LinaLi.jpg") },
-];
+import { useUserContext } from "@modules/auth/context/user.context";
+import { useGetFriendsQuery } from "@modules/friends/api/friends.api";
+import { COLORS } from "@shared/constants/colors";
+import { ICONS } from "@shared/icons";
+import { Link } from "@shared/ui/Links/Links";
+import { filterBySearch } from "@modules/chats/utils/search";
+
+import { styles } from "./contacts.styles";
+
+const FALLBACK_AVATAR = require("@assets/LinaLi.jpg");
 
 export function ContactsPage() {
   const [search, setSearch] = useState("");
+  const { token } = useUserContext();
+  const { data = [], isLoading } = useGetFriendsQuery(token ?? skipToken);
 
-  const filteredContacts = useMemo(() => {
-    const normalizedSearch = search.trim().toLowerCase();
+  
+  const contacts = filterBySearch(data, search, (friend) => {
+    const name = friend.pseudonym || friend.username || `User ${friend.id}`;
 
-    if (!normalizedSearch) {
-      return CONTACTS;
-    }
-
-    return CONTACTS.filter((contact) =>
-      contact.name.toLowerCase().includes(normalizedSearch)
-    );
-  }, [search]);
+    return name;
+  });
 
   return (
     <View style={styles.mainContainer}>
@@ -79,12 +73,23 @@ export function ContactsPage() {
           contentContainerStyle={styles.listContent}
           showsVerticalScrollIndicator
         >
-          {filteredContacts.map((contact) => (
-            <View key={contact.id} style={styles.contactRow}>
-              <Image source={contact.avatar} style={styles.avatar} />
-              <Text style={styles.contactName}>{contact.name}</Text>
+          {isLoading && (
+            <View style={styles.contactRow}>
+              <Text style={styles.contactName}>Завантаження...</Text>
             </View>
-          ))}
+          )}
+
+          {contacts.map((friend) => {
+            const name = friend.pseudonym || friend.username || `User ${friend.id}`;
+            const avatar = friend.avatar ? { uri: friend.avatar } : FALLBACK_AVATAR;
+
+            return (
+              <View key={friend.id} style={styles.contactRow}>
+                <Image source={avatar} style={styles.avatar} />
+                <Text style={styles.contactName}>{name}</Text>
+              </View>
+            );
+          })}
         </ScrollView>
       </View>
     </View>

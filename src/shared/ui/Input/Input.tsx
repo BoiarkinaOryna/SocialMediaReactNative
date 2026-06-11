@@ -13,6 +13,7 @@ export function Input(props: InputProps) {
     labelStyle,
     error,
     style,
+    inputStyle,
     multiline,
     ...rest
   } = props;
@@ -31,7 +32,7 @@ export function Input(props: InputProps) {
         {iconLeft && <View style={styles.icon}>{iconLeft}</View>}
 
         <TextInput
-          style={[styles.input, multiline && styles.inputMultiline]}
+          style={[styles.input, multiline && styles.inputMultiline, inputStyle]}
           placeholderTextColor={COLORS.blue20}
           multiline={multiline}
           {...rest}
@@ -40,8 +41,6 @@ export function Input(props: InputProps) {
         {iconRight && <View style={styles.icon}>{iconRight}</View>}
       </View>
       {error && <Text style={styles.errorMessage}>{error}</Text>}
-      {error && <Text style={styles.errorMessage}>{error}</Text>}
     </View>
   );
 }
-

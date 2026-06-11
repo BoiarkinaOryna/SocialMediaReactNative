@@ -9,6 +9,7 @@ export type friend = {
     // signature: string | null
     // avatar: string | null
     pseudonym: string | null
+    avatar?: string | null
     // is_image_signature: boolean
     // is_text_signature: boolean
 }

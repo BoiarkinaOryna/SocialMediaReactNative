@@ -7,6 +7,9 @@ import { Button } from "@shared/ui/Button/Button";
 import { Input } from "@shared/ui/Input/Input";
 
 import { styles } from "./new-group-modal.styles";
+import { useCreateChatMutation } from "@modules/chats/api/chat.api";
+import { CreateChatDTO } from "./new-group-modal.types";
+import { useUserContext } from "@modules/auth/context/user.context";
 
 const MEMBERS = [
   { id: "1", name: "Aeslie Alexander" },
@@ -15,8 +18,14 @@ const MEMBERS = [
 ];
 
 export function NewGroupModal() {
+  const {token} = useUserContext()
   const { modalType, closeModal, openNewGroupMembers } = useGroupModal();
-
+  const [createChat, {data, error, isLoading}] = useCreateChatMutation()
+  
+  
+  function create(data: CreateChatDTO){
+      createChat({token: token!, contactUserId: data.contactUserId})
+  }
   return (
     <Modal visible={modalType === "new-group"} transparent>
       <View style={styles.overlay}>

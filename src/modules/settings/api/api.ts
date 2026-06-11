@@ -4,9 +4,10 @@ import { AlbumData, EditableUserData } from "./api.types";
 export const settingsApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
         updateProfile: builder.mutation<any, EditableUserData>({
-            query: (body) => ({
-                url: "settings",
+            query: ({ token, ...body }) => ({
+                url: "users/me",
                 method: "PATCH",
+                headers: token ? { Authorization: `Bearer ${token}` } : undefined,
                 body,
             })
         }),

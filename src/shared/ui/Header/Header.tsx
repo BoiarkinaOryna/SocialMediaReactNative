@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, Image, Pressable } from "react-native";
+import { View, TouchableOpacity } from "react-native";
 import { styles } from "./header.styles";
 import { ICONS } from "../../icons/";
 import { router } from "expo-router";
@@ -22,7 +22,7 @@ export function Header() {
       routeName === "chats/index" ||
       routeName === "chats/groups" ||
       routeName === "chats/contacts" ||
-      routeName === "chats/chat"
+      routeName === "chats/[chatId]"
     ) {
       setCurrentPage("chats");
     } else if (
@@ -76,10 +76,9 @@ export function Header() {
               styles.button,
               currentPage === "settings" && styles.chosenIcon,
             ]}
+            onPress={() => router.push("/settings")}
           >
-            <Pressable onPress={() => router.push("/settings")}>
-              <ICONS.SvgSettings />
-            </Pressable>
+            <ICONS.SvgSettings />
           </TouchableOpacity>
         )}
 

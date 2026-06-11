@@ -19,10 +19,18 @@ export const styles = StyleSheet.create({
         backgroundColor: COLORS.blue20,
         gap: 10
     },
+    content: {
+        gap: 8,
+    },
     text: {
         // flex: 1,
         maxWidth: 250,
         fontSize: 14
+    },
+    image: {
+        width: 180,
+        height: 180,
+        borderRadius: 8,
     },
     time: {
         width: 30,

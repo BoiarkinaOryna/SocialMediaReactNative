@@ -1,5 +1,4 @@
 import { RefreshControl, ScrollView, View } from "react-native";
-
 import { styles } from "./my-publications.styles";
 import { PublicationCard } from "../PublicationCard/PublicationCard";
 import { useUserContext } from "@modules/auth/context/user.context";

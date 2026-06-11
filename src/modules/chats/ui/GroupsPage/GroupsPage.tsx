@@ -1,58 +1,36 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { Pressable, ScrollView, Text, TextInput, View } from "react-native";
+import { skipToken } from "@reduxjs/toolkit/query";
+import { router } from "expo-router";
 
-import { Link } from "@shared/ui/Links/Links";
+import { useUserContext } from "@modules/auth/context/user.context";
+import { useGetMyChatsQuery } from "@modules/chats/api/chat.api";
 import { ICONS } from "@shared/icons";
+import { Link } from "@shared/ui/Links/Links";
+import { filterBySearch } from "@modules/chats/utils/search";
 
 import { styles } from "./groups.styles";
 
-const GROUPS = [
-  { id: "1", name: "New group", message: "Привіт! Як справи ?", date: "09:41", unread: true },
-  { id: "2", name: "Ann Ti", message: "Привіт!", date: "25.04.2025" },
-  { id: "3", name: "Ness Ty", message: "Привіт!", date: "25.04.2025" },
-  { id: "4", name: "Ann Ti", message: "Привіт!", date: "25.04.2025" },
-  { id: "5", name: "Ann Ti", message: "Привіт!", date: "25.04.2025" },
-  { id: "6", name: "Ann Ti", message: "Привіт!", date: "25.04.2025" },
-];
-
 export function GroupsPage() {
   const [search, setSearch] = useState("");
+  const { token } = useUserContext();
+  const { data, isLoading } = useGetMyChatsQuery(token ?? skipToken);
 
-  const filteredGroups = useMemo(() => {
-    const query = search.trim().toLowerCase();
+  const groups = data?.groups ?? [];
+  
+  const filteredGroups = filterBySearch(groups, search, (chat) => {
+    const name = chat.name || "";
+    const message = chat.lastMessage?.text || "";
 
-    if (!query) {
-      return GROUPS;
-    }
-
-    return GROUPS.filter(
-      ({ name, message }) =>
-        name.toLowerCase().includes(query) ||
-        message.toLowerCase().includes(query)
-    );
-  }, [search]);
+    return `${name} ${message}`;
+  });
 
   return (
     <View style={styles.mainContainer}>
       <View style={styles.linksContainer}>
-        <Link
-          text="Контакти"
-          logo
-          logoComponent={<ICONS.SvgContacts />}
-          link="/chats/contacts"
-        />
-        <Link
-          text="Повідомлення"
-          logo
-          logoComponent={<ICONS.SvgChat />}
-          link="/chats"
-        />
-        <Link
-          text="Групові чати"
-          logo
-          logoComponent={<ICONS.SvgChat />}
-          linePosition={true}
-        />
+        <Link text="Контакти" logo logoComponent={<ICONS.SvgContacts />} link="/chats/contacts" />
+        <Link text="Повідомлення" logo logoComponent={<ICONS.SvgChat />} link="/chats" />
+        <Link text="Групові чати" logo logoComponent={<ICONS.SvgChat />} linePosition />
       </View>
 
       <View style={styles.card}>
@@ -61,7 +39,7 @@ export function GroupsPage() {
             <View style={styles.titleIconWrap}>
               <ICONS.SvgChat />
               <View style={styles.badge}>
-                <Text style={styles.badgeText}>2</Text>
+                <Text style={styles.badgeText}>{groups.length}</Text>
               </View>
             </View>
             <Text style={styles.title}>Групові чати</Text>
@@ -81,29 +59,31 @@ export function GroupsPage() {
           </View>
         </View>
 
-        <View>
-          <ScrollView
-            showsVerticalScrollIndicator={false}
-            contentContainerStyle={styles.listContent}
-          >
-            {filteredGroups.map((item) => (
-              <Pressable
-                key={item.id}
-                style={[styles.groupRow, item.unread && styles.unreadRow]}
-              >
-                <ICONS.SvgNP />
+        <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.listContent}>
+          {isLoading && (
+            <View style={styles.groupRow}>
+              <Text style={styles.groupMessage}>Завантаження...</Text>
+            </View>
+          )}
 
-                <View style={styles.groupContent}>
-                  <View style={styles.groupHeader}>
-                    <Text style={styles.groupName}>{item.name}</Text>
-                    <Text style={styles.groupDate}>{item.date}</Text>
-                  </View>
-                  <Text style={styles.groupMessage}>{item.message}</Text>
+          {filteredGroups.map((chat) => (
+            <Pressable
+              key={chat.id}
+              style={styles.groupRow}
+              onPress={() => router.push(`/chats/${chat.id}`)}
+            >
+              <ICONS.SvgNP />
+
+              <View style={styles.groupContent}>
+                <View style={styles.groupHeader}>
+                  <Text style={styles.groupName}>{chat.name || `Group ${chat.id}`}</Text>
+                  <Text style={styles.groupDate}>{chat.lastMessage?.created_at?.slice(0, 10)}</Text>
                 </View>
-              </Pressable>
-            ))}
-          </ScrollView>
-        </View>
+                <Text style={styles.groupMessage}>{chat.lastMessage?.text}</Text>
+              </View>
+            </Pressable>
+          ))}
+        </ScrollView>
       </View>
     </View>
   );

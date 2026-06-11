@@ -6,8 +6,8 @@ import { styles } from "./button.styles";
 export function Button(props: ButtonProps){
     const { icon, text, textPosition, isDark, style, ...rest } = props
     return <Pressable style={[styles.container, isDark && styles.dark, style]} {...rest}>
-        { textPosition === "left" && <Text style={isDark && styles.dark}>{text}</Text> }
+        { textPosition === "left" && <Text style={[styles.text, isDark && styles.darkText]}>{text}</Text> }
         { icon }
-        { textPosition === "right" && <Text style={isDark && styles.dark}>{text}</Text> }
+        { textPosition === "right" && <Text style={[styles.text, isDark && styles.darkText]}>{text}</Text> }
     </Pressable>
 }

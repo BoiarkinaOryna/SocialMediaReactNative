@@ -20,7 +20,7 @@ export function UserContextProvider(props: PropsWithChildren) {
 	const [token, setToken] = useState<string | null>(null);
 	const [user, setUser] = useState<FullUserWithoutRelations | null>(null)
 	return (
-		<UserContext
+		<UserContext.Provider
 			value={{
 				token,
 				setToken,
@@ -28,6 +28,6 @@ export function UserContextProvider(props: PropsWithChildren) {
 				setUser
 			}}
 			{...props}
-		></UserContext>
+		></UserContext.Provider>
 	);
 }

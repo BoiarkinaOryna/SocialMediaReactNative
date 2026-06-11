@@ -3,25 +3,24 @@ import * as yup from "yup";
 export const myDataValidator = yup.object({
     name: yup
         .string()
-        .required()
-        // .nullable(),
-        .default(undefined),
+        .default(""),
     surname: yup
         .string()
-        .required()
-        .default(undefined),
-        // .nullable(),
+        .default(""),
+    pseudonym: yup
+        .string()
+        .default(""),
+    username: yup
+        .string()
+        .min(3, "Username must contain at least 3 characters")
+        .default(""),
     birthDate: yup
-        .date()
-        .required()
-        // .nullable(),
-        .default(undefined),
+        .string()
+        .default(""),
     email: yup
         .string()
         .email("Email must contain '@' and '.'")
-        .required()
-        // .nonNullable()
-        .default(undefined)
+        .default("")
 })
 
 export const albumValidator = yup.object({

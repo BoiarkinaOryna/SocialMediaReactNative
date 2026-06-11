@@ -2,6 +2,9 @@
 // import { Message } from "../ui/ChatWindow/Chat/chat.types";
 // import { connectSocket, getSocket } from "./socket";
 
+import { baseApi } from "@shared/api/api";
+import { MyChatsResponse } from "../types/chat.types"
+
 // type GetMessagesArgs = {
 //   chatId: string;
 //   token: string;
@@ -97,3 +100,99 @@
 //   useGetChatMessagesQuery,
 //   useSendMessageMutation,
 // } = chatApi;
+
+
+// const chatsApi = baseApi.injectEndpoints({
+//     endpoints: (builder) => ({
+//         getFriends: builder.query<friend[], string>({
+//             query: (token) => ({
+//                 url: "/friends/all",
+//                 headers: {Authorization: `Bearer ${token}`}
+//             })
+//         }),
+//     })
+// })
+
+const chatApi = baseApi
+	.enhanceEndpoints({
+		addTagTypes: ["Chat"],
+	})
+
+	.injectEndpoints({
+		endpoints: (build) => ({
+			createChat: build.mutation<any, { contactUserId: number[]; token: string }>({
+				query: ({contactUserId, token}) => ({
+					url: "/chats",
+					method: "POST",
+					body: {contactUserId},
+                    headers: { 
+                        Authorization: `Bearer ${token}` 
+                    }
+				}),
+
+				invalidatesTags: ["Chat"],
+			}),
+			getChatIdByUserIds: build.query<{chatId: number}, {userId: number, token: string}>({
+				query: ({userId, token}) => ({
+					url: `/chats/${userId}`,
+					method: "GET",
+                    headers: {Authorization: `Bearer ${token}`}
+				}),
+			}),
+			getChatInfo: build.query<any, {chatId: number, token: string}>({
+				query: ({chatId, token}) => ({
+					url: `/chats/chat/${chatId}`,
+					method: "GET",
+                    headers: {Authorization: `Bearer ${token}`}
+				}),
+			}),
+			getMyChats: build.query<MyChatsResponse, string>({
+				query: (token) => ({
+					url: "/chats/my",
+					method: "GET",
+					headers: { Authorization: `Bearer ${token}` },
+				}),
+				providesTags: ["Chat"],
+			}),
+            
+			// getAllChats: build.query<ChatWithContactInfo[], void>({
+			// 	query: () => ({
+			// 		url: "/chats/my",
+			// 		method: "GET",
+			// 	}),
+			// 	providesTags: ["Chat"],
+			// 	transformResponse(
+			// 		baseQueryReturnValue: ChatWithParticipantInfoResponse[],
+			// 	) {
+			// 		return baseQueryReturnValue.map((chat) => {
+			// 			const { participants, ...restChat } = chat;
+			// 			const { contactsOf, ...restUser } =
+			// 				participants[0].user;
+			// 			if (contactsOf.length > 0) {
+			// 				return {
+			// 					...restChat,
+			// 					isInContact: true,
+			// 					participant: {
+			// 						...restUser,
+			// 						contactsOf: contactsOf[0],
+			// 					},
+			// 				};
+			// 			} else {
+			// 				return {
+			// 					...restChat,
+			// 					isInContact: false,
+			// 					participant: restUser,
+			// 				};
+			// 			}
+			// 		});
+			// 	},
+			// }),
+		}),
+	});
+
+export const {
+	useCreateChatMutation,
+	useLazyGetChatIdByUserIdsQuery,
+	useLazyGetChatInfoQuery,
+	useGetMyChatsQuery
+} = chatApi;

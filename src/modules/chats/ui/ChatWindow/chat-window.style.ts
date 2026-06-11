@@ -37,6 +37,10 @@ export const styles = StyleSheet.create({
         borderRadius: 23,
         backgroundColor: COLORS.pulm
     },
+    avatarText: {
+        color: COLORS.white,
+        fontSize: 16
+    },
     messageBlock: {
         gap: 24
     },

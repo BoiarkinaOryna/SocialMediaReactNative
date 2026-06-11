@@ -8,7 +8,6 @@ import { useUserContext } from '@modules/auth/context/user.context';
 import { router } from 'expo-router';
 import { useRoute } from '@react-navigation/native';
 
-
 interface OverviewProps {
     activeTab: 'main' | 'requests' | 'recommendations' | 'friends'
 }
@@ -48,6 +47,7 @@ export function OverviewPage(props: OverviewProps) {
         console.log("my posts is refreshed")
     }, [friendsRefetch, recommendationsRefetch, requestsRefetch]);
 
+    console.log("friends data", friendsData)
     const route = useRoute();
     const routeName = route.name;
     return <View>
@@ -68,9 +68,9 @@ export function OverviewPage(props: OverviewProps) {
                             id={request.from_user_id}
                             type="request"
                             name={request.pseudonym}
-                            username={request.username}
+                            username={request.pseudonym}
                         />
-                    )))}    
+                    )))}
                 </SettingsCard>
             )}
             { (activeTab === "main" || activeTab === "recommendations") && (
@@ -101,7 +101,7 @@ export function OverviewPage(props: OverviewProps) {
                             username={friend.username}
                         />
                     )))}
-                    </SettingsCard>
+                </SettingsCard>
             )}
             
             <View style={overviewStyles.bottomSpacing} />

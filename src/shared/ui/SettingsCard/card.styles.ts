@@ -4,9 +4,9 @@ import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
     container: {
-        padding: 16,
-        gap: 16,
-        borderRadius: 15,
+        padding: 14,
+        gap: 14,
+        borderRadius: 8,
         borderWidth: 1,
         borderColor: COLORS.blue20,
         backgroundColor: COLORS.white,
@@ -17,8 +17,8 @@ export const styles = StyleSheet.create({
         alignItems: "center"
     },
     title: {
-        fontSize: 16,
-        fontWeight: 500,
+        fontSize: 13,
+        fontWeight: "600",
         color: COLORS.black
     }
 })

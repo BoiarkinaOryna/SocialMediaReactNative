@@ -36,7 +36,7 @@ export function AddParticipantModal() {
             <Input
               iconLeft={<ICONS.SvgSearch />}
               placeholder="Пошук"
-              style={styles.inputText}
+              inputStyle={styles.inputText}
             />
           </View>
 
