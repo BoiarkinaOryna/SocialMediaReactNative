@@ -32,7 +32,7 @@ export function MessagesPage() {
       chat.participants.find((item) => item.id !== user?.id) ??
       chat.participants[0];
     const name = getUserName(participant) || chat.name || "";
-    const message = chat.lastMessage?.text || "";
+    const message = chat.lastMessage?.text || (chat.lastMessage?.chat_app_messageimage?.length ? "Фото" : "");
 
     return `${name} ${message}`;
   });
@@ -100,7 +100,9 @@ export function MessagesPage() {
                       <Text style={styles.messageName}>{name}</Text>
                       <Text style={styles.messageDate}>{chat.lastMessage?.created_at?.slice(0, 10)}</Text>
                     </View>
-                    <Text style={styles.messageText}>{chat.lastMessage?.text}</Text>
+                    <Text style={styles.messageText}>
+                      {chat.lastMessage?.text || (chat.lastMessage?.chat_app_messageimage?.length ? "Фото" : "")}
+                    </Text>
                   </View>
                 </View>
               </Pressable>

@@ -11,16 +11,15 @@ import { useUserContext } from "@modules/auth/context/user.context";
 import { ClientSocket } from "@shared/api/socket/socket";
 import { useLazyGetChatInfoQuery } from "@modules/chats/api/chat.api";
 
-export function ChatWindow(params: {chatId: number}) {
-  const { token, user } = useUserContext()
+export function ChatWindow(params: { chatId: number }) {
+  const { token, user } = useUserContext();
   if (!user || !token) return null;
-  const { chatId } = params
+  const { chatId } = params;
 
   const [text, setText] = useState("");
 
   const handleSend = () => {
     if (!text.trim()) return;
-    
 
     ClientSocket.emit("sendMessage", { chatId, text }, (response: any) => {
       if (response?.status === "error") {
@@ -60,8 +59,7 @@ export function ChatWindow(params: {chatId: number}) {
     setText("");
   };
 
-  const [chatMessages, setChatMessages] = useState<any[]>([])
-  
+  const [chatMessages, setChatMessages] = useState<any[]>([]);
 
   // ClientSocket.on("newMessage", (message) => {
   //     console.log("message:", message);
@@ -80,19 +78,19 @@ export function ChatWindow(params: {chatId: number}) {
     };
   }, [chatId]);
 
-  const [getChatInfo, {data, error, isLoading}] = useLazyGetChatInfoQuery()
+  const [getChatInfo, { data, error, isLoading }] = useLazyGetChatInfoQuery();
   // const {data, error, isLoading} = useGetChatInfoQuery({chatId, token})
 
   useEffect(() => {
     getChatInfo({ chatId, token });
   }, [chatId]);
-  
+
   // обработка данных
   useEffect(() => {
     if (!data) return;
-  
+
     console.log("info is here", data);
-  
+
     setChatMessages(data.chat_app_message);
   }, [data]);
 
@@ -110,7 +108,9 @@ export function ChatWindow(params: {chatId: number}) {
             </View>
 
             <View>
-              <Text>{data?.name} {chatId}</Text>
+              <Text>
+                {data?.name} {chatId}
+              </Text>
               <Text>online</Text>
             </View>
           </View>
@@ -130,10 +130,7 @@ export function ChatWindow(params: {chatId: number}) {
             onChangeText={setText}
           />
 
-          <Button
-            icon={<ICONS.SvgMound />}
-            onPress={handlePickAndSendPhoto}
-          />
+          <Button icon={<ICONS.SvgMound />} onPress={handlePickAndSendPhoto} />
 
           <Button
             isDark

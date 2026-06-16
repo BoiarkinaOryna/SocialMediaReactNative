@@ -50,10 +50,6 @@ export function Chat({ messages, userId }: Props) {
   );
 }
 
-
-
-
-
 /*
 
 import { View, Text, Pressable, FlatList } from "react-native";

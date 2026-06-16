@@ -1,6 +1,6 @@
 import { Message } from "../chat.types";
 
 export interface ChatMessageProps {
-    data: Message,
-    isMy: boolean
+  data: Message;
+  isMy: boolean;
 }
