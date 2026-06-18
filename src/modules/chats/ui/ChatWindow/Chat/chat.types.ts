@@ -1,10 +1,13 @@
-import { FullUserWithoutRelations } from "@shared/types/user.types"
-
 export type Message = {
+  id: number;
+  text: string | null;
+  created_at: Date;
+  sender_id: number;
+  chat_id: any;
+  readers?: any[];
+  chat_app_messageimage?: {
     id: number;
-    text: string;
-    created_at: Date;
-    sender_id: number;
-    chat_id: any;
-    readers?: any[];
-  };
+    image: string;
+    message_id: number;
+  }[];
+};

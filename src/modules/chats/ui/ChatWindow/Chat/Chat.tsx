@@ -28,28 +28,29 @@ export function Chat({ messages, userId }: Props) {
   });
 
   return (
-    <ScrollView contentContainerStyle={styles.chatContainer}>
-      {groupedMessages.map((group, i) => (
-        <View
-        key={i}
-        style={[
-          styles.sameSenderMessages,
-          userId === group[0].sender_id && styles.myMessages,
-        ]}
-        >
-          {group.map((msg) => (
-            <View>
+    <View style={{height: 500}}>
+      <ScrollView
+        contentContainerStyle={styles.chatContainer}
+      >
+        {groupedMessages.map((group, i) => (
+          <View
+            key={i}
+            style={[
+              styles.sameSenderMessages,
+              userId === group[0].sender_id && styles.myMessages,
+            ]}
+          >
+            {group.map((msg) => (
               <ChatMessage
-              key={msg.id}
-              data={msg}
-              isMy={msg.sender_id === userId}
+                key={msg.id}
+                data={msg}
+                isMy={msg.sender_id === userId}
               />
-              {/* <Text>{userId} {group[0].sender_id}</Text> */}
-            </View>
-          ))}
-        </View>
-      ))}
-    </ScrollView>
+            ))}
+          </View>
+        ))}
+      </ScrollView>
+    </View>
   );
 }
 

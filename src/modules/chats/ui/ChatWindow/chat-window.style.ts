@@ -50,7 +50,8 @@ export const styles = StyleSheet.create({
         right: 0
     },
     messageBlock: {
-        gap: 24
+        gap: 24,
+        // flex: 1
     },
     sendMessageBlock: {
         // flex: 1,

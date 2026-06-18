@@ -11,6 +11,8 @@ import { ClientSocket } from "@shared/api/socket/socket";
 import { useLazyGetChatInfoQuery } from "@modules/chats/api/chat.api";
 import { API_BASE_URL } from "@shared/api/api";
 import { GroupOptionsModal } from "../GroupModals/GroupOptionsModal/GroupOptionsModal";
+import * as ImagePicker from "expo-image-picker";
+
 
 
 export function ChatWindow(params: {chatId: number}) {
@@ -25,9 +27,40 @@ export function ChatWindow(params: {chatId: number}) {
 
   const handleSend = () => {
     if (!text.trim()) return;
-    
 
-    ClientSocket.emit("sendMessage", {chatId, text});
+    ClientSocket.emit("sendMessage", { chatId, text }, (response: any) => {
+      if (response?.status === "error") {
+        console.log("send message error:", response.message);
+      }
+    });
+    setText("");
+  };
+
+  const handlePickAndSendPhoto = async () => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ["images"],
+      base64: true,
+      quality: 0.7,
+    });
+
+    if (result.canceled) return;
+
+    const image = result.assets[0]?.base64;
+    if (!image) return;
+
+    ClientSocket.emit(
+      "sendMessage",
+      {
+        chatId,
+        text: text.trim(),
+        images: [image],
+      },
+      (response: any) => {
+        if (response?.status === "error") {
+          console.log("send image message error:", response.message);
+        }
+      },
+    );
 
     setText("");
   };
@@ -131,9 +164,7 @@ export function ChatWindow(params: {chatId: number}) {
               onChangeText={setText}
             />
 
-            <Button
-              icon={<ICONS.SvgMound />}
-            />
+            <Button icon={<ICONS.SvgMound />} onPress={handlePickAndSendPhoto} />
 
             <Button
               isDark
