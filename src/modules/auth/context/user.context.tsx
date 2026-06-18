@@ -6,7 +6,7 @@ interface UserContextContract {
     token: string | null,
     setToken: (token: string | null) => void,
 	user: FullUserWithoutRelations | null,
-	setUser: (user: FullUserWithoutRelations) => void
+	setUser: (user: FullUserWithoutRelations | null) => void
 }
 
 export const UserContext = createContext<null | UserContextContract>(null);

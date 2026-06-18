@@ -3,25 +3,22 @@ import * as yup from "yup";
 export const myDataValidator = yup.object({
     name: yup
         .string()
-        .required()
+        .required(),
         // .nullable(),
-        .default(undefined),
     surname: yup
         .string()
-        .required()
-        .default(undefined),
+        .required(),
         // .nullable(),
     birthDate: yup
-        .date()
-        .required()
+        // .date()
+        .string()
+        .required(),
         // .nullable(),
-        .default(undefined),
     email: yup
         .string()
         .email("Email must contain '@' and '.'")
         .required()
         // .nonNullable()
-        .default(undefined)
 })
 
 export const albumValidator = yup.object({
@@ -32,6 +29,7 @@ export const albumValidator = yup.object({
         .string()
         .required(),
     year: yup
+        // .string()
         .number()
         .required()
         .max(2030, "Year must be before 2030")

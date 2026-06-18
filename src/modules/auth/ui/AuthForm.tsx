@@ -2,6 +2,7 @@ import { View, Text, TextInput, TouchableOpacity } from "react-native";
 import { useAuthForm } from "../hooks/useAuthForm";
 import { styles } from "./auth.styles";
 import { Input } from "@shared/ui/Input/Input";
+import { useEffect } from "react";
 
 type Props = {
   mode: "login" | "register";
@@ -19,7 +20,11 @@ export default function AuthForm({ mode, onChangeMode }: Props) {
     isComplete
   } = useAuthForm(mode);
 
-  isComplete && onChangeMode?.("login")
+  useEffect(() => {
+    if (isComplete) {
+      onChangeMode?.("login");
+    }
+  }, [isComplete]);
 
   return (
     <View style={styles.container}>

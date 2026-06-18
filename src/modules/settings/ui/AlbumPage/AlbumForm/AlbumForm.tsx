@@ -4,7 +4,7 @@ import { ICONS } from "@shared/icons";
 import { Button } from "@shared/ui/Button/Button";
 import { Input } from "@shared/ui/Input/Input";
 import { Controller, useForm } from 'react-hook-form'
-import { AlbumSchema, MyDataSchema } from "@modules/settings/types/my-data.types";
+import { AlbumSchema } from "@modules/settings/types/my-data.types";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { albumValidator } from "@modules/settings/models/my-data.validation";
 import { useCreateAlbumMutation } from "@modules/settings/api/api";

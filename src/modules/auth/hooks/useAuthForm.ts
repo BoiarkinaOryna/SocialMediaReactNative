@@ -7,7 +7,6 @@ import {
   LoginDto,
   RegisterDto,
 } from "../types/auth.schema";
-
 import {
   useLazyMeQuery,
   useLoginMutation,
@@ -28,7 +27,7 @@ type AuthFormState = {
 export const useAuthForm = (mode: Mode) => {
   const { setToken, setUser } = useUserContext()
   const isRegister = mode === "register";
-  const [ isComplete, setIsComplete ] = useState<boolean>(false)
+  const [isComplete, setIsComplete] = useState<boolean>(false);
 
   const [form, setForm] = useState<AuthFormState>({
     email: "",
@@ -39,11 +38,15 @@ export const useAuthForm = (mode: Mode) => {
   const [ getUserData ] = useLazyMeQuery()
 
   const [errors, setErrors] = useState<Record<string, string>>({});
-  
-  const [login, { isLoading: loginLoading }] = useLoginMutation();
-  const [register, { isLoading: registerLoading }] = useRegisterMutation();
 
-  const handleChange = (key: keyof AuthFormState, value: string) => {
+  const [login, { isLoading: loginLoading }] = useLoginMutation();
+  const [register, { isLoading: registerLoading }] =
+    useRegisterMutation();
+
+  const handleChange = (
+    key: keyof AuthFormState,
+    value: string
+  ) => {
     setForm((prev) => ({ ...prev, [key]: value }));
   };
 
@@ -52,7 +55,6 @@ export const useAuthForm = (mode: Mode) => {
       setErrors({});
 
       const schema = isRegister ? registerSchema : loginSchema;
-
       await schema.validate(form, { abortEarly: false });
 
       if (isRegister) {
@@ -98,7 +100,9 @@ export const useAuthForm = (mode: Mode) => {
         setErrors(formatted);
       } else {
         setErrors({
-          general: `Server error ${"status" in err ? err.status : err.message}`,
+          general: `Server error ${
+            "status" in err ? err.status : err.message
+          }`,
         });
       }
     }
@@ -111,6 +115,6 @@ export const useAuthForm = (mode: Mode) => {
     handleSubmit,
     isLoading: loginLoading || registerLoading,
     isRegister,
-    isComplete
+    isComplete,
   };
 };

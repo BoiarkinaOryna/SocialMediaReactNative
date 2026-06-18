@@ -41,8 +41,8 @@ function AppStack() {
     return (
       <Stack
         screenOptions={{
-          header: () => <Header />,
-          animation: "none",
+            header: () => <Header />,
+            animation: "none"
         }}
       />
     );

@@ -12,13 +12,12 @@ import { useEffect, useState } from "react";
 // import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
+
 export function FirstVisitModal() {
     const [ isOpen, setIsOpen ] = useState<boolean>(false)
     
     const { token, user, setUser } = useUserContext()
     const [ getUserData ] = useLazyMeQuery()
-
-    // const userAuthData = useGetUserData()
     
     const { handleSubmit, control } = useForm<firstVisitSchema>({
       resolver: yupResolver(firstVisitValidator),

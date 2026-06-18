@@ -45,8 +45,10 @@ export function PersonalInfoPage(){
     
     console.log("user in personal info", user, user?.avatar)
     async function sendForm(data: MyDataSchema){
+        console.log("button pressed")
         try{
-            const response = await update(data)
+            token && await update({body: data, token})
+            refetchUser(true);
         } catch(error){
             console.log("error:", error)
         }
