@@ -60,7 +60,7 @@ export function Header() {
         <ICONS.SvgLogo />
         <ICONS.SvgLogoText />
       </View>
-        <View style={styles.buttonCon}>
+      <View style={styles.buttonCon}>
         {currentPage !== "friends" && (
           <TouchableOpacity
             style={styles.button}
@@ -93,15 +93,6 @@ export function Header() {
           <ICONS.SvgBack />
         </TouchableOpacity>
       </View>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => {
-            setToken(null);
-            router.push("/auth");
-          }}
-        >
-          <ICONS.SvgBack />
-        </TouchableOpacity>
-      </View>
+    </View>
   );
 }

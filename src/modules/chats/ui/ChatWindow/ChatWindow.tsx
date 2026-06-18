@@ -18,12 +18,18 @@ import * as ImagePicker from "expo-image-picker";
 export function ChatWindow(params: {chatId: number}) {
 
   const [isOptionsModalOpen, setIsOptionsModalOpen] = useState<boolean>(false)
+  const [secondPersonalChatUser, setSecondPersonalChatUser] = useState<any>(null);
+  const [chatMessages, setChatMessages] = useState<any[]>([])
+  const [onlineUserIds, setOnlineUserIds] = useState<number[]>([])
+  const [isOnlineText, setIsOnlineText] = useState<string | null>(null)
+
+  const [text, setText] = useState("");
+
 
   const { token, user } = useUserContext()
   if (!user || !token) return
   const { chatId } = params
 
-  const [text, setText] = useState("");
 
   const handleSend = () => {
     if (!text.trim()) return;
@@ -65,7 +71,6 @@ export function ChatWindow(params: {chatId: number}) {
     setText("");
   };
 
-  const [chatMessages, setChatMessages] = useState<any[]>([])
   const getImageUrl = (img: string) => {
       const uri = `${API_BASE_URL}/uploads/${img}`
       console.log("uri", uri)
@@ -91,23 +96,97 @@ export function ChatWindow(params: {chatId: number}) {
   }, [chatId]);
   
 
-  const [secondPersonalChatUser, setSecondPersonalChatUser] = useState<any>(null);
+  // useEffect(() => {
+  //   if (!data) return;
+
+  //   const users = data.chat_app_chat_users;
+
+  //   if (!data.is_group){
+  //     const secondUser = users.find(
+  //       (chatUser: any) => chatUser.user_id !== user.id
+  //     );
+  
+  //     console.log("1 selected user", secondUser);
+  //     setSecondPersonalChatUser(secondUser);
+  //     console.log("2 selected user", secondUser, secondPersonalChatUser);
+
+  
+  //   }
+  //   ClientSocket.emit(
+  //     "getOnlineUsers",
+  //     users.map((user: any) => {
+  //       return user.user_id
+  //     }),
+  //     (response: any) => {
+  //       if (response?.status === "error") {
+  //         console.log("get online users error:", response.message);
+  //       } else{
+  //         setOnlineUserIds(response.userIds)
+  //       }
+  //     },
+  //   )
+  //   console.log("online users", onlineUserIds)
+
+  //   if (data.is_group){
+  //     setIsOnlineText(`${data.chat_app_chat_users.length} учасники, ${onlineUserIds.length} в мережі`)
+
+  //   } else {
+
+  //       if (onlineUserIds.includes(secondPersonalChatUser.user_id)){
+  //         setIsOnlineText("в мережі")
+  //       } else {
+  //         setIsOnlineText("офлайн")
+  //       }
+  //   }
+
+  //   setChatMessages(data.chat_app_message);
+  // }, [data, user.id]);
 
   useEffect(() => {
     if (!data) return;
 
     const users = data.chat_app_chat_users;
 
-    const secondUser = users.find(
-      (chatUser: any) => chatUser.user_id !== user.id
+    if (!data.is_group) {
+      const secondUser = users.find(
+        (chatUser: any) => chatUser.user_id !== user.id
+      );
+
+      setSecondPersonalChatUser(secondUser);
+    }
+
+    ClientSocket.emit(
+      "getOnlineUsers",
+      users.map((u: any) => u.user_id),
+      (response: any) => {
+        if (response?.status === "error") {
+          console.log("get online users error:", response.message);
+        } else {
+          setOnlineUserIds(response.userIds);
+        }
+      }
     );
-
-    setSecondPersonalChatUser(secondUser ?? null);
-
-    console.log("selected user", secondUser);
 
     setChatMessages(data.chat_app_message);
   }, [data, user.id]);
+
+  useEffect(() => {
+    if (!data || data.is_group || !secondPersonalChatUser) return;
+
+    if (onlineUserIds.includes(secondPersonalChatUser.user_id)) {
+      setIsOnlineText("в мережі");
+    } else {
+      setIsOnlineText("офлайн");
+    }
+  }, [secondPersonalChatUser, onlineUserIds, data]);
+
+  useEffect(() => {
+    if (!data || !data.is_group) return;
+
+    setIsOnlineText(
+      `${data.chat_app_chat_users.length} учасники, ${onlineUserIds.length} в мережі`
+    );
+  }, [onlineUserIds, data]);
   
   const groupName = () => {
     if (data && data.is_group){
@@ -143,7 +222,7 @@ export function ChatWindow(params: {chatId: number}) {
                     groupName()
                   }
                 </Text>
-                <Text>online</Text>
+                <Text>{isOnlineText}</Text>
               </View>
             </View>
           </View>
