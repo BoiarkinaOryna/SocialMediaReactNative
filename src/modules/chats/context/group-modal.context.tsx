@@ -10,6 +10,9 @@ import { AddParticipantModal } from "@modules/chats/ui/GroupModals/AddParticipan
 import { EditGroupModal } from "@modules/chats/ui/GroupModals/EditGroupModal/EditGroupModal";
 import { NewGroupMembersModal } from "@modules/chats/ui/GroupModals/NewGroupMembersModal/NewGroupMembersModal";
 import { NewGroupModal } from "@modules/chats/ui/GroupModals/NewGroupModal/NewGroupModal";
+import { useGetFriendsQuery } from "@modules/friends/api/friends.api";
+import { useUserContext } from "@modules/auth/context/user.context";
+import { friend } from "@modules/friends/types/friends.types";
 
 type GroupModalType =
   | null
@@ -25,14 +28,19 @@ interface GroupModalContextValue {
   openEditGroup: () => void;
   openAddParticipant: () => void;
   closeModal: () => void;
+  selectedIds: number[];
+  setSelectedIds: React.Dispatch<React.SetStateAction<number[]>>;
+  PARTICIPANTS: friend[] | undefined;
 }
 
 const GroupModalContext = createContext<GroupModalContextValue | null>(null);
 
 export function GroupModalProvider(props: PropsWithChildren) {
   const { children } = props;
-
+  const { token } = useUserContext()
   const [modalType, setModalType] = useState<GroupModalType>(null);
+  const [selectedIds, setSelectedIds] = useState<number[]>([]);
+  const {data: PARTICIPANTS, error, isLoading} = useGetFriendsQuery(token!)
 
   function openNewGroupMembers() {
     setModalType("new-group-members");
@@ -62,8 +70,11 @@ export function GroupModalProvider(props: PropsWithChildren) {
       openEditGroup,
       openAddParticipant,
       closeModal,
+      selectedIds,
+      setSelectedIds,
+      PARTICIPANTS
     }),
-    [modalType]
+    [modalType, selectedIds]
   );
 
   return (

@@ -1,6 +1,7 @@
 import { FullUserWithoutRelations } from "@shared/types/user.types";
 import { createContext, PropsWithChildren, useContext, useState } from "react";
 
+
 interface UserContextContract {
     token: string | null,
     setToken: (token: string | null) => void,

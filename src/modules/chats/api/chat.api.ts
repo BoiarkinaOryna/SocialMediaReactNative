@@ -1,117 +1,5 @@
-// import { baseApi } from "@shared/api/api";
-// import { Message } from "../ui/ChatWindow/Chat/chat.types";
-// import { connectSocket, getSocket } from "./socket";
-
 import { baseApi } from "@shared/api/api";
-import { ChatWithChatParticipantsDto, MyChatsResponse } from "../types/chat.types"
-
-// type GetMessagesArgs = {
-//   chatId: string;
-//   token: string;
-// };
-
-// export const chatApi = baseApi.injectEndpoints({
-//   overrideExisting: true,
-
-//   endpoints: (build) => ({
-//     getChatMessages: build.query<Message[], GetMessagesArgs>({
-//       queryFn: async ({ chatId, token }) => {
-//         const socket = connectSocket(token);
-
-//         socket.emit("join_chat", { chatId });
-//         socket.emit("get_messages", { chatId });
-
-//         return { data: [] };
-//       },
-
-//       async onCacheEntryAdded(arg, api) {
-//         await api.cacheDataLoaded;
-
-//         const socket = getSocket();
-
-//         const handleMessages = (data: Message[]) => {
-//           api.updateCachedData(() => data);
-//         };
-
-//         const handleNewMessage = (message: Message) => {
-//           if (String(message.chatId) !== arg.chatId) return;
-
-//           api.updateCachedData((draft) => {
-//             const exists = draft.find((m) => m.id === message.id);
-//             if (!exists) draft.push(message);
-//           });
-//         };
-
-//         socket.on("messages", handleMessages);
-//         socket.on("new_message", handleNewMessage);
-
-//         return () => {
-//           socket.off("messages", handleMessages);
-//           socket.off("new_message", handleNewMessage);
-//         };
-//       },
-//     }),
-
-//     sendMessage: build.mutation<
-//       { ok: true },
-//       { chatId: string; text: string; senderId: number; token: string }
-//     >({
-//       queryFn: async ({ chatId, text, senderId }) => {
-//         const socket = getSocket();
-
-//         socket.emit("send_message", {
-//           chatId,
-//           text,
-//           senderId,
-//         });
-
-//         return { data: { ok: true } };
-//       },
-
-      // async onQueryStarted(arg, { dispatch, queryFulfilled }) {
-      //   const patch = dispatch(
-      //     chatApi.util.updateQueryData(
-      //       "getChatMessages",
-      //       { chatId: arg.chatId, token: arg.token },
-            // (draft) => {
-            //   draft.push({
-            //     created_at: "",
-            //     chat: arg.chatId,
-            //     text: arg.text,
-            //     sender: {
-            //       id: arg.senderId,
-            //     },
-            //   });
-            // }
-        //   )
-        // );
-
-        // try {
-        //   await queryFulfilled;
-        // } catch {
-        //   patch.undo();
-        // }
-//       },
-//     }),
-//   }),
-// });
-
-// export const {
-//   useGetChatMessagesQuery,
-//   useSendMessageMutation,
-// } = chatApi;
-
-
-// const chatsApi = baseApi.injectEndpoints({
-//     endpoints: (builder) => ({
-//         getFriends: builder.query<friend[], string>({
-//             query: (token) => ({
-//                 url: "/friends/all",
-//                 headers: {Authorization: `Bearer ${token}`}
-//             })
-//         }),
-//     })
-// })
+import { ChatWithChatParticipantsDto, CreateChatDTO, MyChatsResponse } from "../types/chat.types"
 
 const chatApi = baseApi
 	.enhanceEndpoints({
@@ -120,11 +8,11 @@ const chatApi = baseApi
 
 	.injectEndpoints({
 		endpoints: (build) => ({
-			createChat: build.mutation<any, {contactUserId: number, token: string}>({
-				query: ({contactUserId, token}) => ({
+			createChat: build.mutation<any, {contactData: CreateChatDTO, token: string}>({
+				query: ({contactData, token}) => ({
 					url: "/chats",
 					method: "POST",
-					body: {contactUserId},
+					body: {contactData},
                     headers: { 
                         Authorization: `Bearer ${token}` 
                     }
@@ -154,6 +42,13 @@ const chatApi = baseApi
 				}),
 				providesTags: ["Chat"],
 			}),
+			deleteChat: build.mutation<any, {id: number, token: string}>({
+				query:({id, token}) => ({
+					url: `/chats/${id}`,
+					method: "DELETE",
+                    headers: {Authorization: `Bearer ${token}`}
+				})
+			})
             
 			// getAllChats: build.query<ChatWithContactInfo[], void>({
 			// 	query: () => ({
@@ -194,5 +89,6 @@ export const {
 	useCreateChatMutation,
 	useLazyGetChatIdByUserIdsQuery,
 	useLazyGetChatInfoQuery,
-	useGetMyChatsQuery
+	useGetMyChatsQuery,
+	useDeleteChatMutation,
 } = chatApi;

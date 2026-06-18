@@ -13,19 +13,20 @@ import {
 } from "@modules/settings/api/api";
 import { AlbumForm } from "./AlbumForm/AlbumForm";
 import { useState } from "react";
+import { API_BASE_URL } from "@shared/api/api";
 
 export function AlbumPage({ token }: { token: string }) {
     console.log("TOKEN:", token);
     const { data, isLoading, refetch, error } = useGetAlbumsQuery(token);
     console.log(JSON.stringify(data, null, 2))
     const [addImage] = useAddImageMutation();
-    const getImageUrl = (img: any) =>
-        `http://192.168.88.205:3000/uploads/${
-            img.uri || img.url || img.filename || img.path
-        }`;
+    const getImageUrl = (img: any) => {
+        return `${API_BASE_URL}/uploads/${
+            img.uri || img.url || img.filename || img.path || img.image
+        }`
+    }
     const [isOpen, setIsOpen] = useState<boolean>(false);
-    console.log("ALBUMS RAW DATA:", data);
-    console.log(error)
+
     const albums = Array.isArray(data)
         ? data
         : data?.data || data?.albums || [];
@@ -90,8 +91,8 @@ export function AlbumPage({ token }: { token: string }) {
                         }
                     >
                         <View style={styles.albumImagesContainer}>
-                            {album.images?.length ? (
-                                album.images.map((img: any) => (
+                            {album.profile_app_albumimage?.length ? (
+                                album.profile_app_albumimage.map((img: any) => (
                                     <View
                                         key={img.id}
                                         style={styles.albumImageContainer}

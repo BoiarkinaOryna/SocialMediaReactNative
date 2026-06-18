@@ -56,6 +56,7 @@ const friendsApi = baseApi.injectEndpoints({
 
 export const {
     useGetFriendsQuery,
+    useLazyGetFriendsQuery,
     useGetRecommendationsQuery,
     useGetRequestsQuery,
     useSendRequestMutation,

@@ -1,10 +1,4 @@
 import { RefreshControl, ScrollView, View } from "react-native";
-<<<<<<<<< Temporary merge branch 1
-// import { usePublications } from "@modules/publication/context/publications.context";
-// import { PublicationCard } from "@modules/publication/ui/PublicationCard/PublicationCard";
-=========
-
->>>>>>>>> Temporary merge branch 2
 import { styles } from "./my-publications.styles";
 import { PublicationCard } from "../PublicationCard/PublicationCard";
 import { useUserContext } from "@modules/auth/context/user.context";

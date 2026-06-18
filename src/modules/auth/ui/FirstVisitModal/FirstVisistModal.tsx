@@ -9,6 +9,8 @@ import { Button } from "@shared/ui/Button/Button";
 import { useFirstVisitMutation, useLazyMeQuery } from "@modules/auth/api/auth.api";
 import { useUserContext } from "@modules/auth/context/user.context";
 import { useEffect, useState } from "react";
+// import AsyncStorage from "@react-native-async-storage/async-storage";
+
 
 export function FirstVisitModal() {
     const [ isOpen, setIsOpen ] = useState<boolean>(false)
@@ -30,6 +32,8 @@ export function FirstVisitModal() {
       if (!token) return
 
       const newUser = await getUserData(token).unwrap()
+      // await AsyncStorage.setItem("username", newUser.username!)
+      // newUser.pseudonym && await AsyncStorage.setItem("pseudonym", newUser.pseudonym)
       setUser(newUser)
     }
 

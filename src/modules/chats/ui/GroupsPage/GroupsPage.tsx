@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Pressable, ScrollView, Text, TextInput, View } from "react-native";
+import { Pressable, ScrollView, Text, TextInput, View, Image } from "react-native";
 import { skipToken } from "@reduxjs/toolkit/query";
 import { router } from "expo-router";
 
@@ -9,6 +9,7 @@ import { ICONS } from "@shared/icons";
 import { Link } from "@shared/ui/Links/Links";
 
 import { styles } from "./groups.styles";
+import { API_BASE_URL } from "@shared/api/api";
 
 export function GroupsPage() {
   const [search, setSearch] = useState("");
@@ -71,7 +72,7 @@ export function GroupsPage() {
               style={styles.groupRow}
               onPress={() => router.push(`/chats/${chat.id}`)}
             >
-              <ICONS.SvgNP />
+              <Image source={{ uri: `${API_BASE_URL}/uploads/${chat?.avatar}` }} style={styles.groupAvatar}/>
 
               <View style={styles.groupContent}>
                 <View style={styles.groupHeader}>

@@ -1,4 +1,6 @@
 import { useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import {
   loginSchema,
   registerSchema,
@@ -71,8 +73,15 @@ export const useAuthForm = (mode: Mode) => {
 
         const response = await login(data).unwrap();
         console.log("new token:", response.token)
+        await AsyncStorage.setItem("token", response.token);
         setToken(response.token)
         const newUser = await getUserData(response.token).unwrap()
+        // await AsyncStorage.setItem("email", newUser.email);
+        // newUser.pseudonym && await AsyncStorage.setItem("pseudonym", newUser.pseudonym)
+        // newUser.username && await AsyncStorage.setItem("username", newUser.username)
+        // newUser.avatar && await AsyncStorage.setItem("avatar", newUser.avatar)
+        // newUser.first_name && await AsyncStorage.setItem("first_name", newUser.first_name)
+        // newUser.last_name && await AsyncStorage.setItem("last_name", newUser.last_name)
         setUser(newUser)
         router.push("/(main)/main")
       }

@@ -6,6 +6,8 @@ export type FullUserWithoutRelations = {
     email: string,
     signature?: string,
     avatar?: string,
+    first_name?: string | null,
+    last_name?: string | null
 }
 // Relations:
     // post?: Post[],

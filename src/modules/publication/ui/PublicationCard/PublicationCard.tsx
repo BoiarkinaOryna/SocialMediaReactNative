@@ -6,6 +6,7 @@ import { styles } from "./publication-card.styles";
 import { Post } from "@modules/publication/types/publication.types";
 
 import { ICONS } from "@shared/icons";
+import { API_BASE_URL } from "@shared/api/api";
 
 interface PublicationCardProps {
   publication: Post;
@@ -45,7 +46,7 @@ export function PublicationCard({ publication }: PublicationCardProps) {
         {imageName && (
           <Image
             source={{
-              uri: `http://192.168.88.205:3000/uploads/${imageName}`,
+              uri: `${API_BASE_URL}/uploads/${imageName}`,
             }}
             style={{
               width: "100%",

@@ -41,20 +41,23 @@ export function Card({
         // console.log("user id", id)
         const chatIdObj = await getChatId({userId: id, token: token!})
         // console.log("chat id", chatIdObj, chatIdObj?.data?.chatId)
+        console.log(1)
+        console.log("chat1", data)
         if (chatIdObj.data?.chatId && !isNaN(chatIdObj.data?.chatId)){
-            console.log(1)
             router.push(`/chats/${chatIdObj.data?.chatId}`)
             return
-        } else if (isChatIdError){
-            if ("status" in ChatIdError && ChatIdError.status == 404){
-                await createChat({contactUserId: id, token: token!})
-                console.log("chat", data)
+        } else{
+            console.log(2)
+            // if ("status" in ChatIdError && ChatIdError.status == 404){
+            console.log("id", id)
+                await createChat({contactData: {contactUserId: [id]}, token: token!})
+                console.log("chat2", data)
                 if (!error){
-                    console.log(2)
+                    console.log(3)
                     router.push(`/chats/${data.id}`)
                     return
                 }
-            }
+            // }
             console.log("ChatIdError", ChatIdError)
         }
     }

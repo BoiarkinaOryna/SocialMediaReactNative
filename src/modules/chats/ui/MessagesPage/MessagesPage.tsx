@@ -9,6 +9,7 @@ import { COLORS } from "@shared/constants/colors";
 import { ICONS } from "@shared/icons";
 import { Link } from "@shared/ui/Links/Links";
 import { styles } from "./messages.styles";
+import { API_BASE_URL } from "@shared/api/api";
 
 const FALLBACK_AVATAR = require("@assets/LinaLi.jpg");
 
@@ -84,7 +85,7 @@ export function MessagesPage() {
               chat.participants[0];
             const name = getUserName(participant) || chat.name || `Chat ${chat.id}`;
             const avatar = participant?.avatar
-              ? { uri: participant.avatar }
+              ? { uri: `${API_BASE_URL}/uploads/${participant.avatar}` }
               : FALLBACK_AVATAR;
 
             return (

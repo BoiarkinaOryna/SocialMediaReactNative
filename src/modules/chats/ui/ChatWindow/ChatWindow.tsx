@@ -1,4 +1,4 @@
-import { View, Text, Pressable } from "react-native";
+import { View, Text, Pressable, Image, Modal } from "react-native";
 import { router } from "expo-router";
 import { useEffect, useState } from "react";
 import { ICONS } from "@shared/icons";
@@ -9,8 +9,14 @@ import { styles } from "./chat-window.style";
 import { useUserContext } from "@modules/auth/context/user.context";
 import { ClientSocket } from "@shared/api/socket/socket";
 import { useLazyGetChatInfoQuery } from "@modules/chats/api/chat.api";
+import { API_BASE_URL } from "@shared/api/api";
+import { GroupOptionsModal } from "../GroupModals/GroupOptionsModal/GroupOptionsModal";
+
 
 export function ChatWindow(params: {chatId: number}) {
+
+  const [isOptionsModalOpen, setIsOptionsModalOpen] = useState<boolean>(false)
+
   const { token, user } = useUserContext()
   if (!user || !token) return
   const { chatId } = params
@@ -27,12 +33,12 @@ export function ChatWindow(params: {chatId: number}) {
   };
 
   const [chatMessages, setChatMessages] = useState<any[]>([])
-  
+  const getImageUrl = (img: string) => {
+      const uri = `${API_BASE_URL}/uploads/${img}`
+      console.log("uri", uri)
+      return uri
+  }
 
-  // ClientSocket.on("newMessage", (message) => {
-  //     console.log("message:", message);
-  //     setChatMessages(chatMessages.push(message))
-  // });
   useEffect(() => {
     const handler = (message: any) => {
       setChatMessages((prev) => [...prev, message]);
@@ -46,66 +52,106 @@ export function ChatWindow(params: {chatId: number}) {
   }, []);
 
   const [getChatInfo, {data, error, isLoading}] = useLazyGetChatInfoQuery()
-  // const {data, error, isLoading} = useGetChatInfoQuery({chatId, token})
 
   useEffect(() => {
-    getChatInfo({chatId, token})
-    // while (true){
-    //   if (isLoading) continue
-    //   else {
-        console.log("info is here", data)
-        if (!data) return
-        setChatMessages(data.chat_app_message)
-      //   break
-      // }
-    // }
-  }, [chatId])
+    getChatInfo({ chatId, token });
+  }, [chatId]);
+  
+
+  const [secondPersonalChatUser, setSecondPersonalChatUser] = useState<any>(null);
+
+  useEffect(() => {
+    if (!data) return;
+
+    const users = data.chat_app_chat_users;
+
+    const secondUser = users.find(
+      (chatUser: any) => chatUser.user_id !== user.id
+    );
+
+    setSecondPersonalChatUser(secondUser ?? null);
+
+    console.log("selected user", secondUser);
+
+    setChatMessages(data.chat_app_message);
+  }, [data, user.id]);
+  
+  const groupName = () => {
+    if (data && data.is_group){
+      return data.name
+    } else{
+      if (secondPersonalChatUser?.user_app_user?.first_name){
+        return secondPersonalChatUser?.user_app_user?.first_name + " " + secondPersonalChatUser?.user_app_user.last_name
+      } else {
+        return secondPersonalChatUser?.user_app_user?.profile_app_profile.pseudonym
+      }
+    }
+  }
 
   return (
-    <View style={styles.container}>
-      <View style={styles.head}>
-        <View style={styles.groupInfo}>
-          <Pressable onPress={() => router.back()}>
-            <ICONS.SvgReturn />
-          </Pressable>
+    <View>
+      <View style={styles.container}>
+        <View style={styles.head}>
+          <View style={styles.groupInfo}>
+            <Pressable onPress={() => router.back()}>
+              <ICONS.SvgReturn />
+            </Pressable>
 
-          <View style={styles.info}>
-            <View style={styles.avatar}>
-              <Text style={styles.avatarText}>NG</Text>
-            </View>
+            <View style={styles.info}>
+              <Image source={{ uri:
+                ((data && !data.is_group) && secondPersonalChatUser?.user_app_user?.profile_app_profile?.avatar)
+                ? getImageUrl(secondPersonalChatUser?.user_app_user?.profile_app_profile?.avatar) 
+                : data && getImageUrl(data.avatar)
+              }} style={styles.avatar}/>
 
-            <View>
-              <Text>{data?.name} {chatId}</Text>
-              <Text>online</Text>
+              <View>
+                <Text>
+                  {
+                    groupName()
+                  }
+                </Text>
+                <Text>online</Text>
+              </View>
             </View>
           </View>
+
+          <Pressable onPress={() => {setIsOptionsModalOpen(true)}}>
+              <ICONS.SvgDots />
+          </Pressable>
         </View>
 
-        <ICONS.SvgDots />
-      </View>
+        <View style={styles.messageBlock}>
+          <Chat messages={chatMessages} userId={user?.id} />
+          <View style={styles.sendMessageBlock}>
+            <Input
+              style={{ flex: 1 }}
+              placeholder="Повідомлення"
+              value={text}
+              keyboardType="ascii-capable"
+              onChangeText={setText}
+            />
 
-      <View style={styles.messageBlock}>
-        <Chat messages={chatMessages} userId={user?.id} />
+            <Button
+              icon={<ICONS.SvgMound />}
+            />
 
-        <View style={styles.sendMessageBlock}>
-          <Input
-            style={{ flex: 1 }}
-            placeholder="Повідомлення"
-            value={text}
-            onChangeText={setText}
-          />
-
-          <Button
-            icon={<ICONS.SvgMound />}
-          />
-
-          <Button
-            isDark
-            icon={<ICONS.SvgPlane />}
-            onPress={() => handleSend()}
-          />
+            <Button
+              isDark
+              icon={<ICONS.SvgPlane />}
+              onPress={() => handleSend()}
+            />
+          </View>
         </View>
       </View>
+        <Modal
+          visible={isOptionsModalOpen}
+          style={styles.modal}
+          transparent
+        >
+        <View style={styles.modalContainer}>
+          <GroupOptionsModal setIsOpen={setIsOptionsModalOpen} chatId={chatId}/>
+        </View>
+      </Modal>
     </View>
   );
 }

@@ -41,6 +41,14 @@ export const styles = StyleSheet.create({
         color: COLORS.white,
         fontSize: 16
     },
+    modalContainer: {
+        position: "absolute",
+        right: 0,
+        top: 135
+    },
+    modal: {
+        right: 0
+    },
     messageBlock: {
         gap: 24
     },

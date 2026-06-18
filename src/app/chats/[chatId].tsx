@@ -61,7 +61,7 @@ export default function Chat(){
                 text="Повідомлення"
                 logo
                 logoComponent={<ICONS.SvgChat />}
-                linePosition={true}
+                link="/chats"
             />
             <Link
                 text="Групові чати"

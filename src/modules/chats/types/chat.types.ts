@@ -71,3 +71,9 @@ export type MyChatsResponse = {
 	personal: ChatListItem[];
 	groups: ChatListItem[];
 };
+
+export type CreateChatDTO={
+    title?: string
+    base64avatar?: string
+    contactUserId: number[]
+}
