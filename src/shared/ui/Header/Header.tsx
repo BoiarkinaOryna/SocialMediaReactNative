@@ -1,11 +1,7 @@
-import { View, Text, TouchableOpacity, Image, Pressable } from "react-native";
 import { styles } from "./header.styles";
 import { ICONS } from "../../icons/";
 import { View, Text, TouchableOpacity, Image, Pressable } from "react-native";
-import { styles } from "./header.styles";
-import { ICONS } from "../../icons/";
 import { router } from "expo-router";
-import { useRoute } from "@react-navigation/native";
 import { useRoute } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import { useUserContext } from "@modules/auth/context/user.context";
@@ -48,12 +44,6 @@ export function Header() {
     }
   }, [routeName]);
 
-  if (currentPage === "register") {
-    return (
-      <View style={styles.headerRegister}>
-        <View style={styles.imgWorld}>
-          <ICONS.SvgLogo />
-          <ICONS.SvgLogoText />
   if (currentPage === "register") {
     return (
       <View style={styles.headerRegister}>
@@ -113,7 +103,5 @@ export function Header() {
           <ICONS.SvgBack />
         </TouchableOpacity>
       </View>
-    </View>
-  );
   );
 }
